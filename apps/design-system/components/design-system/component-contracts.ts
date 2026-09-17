@@ -197,14 +197,14 @@ export const contractDetails: Record<
   Calendar: {
     fa: 'تقویم',
     usage: [
-      'تاریخ با تقویم مشخص و روزهای غیرقابل انتخاب روشن.',
-      'Select a date in an explicitly named calendar with unavailable days.',
+      'انتخاب شمسی یا میلادی با حفظ همان روز؛ ماه‌ها، سال کبیسه و روزهای غیرقابل انتخاب مطابق تقویم فعال.',
+      'Switch between Persian and Gregorian calendars without changing the selected day; months, leap years and disabled days follow the active calendar.',
     ],
     keyboard: [
       'جهت‌ها بین روزها؛ PageUp/PageDown بین ماه‌ها؛ Enter انتخاب.',
       'Arrows move dates; PageUp/PageDown change months; Enter selects.',
     ],
-    api: 'mode="single" | "range"; selected; onSelect; disabled; locale; dir; labels; numerals',
+    api: 'calendar="persian" | "gregorian"; mode="single" | "range"; selected; onSelect; disabled; locale; dir; labels; numerals',
   },
   'File input': {
     fa: 'انتخاب فایل',

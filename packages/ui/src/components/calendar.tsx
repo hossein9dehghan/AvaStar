@@ -12,11 +12,17 @@ import {
   type DayButton,
 } from "react-day-picker"
 
+import { DayPicker as PersianDayPicker, faIR as persianFa, enUS as persianEn } from "@daypicker/persian"
+import { faIR, enUS } from "date-fns/locale"
+import { useUiLocale } from "@avastar/ui/locale-provider"
+
 import { cn } from "@avastar/ui/lib/utils"
 import { Button, buttonVariants } from "@avastar/ui/components/button"
 
 function Calendar({
   className,
+  calendar = "gregorian",
+  locale,
   classNames,
   showOutsideDays = true,
   captionLayout = "label",
@@ -25,12 +31,21 @@ function Calendar({
   components,
   ...props
 }: React.ComponentProps<typeof DayPicker> & {
+  calendar?: "persian" | "gregorian"
   buttonVariant?: React.ComponentProps<typeof Button>["variant"]
 }) {
   const defaultClassNames = getDefaultClassNames()
+  const language = useUiLocale()
+  const Picker = calendar === "persian" ? PersianDayPicker : DayPicker
+  const defaultLocale = calendar === "persian"
+    ? (language === "fa" ? persianFa : persianEn)
+    : (language === "fa" ? faIR : enUS)
 
   return (
-    <DayPicker
+    <Picker
+      locale={{ ...defaultLocale, ...locale }}
+      dir={language === "fa" ? "rtl" : "ltr"}
+      numerals={language === "fa" ? "arabext" : "latn"}
       showOutsideDays={showOutsideDays}
       className={cn(
         "group/calendar bg-background p-3 [--cell-size:--spacing(8)] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent",
@@ -39,11 +54,7 @@ function Calendar({
         className
       )}
       captionLayout={captionLayout}
-      formatters={{
-        formatMonthDropdown: (date) =>
-          date.toLocaleString("default", { month: "short" }),
-        ...formatters,
-      }}
+      formatters={formatters}
       classNames={{
         root: cn("w-fit", defaultClassNames.root),
         months: cn(

@@ -2328,3 +2328,16 @@ html[lang='en'] .hero-copy h1 {
     font-size: 80px;
   }
 }
+
+/* The opening galaxy sits behind the journey's planetary layers. */
+.cosmos .hero-galaxy {
+  position: absolute;
+  inset: auto;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  max-width: none;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}

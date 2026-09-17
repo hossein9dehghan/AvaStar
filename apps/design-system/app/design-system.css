@@ -2037,3 +2037,6 @@
     white-space: nowrap;
   }
 }
+
+.ds-calendar-switch { margin-block-end: var(--space-6); }
+.ds-calendar-switch [data-slot='toggle-group-item'] { min-height: 44px; padding-inline: 20px; }

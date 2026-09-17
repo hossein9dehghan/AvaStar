@@ -5,6 +5,7 @@ import type { FlightState } from './use-depth-journey';
 import type { PlanetRotation } from '@/lib/planet-rotation';
 import type { CosmicScene } from './cosmic-scene';
 import { CosmicFallback } from './cosmic-fallback';
+import { HeroGalaxy } from './hero-galaxy';
 
 export type CosmicBackdropProps = {
   rotations: MutableRefObject<PlanetRotation[]>;
@@ -54,6 +55,7 @@ export function CosmicBackdrop(props: CosmicBackdropProps) {
   }, [props.locale]);
   return (
     <>
+      <HeroGalaxy {...props} />
       {!ready && <CosmicFallback {...props} />}
       <canvas ref={canvas} className="cosmic-scene" data-ready={ready} aria-hidden="true" />
     </>

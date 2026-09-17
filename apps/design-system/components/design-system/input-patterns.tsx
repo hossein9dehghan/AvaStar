@@ -1,6 +1,5 @@
 'use client';
 import { useState } from 'react';
-import { faIR, enUS } from 'date-fns/locale';
 import { Check, Upload, X, Bold, Italic, Underline } from 'lucide-react';
 import { Checkbox } from '@avastar/ui/components/checkbox';
 import { Switch } from '@avastar/ui/components/switch';
@@ -182,6 +181,10 @@ export function PickerPatterns({ locale }: { locale: Locale }) {
   const [path, setPath] = useState(''),
     [city, setCity] = useState<string | null>(null),
     [date, setDate] = useState<Date | undefined>(),
+    [calendar, setCalendar] = useState<'persian' | 'gregorian'>(
+      locale === 'fa' ? 'persian' : 'gregorian',
+    ),
+    [month, setMonth] = useState(new Date(2026, 8, 1)),
     [file, setFile] = useState<File | null>(null),
     [fileError, setFileError] = useState(''),
     [otp, setOtp] = useState('');
@@ -258,20 +261,42 @@ export function PickerPatterns({ locale }: { locale: Locale }) {
       </div>
       <Specimen
         locale={locale}
-        title={t('تاریخ؛ تقویم میلادی', 'Date; Gregorian calendar')}
-        source={'<Calendar mode="single" selected={date} onSelect={setDate} />'}
+        title={t('تقویم شمسی و میلادی', 'Persian & Gregorian calendars')}
+        source={
+          '<Calendar calendar="persian" mode="single" selected={date} onSelect={setDate} />\n<Calendar calendar="gregorian" mode="single" selected={date} onSelect={setDate} />'
+        }
       >
+        <ToggleGroup
+          className="ds-calendar-switch"
+          type="single"
+          variant="outline"
+          value={calendar}
+          dir={dir}
+          aria-label={t('نوع تقویم', 'Calendar system')}
+          onValueChange={(value) => {
+            if (value !== 'persian' && value !== 'gregorian') return;
+            setCalendar(value);
+            if (date) setMonth(date);
+          }}
+        >
+          <ToggleGroupItem value="persian">{t('شمسی', 'Persian')}</ToggleGroupItem>
+          <ToggleGroupItem value="gregorian">{t('میلادی', 'Gregorian')}</ToggleGroupItem>
+        </ToggleGroup>
         <div className="ds-picker-layout">
           <Calendar
+            key={calendar}
+            calendar={calendar}
+            month={month}
+            onMonthChange={setMonth}
             mode="single"
-            locale={locale === 'fa' ? faIR : enUS}
             numerals={locale === 'fa' ? 'arabext' : 'latn'}
             labels={{
               labelNav: () => t('ناوبری تقویم', 'Calendar navigation'),
               labelPrevious: () => t('ماه قبل', 'Previous month'),
               labelNext: () => t('ماه بعد', 'Next month'),
               labelDayButton: (date, modifiers) =>
-                new Intl.DateTimeFormat(locale === 'fa' ? 'fa-IR-u-ca-gregory' : 'en', {
+                new Intl.DateTimeFormat(locale === 'fa' ? 'fa-IR' : 'en-US', {
+                  calendar: calendar === 'persian' ? 'persian' : 'gregory',
                   dateStyle: 'full',
                 }).format(date) +
                 (modifiers.selected ? t('، انتخاب‌شده', ', selected') : '') +
@@ -279,15 +304,15 @@ export function PickerPatterns({ locale }: { locale: Locale }) {
             }}
             selected={date}
             onSelect={setDate}
-            defaultMonth={new Date(2026, 8, 1)}
             dir={dir}
             disabled={{ before: new Date(2026, 8, 1) }}
           />
           <div className="ds-stack">
             <h2>{t('تاریخ انتخاب‌شده', 'Selected date')}</h2>
-            <output>
+            <output aria-live="polite" aria-atomic="true">
               {date
-                ? new Intl.DateTimeFormat(locale === 'fa' ? 'fa-IR-u-ca-gregory' : 'en', {
+                ? new Intl.DateTimeFormat(locale === 'fa' ? 'fa-IR' : 'en-US', {
+                    calendar: calendar === 'persian' ? 'persian' : 'gregory',
                     dateStyle: 'long',
                   }).format(date)
                 : t('یک روز را انتخاب کنید.', 'Choose a day.')}
@@ -301,8 +326,8 @@ export function PickerPatterns({ locale }: { locale: Locale }) {
             </Button>
             <p className="ds-note">
               {t(
-                'روزهای پیش از سپتامبر ۲۰۲۶ در این نمونه غیرفعال‌اند.',
-                'Dates before September 2026 are disabled in this example.',
+                'با تغییر تقویم، همان روز انتخاب‌شده حفظ می‌شود. روزهای پیش از ۱۰ شهریور ۱۴۰۵ (۱ سپتامبر ۲۰۲۶) در این نمونه غیرفعال‌اند.',
+                'Switching calendars preserves the selected day. Dates before 10 Shahrivar 1405 (September 1, 2026) are disabled in this example.',
               )}
             </p>
           </div>
