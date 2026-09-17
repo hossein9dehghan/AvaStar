@@ -1,0 +1,2330 @@
+/* Avastar Observatory: restrained brand accents, editorial Persian type, cinematic art. */
+:root {
+  --observatory-ease: cubic-bezier(0.22, 0.75, 0.18, 1);
+  --hairline: color-mix(in srgb, var(--foreground) 13%, transparent);
+}
+body {
+  font-size: 1rem;
+  line-height: 1.9;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+html[lang='fa'] h1,
+html[lang='fa'] h2,
+html[lang='fa'] h3,
+html[lang='fa'] button,
+html[lang='fa'] .eyebrow {
+  letter-spacing: 0 !important;
+}
+h1,
+h2,
+h3 {
+  font-weight: 500;
+  text-wrap: balance;
+}
+p {
+  text-wrap: pretty;
+}
+button,
+a {
+  font-weight: 400;
+}
+button:focus-visible,
+a:focus-visible {
+  outline-width: 1px;
+  outline-offset: 5px;
+}
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #273040 #03060c;
+}
+.depth-mode .site-header {
+  height: 100px;
+  padding-inline: 6%;
+  background: linear-gradient(var(--background), transparent);
+  border: 0;
+  gap: 30px;
+}
+.depth-mode .site-header:hover {
+  background: color-mix(in srgb, var(--background) 86%, transparent);
+  border: 0;
+  backdrop-filter: blur(14px);
+}
+.brand img {
+  width: 133px;
+  max-height: 43px;
+}
+.depth-mode .desktop-nav {
+  gap: 28px;
+  font-size: 1rem;
+  color: var(--muted-foreground);
+}
+.depth-mode .desktop-nav a {
+  padding-block: 12px;
+}
+.depth-mode .desktop-nav a::after {
+  height: 1px;
+  background: var(--brand-orange);
+  bottom: 8px;
+  transform-origin: center;
+}
+.depth-mode .desktop-nav a:hover::after,
+.depth-mode .desktop-nav .nav-active::after {
+  transform: scaleX(0.3);
+}
+.nav-divider {
+  height: 13px;
+  opacity: 0.55;
+}
+.header-actions {
+  gap: 18px;
+}
+.language-control {
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  gap: 8px;
+}
+.header-cta {
+  height: 44px !important;
+  border-radius: 999px !important;
+  padding-inline: 20px !important;
+  font-size: 0.9375rem !important;
+  gap: 11px !important;
+  background: #ffffff03 !important;
+  border-color: var(--hairline) !important;
+}
+.header-cta:hover {
+  background: #ffffff08 !important;
+  border-color: #ffffff40 !important;
+}
+.header-cta svg {
+  width: 15px;
+}
+.depth-mode .atmosphere {
+  background: radial-gradient(ellipse at 24% 48%, #172b641a, transparent 62%);
+}
+.cosmos {
+  background: var(--background);
+}
+.planet-field {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+  mix-blend-mode: screen;
+}
+.planet-plane {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  will-change: transform, opacity, filter;
+  mix-blend-mode: screen;
+  transform-origin: 50% 50%;
+}
+.planet-plane img {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  pointer-events: none;
+}
+.planet-plane.plane-0 {
+  width: 65vw;
+  transform: translate3d(26vw, 48vh, 0) translate(-50%, -50%);
+  opacity: 1;
+  visibility: visible;
+}
+.static-explore,
+.static-shop,
+.static-club {
+  filter: none;
+}
+.depth-mode .hero {
+  padding: 120px 9% 130px;
+  align-items: center;
+}
+.depth-mode .hero-copy {
+  width: 46%;
+  max-width: 610px;
+}
+.depth-mode .hero .eyebrow {
+  font-size: 0.9375rem;
+  font-weight: 400;
+  gap: 14px;
+  margin-bottom: 25px;
+  color: #b2bac9;
+}
+.tiny-orbit {
+  width: 5px;
+  height: 5px;
+  background: var(--brand-orange);
+  border: 0;
+  box-shadow: none;
+}
+.depth-mode .hero h1 {
+  font-size: clamp(60px, 5.6vw, 92px);
+  line-height: 1.36;
+  font-weight: 600;
+  letter-spacing: 0;
+  margin: 0 0 26px;
+  color: var(--foreground);
+}
+.hero h1 em {
+  display: inline-block;
+  background: none;
+  color: #bac3d3;
+  -webkit-text-fill-color: currentColor;
+  font-weight: 300;
+  font-style: normal;
+  letter-spacing: 0;
+}
+.depth-mode .hero-description {
+  font-size: 1.125rem;
+  line-height: 2;
+  max-width: 450px;
+  color: var(--muted-foreground);
+  margin: 0;
+}
+.depth-mode .hero-actions {
+  gap: 26px;
+  margin-top: 34px;
+  align-items: center;
+}
+.primary-button {
+  min-height: var(--control-lg);
+}
+.primary-button:hover {
+  background: color-mix(in srgb, var(--brand-blue) 88%, white) !important;
+  box-shadow:
+    0 8px 36px #2d56c82b,
+    inset 0 1px #ffffff25 !important;
+  transform: translateY(-2px);
+}
+.primary-button::before {
+  background: radial-gradient(
+    170px circle at var(--hover-x, 50%) var(--hover-y, 50%),
+    #ffffff17,
+    transparent 70%
+  );
+}
+.quiet-link {
+  font-size: 0.9375rem;
+  gap: 9px;
+  min-height: 44px;
+  color: #b7bfcd;
+}
+.quiet-link svg {
+  width: 15px;
+  transition: transform 0.3s;
+}
+.quiet-link:hover svg {
+  transform: translateY(3px);
+}
+.depth-mode .hero-note {
+  font-size: 0.875rem;
+  margin-top: 38px;
+  color: #8993a5;
+  gap: 14px;
+}
+.note-rule {
+  background: #7a879e4d;
+  width: 30px;
+}
+.depth-mode .hero-planet-link {
+  left: 0;
+  top: 19%;
+  height: 56%;
+  width: 53%;
+  border-radius: 0;
+}
+.depth-mode .planet-caption {
+  left: 15%;
+  bottom: -2%;
+  font-size: 0.8125rem;
+  opacity: 1;
+  gap: 18px;
+  color: #b3bccb;
+}
+.caption-line {
+  width: 42px;
+  background: #b3bccb40;
+}
+.depth-mode .hero-bottom {
+  left: 6%;
+  right: 6%;
+  bottom: 110px;
+  opacity: 1;
+}
+.scroll-cue {
+  font-size: 0.8125rem;
+  color: #8893a8;
+  gap: 12px;
+}
+.scroll-cue svg {
+  width: 15px;
+}
+.coordinates {
+  font:
+    11px Arial,
+    sans-serif;
+  letter-spacing: 0.14em;
+  color: #657188;
+}
+.coordinates span {
+  color: var(--brand-orange);
+  margin-inline: 10px;
+}
+.depth-mode .planet-section {
+  padding: 115px 9% 128px;
+}
+.depth-mode .planet-copy {
+  width: 44%;
+  max-width: 570px;
+}
+.depth-mode .planet-copy h2 {
+  font-size: clamp(38px, 3.9vw, 61px);
+  font-weight: 500;
+  line-height: 1.52;
+  letter-spacing: 0;
+  margin: 0 0 24px;
+}
+.depth-mode .planet-kicker {
+  font-size: 1rem;
+  margin-bottom: 28px;
+  gap: 14px;
+  color: #c8cfda;
+}
+.planet-kicker > span:first-child {
+  font:
+    12px Arial,
+    sans-serif;
+  letter-spacing: 0.1em;
+  color: var(--brand-orange);
+}
+.planet-kicker svg {
+  width: 17px;
+  opacity: 0.75;
+}
+.short-rule {
+  width: 28px;
+  opacity: 0.45;
+}
+.depth-mode .planet-copy .eyebrow {
+  font-size: 0.9375rem;
+  line-height: 1.9;
+  opacity: 1;
+  color: #8b98ae;
+  margin-bottom: 16px;
+  letter-spacing: 0;
+}
+.depth-mode .section-description {
+  font-size: 1.125rem;
+  line-height: 1.95;
+  max-width: 440px;
+  color: var(--muted-foreground);
+}
+.depth-mode .feature-chips {
+  margin: 25px 0 30px;
+  gap: 0;
+  row-gap: 10px;
+}
+.depth-mode .feature-chips span {
+  font-size: 0.875rem;
+  color: #b7c1d1;
+  padding-inline: 0 12px;
+  line-height: 1.6;
+}
+.depth-mode .feature-chips span + span {
+  padding-inline-start: 12px;
+  border-color: #a1adc633;
+}
+.planet-button {
+  min-height: var(--control-lg);
+}
+.planet-button:hover {
+  background: #2d56c821 !important;
+  border-color: #728ec066 !important;
+}
+.depth-mode .text-link {
+  font-size: 0.875rem;
+  margin-top: 19px;
+  opacity: 1;
+  color: #a8b2c4;
+}
+.depth-mode .planet-target,
+.depth-mode .alternate .planet-target {
+  width: 43%;
+  height: 54%;
+  top: 21%;
+  left: 4%;
+  right: auto;
+}
+.depth-mode .alternate .planet-target {
+  right: 4%;
+  left: auto;
+}
+.depth-mode .world-coordinate {
+  font:
+    12px Arial,
+    sans-serif;
+  letter-spacing: 0.11em;
+  left: 9%;
+  top: 1%;
+  opacity: 0.6;
+}
+.depth-mode .world-coordinate span {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  margin-top: 8px;
+}
+.depth-mode .target-label {
+  font-size: 0.875rem;
+  bottom: -7%;
+  color: #aab5c8;
+  opacity: 0.85;
+  gap: 12px;
+}
+.depth-mode .target-label > span {
+  width: 33px;
+  height: 33px;
+  border: 1px solid #b0bdd335;
+  font:
+    16px Arial,
+    sans-serif;
+  color: #dce2ed;
+  background: #ffffff02;
+}
+.depth-mode .planet-target:hover .target-label {
+  transform: translateX(-50%);
+  opacity: 1;
+}
+.depth-mode .planet-target:hover .target-label > span {
+  background: var(--brand-blue);
+  border-color: var(--brand-blue);
+  transition: background 0.3s;
+}
+.depth-mode .flight-control {
+  width: 88%;
+  max-width: none;
+  bottom: 0;
+  left: 6%;
+  transform: none;
+  border: 0;
+  border-top: 1px solid var(--hairline);
+  border-radius: 0;
+  padding: 16px 0 20px;
+  gap: 25px;
+  background: linear-gradient(transparent, #03060cba);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+.flight-readout {
+  gap: 21px;
+  min-width: 175px;
+}
+.flight-index {
+  font-size: 25px;
+  color: #d4dbe7;
+}
+.flight-index small {
+  font-size: 12px;
+  color: #69758b;
+}
+.flight-readout .overline {
+  display: none;
+}
+.flight-readout strong {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #b9c3d3;
+}
+.flight-stops {
+  gap: 4px;
+  height: 44px;
+}
+.flight-stops button {
+  width: 32px;
+  height: 44px;
+}
+.flight-stops button > span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #79859d55;
+}
+.flight-stops button:hover > span {
+  height: 6px;
+  width: 6px;
+  background: #bac7df;
+}
+.flight-stops button.is-current > span {
+  width: 6px;
+  height: 6px;
+  background: var(--brand-orange);
+  box-shadow: 0 0 0 5px #f7751d0c;
+}
+.flight-stops em {
+  font-size: 12px;
+  padding: 7px 12px;
+  bottom: 45px;
+}
+.flight-actions {
+  gap: 20px;
+}
+.flight-control .motion-toggle {
+  border: 0;
+  padding: 0;
+  color: #a6b1c3;
+  min-width: 44px;
+  height: 44px;
+}
+.flight-control .next-station {
+  font-size: 0.875rem;
+  gap: 15px;
+  min-height: 44px;
+  color: #d6deeb;
+}
+.next-station > span {
+  display: inline;
+}
+.flight-control .next-station svg {
+  height: 35px;
+  width: 35px;
+  padding: 9px;
+  border: 1px solid #a4b0c333;
+  border-radius: 50%;
+}
+.dock-progress {
+  top: -1px;
+  bottom: auto;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--brand-blue), #f7751d99);
+}
+.depth-mode .section-heading {
+  margin-bottom: 36px;
+}
+.depth-mode .section-heading h2,
+.depth-mode .about-section h2,
+.depth-mode .faq-section h2 {
+  font-size: clamp(32px, 3.1vw, 48px);
+  font-weight: 500;
+  line-height: 1.65;
+  letter-spacing: 0;
+}
+.depth-mode .section-heading .eyebrow,
+.depth-mode .about-section .eyebrow,
+.depth-mode .faq-section .eyebrow {
+  font-size: 0.875rem;
+  color: #8d9bb2;
+  letter-spacing: 0;
+  margin-bottom: 14px;
+}
+.depth-mode .section-heading > p {
+  font-size: 1rem;
+  max-width: 350px;
+  color: var(--muted-foreground);
+}
+.depth-mode .journal-section {
+  padding-inline: 9% !important;
+}
+.depth-mode .journal-grid {
+  gap: 30px;
+}
+.depth-mode .journal-card {
+  border: 0;
+  border-top: 1px solid var(--hairline);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none !important;
+  overflow: visible;
+}
+.depth-mode .journal-card:hover {
+  transform: translateY(-6px);
+  border-color: #8a9abb55;
+  box-shadow: none;
+}
+.depth-mode .journal-card::after {
+  display: none;
+}
+.depth-mode .journal-art {
+  height: clamp(130px, 21vh, 225px);
+  background: none !important;
+  overflow: hidden;
+}
+.journal-art img,
+.journal-art-1 img,
+.journal-art-2 img {
+  filter: none;
+  opacity: 0.95;
+  object-fit: contain;
+  width: 100%;
+  height: 125%;
+  mix-blend-mode: screen;
+  transform: translateY(-4%);
+  transition:
+    transform 0.7s var(--observatory-ease),
+    opacity 0.5s;
+}
+.journal-card:hover .journal-art img {
+  transform: translateY(-4%) scale(1.04);
+  opacity: 1;
+}
+.article-number {
+  font-size: 11px;
+  color: #8792a9;
+  letter-spacing: 0.1em;
+  background: none;
+}
+.depth-mode .journal-card-body {
+  padding: 22px 0 0;
+}
+.journal-card-body .overline {
+  font-size: 0.8125rem;
+  color: var(--brand-orange);
+  letter-spacing: 0;
+}
+.depth-mode .journal-card h3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.65;
+  margin: 11px 0;
+}
+.depth-mode .journal-card p {
+  font-size: 1rem;
+  line-height: 1.85;
+}
+.depth-mode .article-link {
+  font-size: 0.9375rem;
+  margin-top: 22px;
+  gap: 12px;
+  color: #d5dce9;
+}
+.depth-mode .about-section {
+  padding-inline: 13% !important;
+  gap: 90px;
+}
+.depth-mode .about-section p:not(.eyebrow) {
+  font-size: 1.1875rem;
+  line-height: 2.1;
+}
+.depth-mode .values {
+  font-size: 0.9375rem;
+  gap: 18px;
+  color: #bcc5d4;
+}
+.depth-mode .about-symbol img {
+  width: 165px;
+}
+.depth-mode .about-symbol > span {
+  font:
+    12px/1.8 Arial,
+    sans-serif;
+  letter-spacing: 0.15em;
+  color: #78859c;
+}
+.depth-mode .partnership .eyebrow {
+  color: #aeb8c9;
+  font-size: 0.9375rem;
+  letter-spacing: 0;
+}
+.depth-mode .partnership h2 {
+  font-size: clamp(38px, 4.5vw, 67px);
+  font-weight: 400;
+  line-height: 1.6;
+}
+.depth-mode .partnership p:not(.eyebrow) {
+  font-size: 1.1875rem;
+}
+.depth-mode .partnership .planet-button {
+  min-width: 0;
+}
+.depth-mode .faq-list [data-slot='accordion-trigger'] {
+  font-size: 1.0625rem;
+  font-weight: 400;
+  padding-block: 22px;
+  line-height: 1.85;
+}
+.depth-mode .faq-list [data-slot='accordion-content'] {
+  font-size: 1rem;
+  line-height: 2;
+  color: var(--muted-foreground);
+}
+.faq-list [data-slot='accordion-item'] {
+  border-color: var(--hairline);
+}
+.depth-mode .journey-footer {
+  background: none;
+  padding-inline: 9% !important;
+}
+.footer-invitation {
+  padding-bottom: 36px;
+}
+.footer-invitation .eyebrow {
+  font-size: 0.875rem;
+  color: #939fb3;
+}
+.footer-invitation h2 {
+  font-size: clamp(27px, 2.7vw, 41px);
+  font-weight: 400;
+  line-height: 1.6;
+}
+.footer-grid {
+  gap: 40px;
+  padding-block: 39px;
+}
+.footer-grid h3 {
+  font-size: 1rem;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+.footer-grid nav a,
+.footer-contact button {
+  font-size: 0.9375rem;
+  min-height: 42px;
+  color: #9faabf;
+}
+.footer-identity p {
+  font-size: 0.9375rem;
+  line-height: 2;
+}
+.footer-contact p {
+  font-size: 0.8125rem;
+  line-height: 2;
+}
+.footer-tagline {
+  font-size: 0.8125rem;
+  color: #a6b4cb;
+}
+.footer-base {
+  font-size: 0.8125rem;
+  padding-top: 20px;
+  border-color: var(--hairline);
+}
+[data-slot='dialog-overlay'] {
+  background: #02040acd !important;
+  backdrop-filter: blur(15px);
+}
+[data-slot='dialog-content'] {
+  border: 1px solid #b2c1dd22;
+  box-shadow: 0 35px 120px #0009;
+}
+.planet-dialog {
+  border-radius: 20px !important;
+  background: #090e18 !important;
+  max-width: 930px !important;
+}
+.dialog-art {
+  background: #02050c;
+  overflow: hidden;
+}
+.dialog-art img {
+  mix-blend-mode: screen;
+  filter: none;
+  width: 115%;
+  max-width: none;
+  object-fit: contain;
+  transform: none;
+  margin: 0;
+}
+.dialog-art > span {
+  font:
+    12px Arial,
+    sans-serif;
+  letter-spacing: 0.13em;
+  color: #7f8da5;
+}
+.dialog-copy {
+  padding: 52px 40px;
+}
+.dialog-copy [data-slot='dialog-title'] {
+  font-size: 2.75rem;
+  font-weight: 400;
+  margin-bottom: 20px;
+  line-height: 1.55;
+}
+.dialog-copy [data-slot='dialog-description'] {
+  font-size: 1.0625rem;
+  line-height: 2;
+  color: #a5b0c2;
+}
+.dialog-copy .eyebrow {
+  font-size: 0.875rem;
+  color: #b6c0d1;
+}
+.dialog-copy ul {
+  font-size: 1rem;
+  line-height: 1.9;
+  gap: 9px;
+  margin-block: 24px;
+}
+.dialog-copy li svg {
+  color: var(--brand-orange);
+}
+.dialog-small {
+  font-size: 0.8125rem;
+  line-height: 2;
+  color: #8794aa;
+}
+.dialog-close {
+  width: 40px;
+  height: 40px;
+  background: #ffffff05;
+  border: 1px solid var(--hairline);
+  color: #c8d2e3;
+}
+.dialog-close:hover {
+  background: #ffffff12;
+  transform: none;
+}
+.path-guide {
+  border-radius: 20px !important;
+  background: #080c14 !important;
+  max-width: 960px !important;
+  grid-template-columns: 260px 1fr !important;
+}
+.path-sidebar {
+  background: linear-gradient(145deg, #172b642b, #080c14);
+  padding: 49px 30px 32px;
+  border-color: var(--hairline);
+}
+.compass-mark {
+  width: 57px;
+  height: 57px;
+  border-color: #acbcd12b;
+  box-shadow: none;
+  color: #d1dbea;
+}
+.path-sidebar h2 {
+  font-size: 1.75rem;
+  font-weight: 300;
+  line-height: 1.8;
+  margin-bottom: 34px;
+}
+.path-sidebar .overline {
+  font-size: 12px;
+  color: #6e7c94;
+  letter-spacing: 0.08em;
+}
+.path-steps li {
+  font-size: 0.9375rem;
+  gap: 15px;
+}
+.path-steps li > span {
+  width: 29px;
+  height: 29px;
+}
+.path-assurance {
+  font-size: 0.8125rem;
+  line-height: 2;
+}
+.path-content {
+  padding: 45px 40px 30px;
+  min-height: 605px;
+}
+.path-step-caption {
+  font-size: 0.875rem;
+  margin-bottom: 22px;
+  color: #92a4c1;
+}
+.path-content [data-slot='dialog-title'] {
+  font-size: 1.9375rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+.path-content [data-slot='dialog-description'] {
+  font-size: 1rem;
+  line-height: 1.9;
+}
+.path-options {
+  gap: 13px;
+  margin-block: 28px;
+}
+.path-options label {
+  padding: 19px;
+  border-radius: 12px;
+  min-height: 154px;
+  gap: 15px;
+  background: #ffffff02;
+  border-color: #bdcee01a;
+}
+.path-options strong {
+  font-size: 1.0625rem;
+  font-weight: 500;
+}
+.path-options small {
+  font-size: 0.875rem;
+  line-height: 1.85;
+  color: #929fb6;
+}
+.path-options label > svg {
+  color: #b6c4dc;
+  stroke-width: 1.35;
+}
+.path-options label.selected {
+  border-color: #486acb;
+  background: #2d56c815;
+}
+.path-options label.selected > svg {
+  color: var(--brand-orange);
+}
+.path-options label:hover {
+  transform: translateY(-2px);
+  border-color: #b6c4dc55;
+  background: #ffffff04;
+}
+.path-bottom > span {
+  font-size: 0.8125rem;
+  line-height: 1.85;
+  max-width: 210px;
+}
+.path-bottom .primary-button {
+  font-size: 0.9375rem !important;
+  height: 47px !important;
+}
+.path-back,
+.path-reset {
+  font-size: 0.9375rem;
+}
+.experience-options label {
+  min-height: 116px;
+  padding-inline-end: 47px;
+}
+.path-recommendation h3 {
+  font-size: 1.8125rem;
+  font-weight: 500;
+  line-height: 1.7;
+}
+.path-recommendation > p {
+  font-size: 1rem;
+  line-height: 1.95;
+}
+.recommendation-meta > span {
+  font-size: 0.8125rem;
+}
+.recommendation-secondary {
+  font-size: 0.9375rem;
+}
+.recommendation-icon {
+  color: #bbc9e2;
+}
+.request-dialog [data-slot='dialog-title'] {
+  font-size: 1.8125rem;
+  font-weight: 500;
+}
+.request-dialog [data-slot='dialog-description'] {
+  font-size: 1rem;
+  line-height: 1.95;
+}
+.request-form label {
+  font-size: 0.9375rem;
+}
+.request-form input,
+.request-form textarea {
+  font-size: 1rem;
+  border-color: var(--hairline);
+  border-radius: 8px;
+  background: #ffffff03;
+}
+.form-privacy {
+  font-size: 0.8125rem;
+  line-height: 2;
+}
+.detail-hero h1,
+.article-page h1 {
+  font-size: clamp(38px, 4.1vw, 64px);
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: 0;
+}
+.detail-hero > img,
+.article-cover img {
+  filter: none;
+  mix-blend-mode: screen;
+}
+.detail-hero p:not(.eyebrow),
+.article-intro {
+  font-size: 1.125rem;
+  line-height: 2;
+}
+.article-page section p {
+  font-size: 1.0625rem;
+  line-height: 2.2;
+}
+.detail-items h2,
+.article-page section h2 {
+  font-weight: 500;
+}
+.article-cover {
+  background: #03060c;
+}
+.depth-mode[lang='en'] .hero h1 {
+  font-size: clamp(47px, 4.65vw, 75px);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+.depth-mode[lang='en'] .hero h1 em {
+  letter-spacing: -0.04em;
+  line-height: 1.12;
+  margin-top: 12px;
+}
+.depth-mode[lang='en'] .hero .eyebrow {
+  font:
+    12px Arial,
+    sans-serif;
+  letter-spacing: 0.11em;
+}
+.depth-mode[lang='en'] .planet-copy h2 {
+  font-size: clamp(38px, 3.8vw, 59px);
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+.depth-mode[lang='en'] .planet-copy .eyebrow {
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+}
+@media (max-width: 1150px) and (min-width: 761px) {
+  .depth-mode .desktop-nav {
+    gap: 17px;
+    font-size: 0.9375rem;
+  }
+  .depth-mode .site-header {
+    padding-inline: 5%;
+    gap: 24px;
+  }
+  .header-actions {
+    gap: 10px;
+  }
+  .depth-mode .hero {
+    padding-inline: 8%;
+  }
+  .depth-mode .hero h1 {
+    font-size: 64px;
+  }
+  .depth-mode .hero-actions {
+    gap: 16px;
+  }
+  .depth-mode .hero-description {
+    font-size: 1.0625rem;
+  }
+  .depth-mode .planet-copy h2 {
+    font-size: 45px;
+  }
+  .depth-mode .section-description {
+    font-size: 1.0625rem;
+  }
+  .depth-mode .journal-card h3 {
+    font-size: 1.3125rem;
+  }
+  .footer-grid {
+    gap: 26px;
+  }
+  .footer-invitation h2 {
+    font-size: 29px;
+  }
+  .path-guide {
+    max-width: 900px !important;
+    grid-template-columns: 235px 1fr !important;
+  }
+  .path-content {
+    padding-inline: 30px;
+  }
+  .flight-stops {
+    gap: 0;
+  }
+  .flight-stops button {
+    width: 27px;
+  }
+  .flight-readout {
+    min-width: 150px;
+  }
+  .depth-mode .hero-note {
+    margin-top: 25px;
+  }
+}
+@media (max-height: 780px) and (min-width: 761px) {
+  .depth-mode .hero {
+    padding-top: 100px;
+    padding-bottom: 115px;
+  }
+  .depth-mode .hero h1 {
+    font-size: clamp(55px, 5vw, 73px);
+    margin-bottom: 18px;
+  }
+  .depth-mode .hero-description {
+    font-size: 1.0625rem;
+  }
+  .depth-mode .hero .eyebrow {
+    margin-bottom: 17px;
+  }
+  .depth-mode .hero-note {
+    margin-top: 22px;
+  }
+  .depth-mode .hero-actions {
+    margin-top: 25px;
+  }
+  .depth-mode .hero-bottom {
+    display: none;
+  }
+  .depth-mode .planet-copy h2 {
+    font-size: 43px;
+    margin-bottom: 17px;
+  }
+  .depth-mode .planet-kicker {
+    margin-bottom: 18px;
+  }
+  .depth-mode .planet-copy .eyebrow {
+    margin-bottom: 11px;
+  }
+  .depth-mode .section-description {
+    font-size: 1rem;
+  }
+  .depth-mode .feature-chips {
+    margin: 18px 0 23px;
+  }
+  .depth-mode .planet-section {
+    padding-top: 105px;
+    padding-bottom: 105px;
+  }
+  .depth-mode .journal-art {
+    height: 140px;
+  }
+  .depth-mode .journal-card h3 {
+    font-size: 1.3125rem;
+  }
+  .depth-mode .journal-card p {
+    font-size: 0.9375rem;
+  }
+  .depth-mode .journal-card-body {
+    padding-top: 15px;
+  }
+  .depth-mode .section-heading {
+    margin-bottom: 22px;
+  }
+  .depth-mode .article-link {
+    margin-top: 14px;
+  }
+  .footer-grid {
+    padding-block: 25px;
+  }
+  .footer-invitation {
+    padding-bottom: 26px;
+  }
+  .footer-grid nav a,
+  .footer-contact button {
+    font-size: 0.875rem;
+  }
+  .path-content {
+    min-height: 565px;
+    padding-top: 36px;
+  }
+  .path-options {
+    margin-block: 23px;
+  }
+  .path-options label {
+    min-height: 143px;
+  }
+}
+@media (max-width: 760px) {
+  .depth-mode .site-header {
+    height: 80px;
+    padding-inline: 6%;
+    gap: 15px;
+  }
+  .brand img {
+    width: 113px;
+    max-height: 38px;
+  }
+  .header-actions {
+    gap: 6px;
+  }
+  .language-control {
+    font-size: 0.8125rem;
+  }
+  .mobile-menu {
+    width: 42px;
+    height: 42px;
+  }
+  .depth-mode .hero {
+    padding: 111px 7% 95px;
+    display: block;
+  }
+  .depth-mode .hero-copy {
+    width: 100%;
+    max-width: none;
+    align-items: center;
+    text-align: center;
+  }
+  .depth-mode .hero .eyebrow {
+    font-size: 0.8125rem;
+    gap: 11px;
+    margin: 0 0 19px;
+    justify-content: center;
+  }
+  .depth-mode .hero h1 {
+    font-size: clamp(40px, 10.4vw, 57px);
+    line-height: 1.36;
+    margin: 0 0 20px;
+    font-weight: 600;
+  }
+  .hero h1 em {
+    font-weight: 300;
+  }
+  .depth-mode .hero-description {
+    font-size: 1rem;
+    line-height: 1.9;
+    max-width: 335px;
+    margin: 0 auto;
+  }
+  .depth-mode .hero-actions {
+    margin-top: 24px;
+    gap: 12px;
+    flex-wrap: nowrap;
+    justify-content: center;
+  }
+  .primary-button {
+    height: 50px !important;
+    font-size: 0.9375rem !important;
+    padding-inline: 19px !important;
+    gap: 13px !important;
+  }
+  .quiet-link {
+    font-size: 0.875rem;
+    gap: 6px;
+  }
+  .depth-mode .hero-note,
+  .depth-mode .hero-bottom {
+    display: none;
+  }
+  .depth-mode .hero-planet-link {
+    left: 4%;
+    top: 55%;
+    width: 92%;
+    height: 30%;
+  }
+  .depth-mode .planet-caption {
+    left: 50%;
+    bottom: -3%;
+    font-size: 0.75rem;
+    gap: 13px;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  .caption-line {
+    width: 30px;
+  }
+  .planet-plane.plane-0 {
+    width: 117vw;
+    transform: translate3d(50vw, 73vh, 0) translate(-50%, -50%);
+  }
+  .depth-mode .planet-section {
+    padding: 0 8% 118px;
+    align-items: flex-end;
+  }
+  .depth-mode .planet-copy,
+  .depth-mode .alternate .planet-copy {
+    width: 100%;
+    max-width: none;
+  }
+  .depth-mode .planet-copy h2 {
+    font-size: clamp(29px, 7.7vw, 40px);
+    line-height: 1.55;
+    font-weight: 500;
+    margin: 0 0 14px;
+  }
+  .depth-mode .planet-kicker {
+    font-size: 0.9375rem;
+    margin-bottom: 15px;
+    gap: 11px;
+  }
+  .depth-mode .planet-copy .eyebrow {
+    font-size: 0.8125rem;
+    margin-bottom: 10px;
+  }
+  .depth-mode .section-description {
+    font-size: 1rem;
+    line-height: 1.9;
+    max-width: none;
+  }
+  .depth-mode .feature-chips {
+    margin: 17px 0 23px;
+    row-gap: 8px;
+  }
+  .depth-mode .feature-chips span {
+    font-size: 0.8125rem;
+    padding-inline-end: 10px;
+  }
+  .depth-mode .feature-chips span + span {
+    padding-inline-start: 10px;
+  }
+  .planet-button {
+    height: 47px !important;
+    font-size: 0.9375rem !important;
+    padding-inline: 20px !important;
+  }
+  .depth-mode .text-link {
+    font-size: 0.875rem;
+    margin-top: 14px;
+  }
+  .depth-mode .planet-target,
+  .depth-mode .alternate .planet-target {
+    top: 11%;
+    left: 14%;
+    right: auto;
+    width: 72%;
+    height: 24%;
+  }
+  .depth-mode .world-coordinate {
+    font-size: 11px;
+    left: -5%;
+    top: 3%;
+    opacity: 0.5;
+  }
+  .depth-mode .world-coordinate span {
+    display: none;
+  }
+  .depth-mode .target-label {
+    font-size: 0.75rem;
+    bottom: -8%;
+    gap: 9px;
+  }
+  .depth-mode .target-label > span {
+    height: 28px;
+    width: 28px;
+    font-size: 13px;
+  }
+  .depth-mode .flight-control {
+    left: 7%;
+    width: 86%;
+    bottom: 0;
+    padding: 11px 0 14px;
+    gap: 12px;
+    border-radius: 0;
+    background: linear-gradient(transparent, #03060ce8);
+  }
+  .flight-readout {
+    min-width: 0;
+    gap: 14px;
+  }
+  .flight-index {
+    font-size: 22px;
+  }
+  .flight-index small {
+    font-size: 11px;
+  }
+  .flight-readout strong {
+    font-size: 0.9375rem;
+  }
+  .flight-actions {
+    gap: 10px;
+  }
+  .flight-control .next-station {
+    width: 38px;
+    min-width: 38px;
+  }
+  .next-station > span {
+    display: none;
+  }
+  .flight-control .motion-toggle {
+    width: 36px;
+    min-width: 36px;
+  }
+  .flight-stops {
+    display: none;
+  }
+  .depth-mode .journal-section {
+    padding: 106px 8% 114px !important;
+  }
+  .depth-mode .section-heading {
+    margin-bottom: 28px;
+  }
+  .depth-mode .section-heading h2,
+  .depth-mode .about-section h2,
+  .depth-mode .faq-section h2 {
+    font-size: 1.9375rem;
+    line-height: 1.65;
+  }
+  .depth-mode .section-heading .eyebrow {
+    font-size: 0.8125rem;
+  }
+  .depth-mode .section-heading > p {
+    font-size: 0.9375rem;
+  }
+  .depth-mode .journal-grid {
+    gap: 24px;
+  }
+  .depth-mode .journal-card {
+    flex-basis: 88%;
+    border-radius: 0;
+  }
+  .depth-mode .journal-art {
+    height: clamp(130px, 22vh, 220px);
+  }
+  .depth-mode .journal-card-body {
+    padding: 18px 0 0;
+  }
+  .depth-mode .journal-card h3 {
+    font-size: 1.4375rem;
+  }
+  .depth-mode .journal-card p {
+    font-size: 1rem;
+  }
+  .depth-mode .article-link {
+    font-size: 0.9375rem;
+    margin-top: 18px;
+  }
+  .depth-mode .about-section {
+    padding: 106px 9% 116px !important;
+    gap: 30px;
+  }
+  .depth-mode .about-symbol img {
+    width: 88px;
+  }
+  .depth-mode .about-symbol > span {
+    font-size: 11px;
+  }
+  .depth-mode .about-section p:not(.eyebrow) {
+    font-size: 1.0625rem;
+    line-height: 2;
+  }
+  .depth-mode .values {
+    font-size: 0.875rem;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .depth-mode .partnership {
+    padding: 105px 9% 120px !important;
+    gap: 25px;
+  }
+  .depth-mode .partnership h2 {
+    font-size: 2.4rem;
+    line-height: 1.65;
+  }
+  .depth-mode .partnership p:not(.eyebrow) {
+    font-size: 1.0625rem;
+  }
+  .depth-mode .faq-section {
+    padding: 104px 8% 116px !important;
+    gap: 18px;
+  }
+  .depth-mode .faq-list {
+    max-height: calc(100svh - 370px);
+  }
+  .depth-mode .faq-list [data-slot='accordion-trigger'] {
+    font-size: 1rem;
+    padding-block: 16px;
+  }
+  .depth-mode .faq-list [data-slot='accordion-content'] {
+    font-size: 0.9375rem;
+  }
+  .depth-mode .faq-section > div > p:not(.eyebrow) {
+    font-size: 1rem;
+  }
+  .depth-mode .journey-footer {
+    padding: 104px 8% 114px !important;
+  }
+  .footer-invitation {
+    gap: 24px;
+  }
+  .footer-invitation .eyebrow {
+    font-size: 0.8125rem;
+  }
+  .footer-invitation h2 {
+    font-size: 1.8125rem;
+  }
+  .footer-grid {
+    gap: 30px 22px;
+    padding-block: 30px;
+  }
+  .footer-grid nav a,
+  .footer-contact button {
+    font-size: 0.9375rem;
+    min-height: 44px;
+  }
+  .footer-identity p {
+    font-size: 1rem;
+  }
+  .footer-base {
+    font-size: 0.8125rem;
+  }
+  .footer-contact p {
+    font-size: 0.875rem;
+  }
+  .planet-dialog {
+    border-radius: 16px !important;
+  }
+  .dialog-art {
+    height: 190px;
+  }
+  .dialog-art img {
+    width: 88%;
+    height: 280px;
+    object-fit: contain;
+    margin: 0;
+    transform: translateY(3%);
+  }
+  .dialog-copy {
+    padding: 28px;
+  }
+  .dialog-copy [data-slot='dialog-title'] {
+    font-size: 2rem;
+    margin-bottom: 16px;
+  }
+  .dialog-copy [data-slot='dialog-description'] {
+    font-size: 1rem;
+  }
+  .dialog-copy ul {
+    font-size: 0.9375rem;
+    margin-block: 20px;
+  }
+  .dialog-small {
+    font-size: 0.8125rem;
+  }
+  .path-guide {
+    display: block !important;
+    border-radius: 16px !important;
+  }
+  .path-sidebar {
+    padding: 22px 22px 19px;
+  }
+  .path-steps {
+    gap: 10px;
+  }
+  .path-steps li {
+    font-size: 0.8125rem;
+    gap: 7px;
+  }
+  .path-steps li > span {
+    width: 24px;
+    height: 24px;
+  }
+  .path-content {
+    padding: 25px 23px;
+    min-height: 0;
+  }
+  .path-content [data-slot='dialog-title'] {
+    font-size: 1.5rem;
+    line-height: 1.65;
+  }
+  .path-content [data-slot='dialog-description'] {
+    font-size: 0.9375rem;
+  }
+  .path-options {
+    gap: 10px;
+    margin-block: 23px;
+  }
+  .path-options label {
+    padding: 15px;
+    min-height: 147px;
+    gap: 13px;
+  }
+  .path-options strong {
+    font-size: 1rem;
+  }
+  .path-options small {
+    font-size: 0.8125rem;
+  }
+  .path-bottom > span {
+    font-size: 0.75rem;
+    max-width: 160px;
+  }
+  .path-back,
+  .path-reset {
+    font-size: 0.875rem;
+  }
+  .path-bottom .primary-button {
+    font-size: 0.875rem !important;
+    padding-inline: 14px !important;
+  }
+  .experience-options label {
+    min-height: 119px;
+    padding-inline-end: 38px;
+  }
+  .path-recommendation h3 {
+    font-size: 1.5rem;
+  }
+  .path-recommendation > p {
+    font-size: 1rem;
+  }
+  .depth-mode[lang='en'] .hero h1 {
+    font-size: clamp(34px, 9vw, 49px);
+    line-height: 1.06;
+    letter-spacing: -0.04em;
+  }
+  .depth-mode[lang='en'] .hero h1 em {
+    margin-top: 7px;
+  }
+  .depth-mode[lang='en'] .hero .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+  }
+  .depth-mode[lang='en'] .planet-copy h2 {
+    font-size: clamp(29px, 7.5vw, 39px);
+    line-height: 1.2;
+  }
+  .depth-mode[lang='en'] .planet-copy .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+  }
+}
+@media (max-width: 760px) and (max-height: 740px) {
+  .depth-mode .hero {
+    padding-top: 95px;
+  }
+  .depth-mode .hero .eyebrow {
+    margin-bottom: 14px;
+  }
+  .depth-mode .hero h1 {
+    font-size: 39px;
+    margin-bottom: 14px;
+  }
+  .depth-mode .hero-description {
+    font-size: 0.9375rem;
+    line-height: 1.85;
+  }
+  .depth-mode .hero-actions {
+    margin-top: 20px;
+  }
+  .depth-mode .planet-section {
+    padding-bottom: 99px;
+  }
+  .depth-mode .planet-copy .eyebrow {
+    display: none;
+  }
+  .depth-mode .planet-copy h2 {
+    font-size: 29px;
+  }
+  .depth-mode .section-description {
+    font-size: 0.9375rem;
+  }
+  .depth-mode .feature-chips {
+    margin: 14px 0 18px;
+  }
+  .depth-mode .hero-planet-link {
+    top: 59%;
+    height: 24%;
+  }
+  .depth-mode .planet-target {
+    top: 11%;
+    height: 23%;
+  }
+  .depth-mode .planet-kicker {
+    margin-bottom: 11px;
+  }
+  .depth-mode .about-section {
+    gap: 22px;
+  }
+  .depth-mode .about-section p:not(.eyebrow) {
+    font-size: 1rem;
+  }
+  .depth-mode .about-symbol img {
+    width: 65px;
+  }
+  .depth-mode .journal-art {
+    height: 135px;
+  }
+  .depth-mode .journal-card p {
+    font-size: 0.9375rem;
+  }
+  .depth-mode .journal-card h3 {
+    font-size: 1.3125rem;
+  }
+  .depth-mode .journal-section {
+    padding-top: 95px !important;
+  }
+  .path-options label {
+    min-height: 138px;
+  }
+  .path-content {
+    padding: 20px;
+  }
+}
+@media (max-height: 560px) {
+  .depth-mode .depth-panel[data-current='true'] {
+    overflow-y: auto;
+  }
+  .depth-mode .hero,
+  .depth-mode .planet-section {
+    padding-top: 95px;
+    padding-bottom: 110px;
+    align-items: flex-start;
+  }
+  .depth-mode .hero-planet-link,
+  .depth-mode .planet-target {
+    display: none;
+  }
+  .depth-mode .journal-section,
+  .depth-mode .about-section,
+  .depth-mode .partnership,
+  .depth-mode .faq-section {
+    justify-content: flex-start;
+    padding-top: 95px !important;
+    padding-bottom: 110px !important;
+  }
+  .depth-mode .faq-list {
+    max-height: none;
+    overflow: visible;
+  }
+  .depth-mode .journey-footer {
+    display: flex;
+  }
+  .depth-mode .hero-copy {
+    pointer-events: auto;
+  }
+}
+@media (max-width: 760px) {
+  .depth-mode .hero-actions {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .hero-actions .quiet-link {
+    white-space: nowrap;
+    min-height: 40px;
+  }
+}
+@media (max-width: 760px) and (max-height: 740px) {
+  .hero-actions .quiet-link {
+    display: none;
+  }
+}
+.path-guide,
+.planet-dialog {
+  --foreground: #f0f2f6;
+  --muted-foreground: #a8b0c0;
+  --border: #dce2ec1a;
+  --background: #080c14;
+  color: var(--foreground);
+}
+[data-theme='light'] .detail-hero > img {
+  mix-blend-mode: normal;
+  border-radius: 20px;
+}
+[data-theme='light'] .footer-grid nav a,
+[data-theme='light'] .footer-contact button,
+[data-theme='light'] .footer-tagline {
+  color: var(--muted-foreground);
+}
+.depth-mode[data-station='9'] .flight-control {
+  background: var(--background);
+  box-shadow: 0 -15px 30px var(--background);
+}
+.depth-mode[data-station='9'] .site-header {
+  background: var(--background);
+  border-bottom: 1px solid var(--hairline);
+}
+.depth-mode .journal-art {
+  background: var(--background) !important;
+}
+/* Stars are erased behind each planet silhouette by the shared canvas camera. */
+.cosmos {
+  isolation: isolate;
+  pointer-events: none;
+}
+.star-field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.star-field canvas {
+  pointer-events: none;
+}
+.planet-field {
+  z-index: 2;
+  isolation: isolate;
+}
+.star-field {
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+}
+
+/* All celestial layers share one camera. Stars never participate in content stacking. */
+.cosmic-stars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+.depth-mode .site-header {
+  background: linear-gradient(
+    var(--background) 15%,
+    color-mix(in srgb, var(--background) 75%, transparent) 70%,
+    transparent
+  );
+}
+.depth-mode .site-header:hover {
+  background: linear-gradient(
+    var(--background) 15%,
+    color-mix(in srgb, var(--background) 75%, transparent) 70%,
+    transparent
+  );
+  backdrop-filter: none;
+}
+.depth-mode .desktop-nav {
+  gap: 24px;
+  font-size: 0.9375rem;
+}
+.depth-mode .desktop-nav .nav-active {
+  color: var(--foreground);
+}
+.depth-mode .hero-description {
+  color: #b1bacb;
+}
+.primary-button:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px #ffffff25,
+    0 4px 20px #2d56c820 !important;
+}
+.primary-button:active {
+  transform: translateY(0);
+}
+.language-control,
+.icon-button {
+  min-width: 44px;
+  min-height: 44px;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--brand-orange);
+  outline-offset: 5px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .planet-plane,
+  .primary-button {
+    transition: none !important;
+  }
+}
+
+/* UI 3: shared product materials and immediate input feedback. */
+:root {
+  --observatory-ease: var(--motion-ease);
+}
+.depth-mode {
+  --background: var(--cosmos-background);
+}
+.depth-mode .site-header,
+.depth-mode .site-header:hover {
+  height: 88px;
+  background: color-mix(in srgb, var(--cosmos-background) 86%, transparent);
+  backdrop-filter: blur(20px) saturate(120%);
+}
+.depth-mode .desktop-nav a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.depth-mode .desktop-nav a::after {
+  background: var(--link);
+}
+.depth-mode .hero-description,
+.section-description {
+  color: var(--muted-foreground);
+  font-size: 1.0625rem;
+  line-height: 1.95;
+}
+.hero-copy h1 {
+  font-weight: 600;
+}
+.hero-note {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+.hero-actions .av-button,
+.planet-button,
+.header-cta {
+  border-radius: var(--radius-input);
+}
+.quiet-link {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--link);
+}
+.primary-button:hover,
+.planet-button:hover {
+  transform: none;
+  box-shadow: none !important;
+}
+.primary-button:active,
+.planet-button:active,
+.header-cta:active {
+  transform: scale(0.97);
+  transition-duration: 80ms;
+}
+.flight-control {
+  background: var(--material);
+  backdrop-filter: blur(24px) saturate(130%);
+  border-color: var(--border);
+  box-shadow: var(--shadow);
+}
+.flight-stops button,
+.flight-actions button {
+  min-width: 44px;
+  min-height: 44px;
+}
+.depth-mode .journal-card {
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+.depth-mode .journal-card h3 {
+  font-weight: 500;
+}
+.depth-mode .faq-list [data-slot='accordion-trigger'] {
+  min-height: 64px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.depth-mode .faq-list [data-slot='accordion-content'] {
+  color: var(--muted-foreground);
+  font-size: 1rem;
+  line-height: 1.9;
+}
+.planet-dialog[data-slot='dialog-content'],
+.path-guide[data-slot='dialog-content'] {
+  padding: 0;
+  border-radius: var(--radius-dialog);
+  background: var(--card);
+}
+.request-dialog[data-slot='dialog-content'],
+.menu-dialog[data-slot='dialog-content'] {
+  border-radius: var(--radius-dialog);
+  background: var(--popover);
+  padding: 36px;
+}
+.dialog-copy [data-slot='dialog-title'],
+.request-dialog [data-slot='dialog-title'] {
+  font-weight: 600;
+}
+.dialog-copy [data-slot='dialog-description'],
+.request-dialog [data-slot='dialog-description'] {
+  color: var(--muted-foreground);
+  line-height: 1.9;
+}
+.dialog-close.av-button {
+  border-radius: var(--radius-pill);
+}
+.request-form input.av-field,
+.request-form textarea.av-field {
+  border-radius: var(--radius-input);
+  border-color: var(--input);
+  background: var(--control-background);
+  color: var(--foreground);
+  min-height: 48px;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+.request-form label {
+  font-size: 0.9375rem;
+}
+.request-form .form-error {
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--destructive-background);
+  color: var(--destructive);
+}
+.path-options label {
+  border-radius: var(--radius-input);
+  border-color: var(--input);
+  transition:
+    background var(--motion-fast),
+    border-color var(--motion-fast);
+}
+.path-options label.selected {
+  background: var(--accent);
+  border-color: var(--ring);
+}
+.path-options label:active {
+  transform: scale(0.99);
+}
+.path-guide .path-sidebar {
+  background: var(--subtle);
+}
+.path-guide .path-content {
+  background: var(--card);
+}
+html[lang='en'] .hero-copy h1 {
+  letter-spacing: -0.04em;
+  line-height: 1.13;
+}
+@media (max-width: 760px) {
+  .depth-mode .site-header,
+  .depth-mode .site-header:hover {
+    height: 76px;
+    padding-inline: 20px;
+  }
+  .hero-actions {
+    gap: 12px;
+  }
+  .request-dialog[data-slot='dialog-content'],
+  .menu-dialog[data-slot='dialog-content'] {
+    padding: 28px 22px;
+  }
+  .flight-control {
+    max-width: calc(100vw - 24px);
+  }
+  .flight-stops button {
+    min-width: 28px;
+  }
+  .flight-stops {
+    gap: 0;
+  }
+  .flight-actions .next-station {
+    padding-inline: 12px;
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .depth-mode .site-header,
+  .depth-mode .site-header:hover,
+  .flight-control {
+    background: var(--card);
+    backdrop-filter: none;
+  }
+}
+@media (prefers-contrast: more) {
+  .flight-control,
+  .path-options label {
+    border-color: var(--foreground);
+  }
+  .depth-mode .site-header {
+    background: var(--cosmos-background);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .avastar .av-button:active,
+  .path-options label:active {
+    transform: none;
+  }
+  .flight-control {
+    transition: none;
+  }
+}
+
+/* Perspective scene: real geometry owns depth and occlusion. */
+.cosmic-scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+}
+.cosmic-scene[data-ready='true'] {
+  opacity: 1;
+}
+
+/* Mirror the composition, hit areas and labels together with the reading direction. */
+@media (min-width: 761px) {
+  .depth-mode .hero-copy,
+  .depth-mode .planet-copy {
+    margin-left: 0;
+    margin-right: 0;
+    margin-inline-start: 0;
+    margin-inline-end: auto;
+  }
+  .depth-mode .alternate .planet-copy {
+    margin-inline-start: auto;
+    margin-inline-end: 0;
+  }
+  .depth-mode .hero-planet-link {
+    left: auto;
+    right: auto;
+    inset-inline-end: 0;
+  }
+  .depth-mode .planet-target {
+    left: auto;
+    right: auto;
+    inset-inline-start: auto;
+    inset-inline-end: 4%;
+  }
+  .depth-mode .alternate .planet-target {
+    left: auto;
+    right: auto;
+    inset-inline-start: 4%;
+    inset-inline-end: auto;
+  }
+  .depth-mode .planet-caption {
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+  .depth-mode[lang='en'] .world-coordinate {
+    left: auto;
+    right: 9%;
+  }
+  .avastar[lang='en'] .planet-plane.plane-0 {
+    transform: translate3d(74vw, 48vh, 0) translate(-50%, -50%);
+  }
+  .depth-mode[lang='en'] .atmosphere {
+    background: radial-gradient(ellipse at 76% 48%, #172b641a, transparent 62%);
+  }
+}
+
+/* A precise pointer with a small inertial orbit, only for mouse input. */
+.orbit-cursor-dot,
+.orbit-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 120;
+  pointer-events: none;
+  border-radius: 50%;
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform;
+}
+.orbit-cursor-dot {
+  width: 4px;
+  height: 4px;
+  background: #edf5ff;
+  box-shadow: 0 0 8px #afcfff55;
+}
+.orbit-cursor-ring {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #bacce36b;
+  transition:
+    border-color 120ms,
+    background-color 120ms;
+}
+.orbit-cursor-ring::after {
+  content: '';
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #c7d8ed;
+  top: -2px;
+  left: calc(50% - 1.5px);
+}
+.orbit-cursor-dot[data-kind='action'],
+.orbit-cursor-dot[data-kind='planet'] {
+  background: var(--brand-orange);
+}
+.orbit-cursor-ring[data-kind='action'],
+.orbit-cursor-ring[data-kind='planet'] {
+  border-color: #f7751da6;
+  background: #f7751d08;
+}
+.orbit-cursor-ring[data-pressed='true'] {
+  border-color: #f5b480;
+  background: #f7751d18;
+}
+.orbit-cursor-dot[data-pressed='true'] {
+  background: #fff;
+}
+@media (hover: hover) and (pointer: fine) {
+  html[data-orbit-cursor='on'] .avastar,
+  html[data-orbit-cursor='on'] .avastar * {
+    cursor: none !important;
+  }
+  .orbit-cursor-dot[data-visible='true'],
+  .orbit-cursor-ring[data-visible='true'] {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .orbit-cursor-ring {
+    transition: none;
+  }
+}
+
+/* Hit areas share each renderer's projected geometry, independent of locale or text transforms. */
+.cosmic-targets {
+  position: fixed;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+.cosmic-planet-target {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted-foreground);
+  pointer-events: auto;
+  cursor: pointer;
+  touch-action: pan-y;
+}
+.cosmic-planet-target[hidden] {
+  display: none;
+}
+.cosmic-planet-target:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 8px;
+}
+.cosmic-target-caption {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding-top: 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  font-size: var(--type-caption-size);
+  pointer-events: none;
+  opacity: 0.8;
+}
+.cosmic-planet-target:hover .cosmic-target-caption,
+.cosmic-planet-target:focus-visible .cosmic-target-caption {
+  color: var(--foreground);
+  opacity: 1;
+}
+.avastar .av-button {
+  border-radius: var(--radius-input) !important;
+}
+.avastar .av-button--primary {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: var(--primary-foreground);
+  box-shadow: none !important;
+}
+.avastar .av-button--primary:hover {
+  background: var(--primary-hover) !important;
+  border-color: var(--primary-hover) !important;
+}
+.avastar .av-button--secondary {
+  background: var(--control-background) !important;
+  border-color: var(--input) !important;
+}
+.avastar .av-button--secondary:hover {
+  background: var(--control-hover) !important;
+  border-color: var(--input) !important;
+}
+.avastar .av-button:focus-visible,
+.avastar .av-language-switch:focus-visible,
+.avastar .av-field:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.avastar .av-button svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+.flight-control .next-station {
+  width: auto;
+  height: 44px;
+  min-width: 44px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.flight-control .next-station svg {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.avastar[lang='en'] .hero-copy h1,
+.avastar[lang='en'] .planet-copy h2 {
+  letter-spacing: -0.015em;
+  word-spacing: 0.025em;
+}
+@media (max-width: 760px) {
+  .site-header .av-language-switch {
+    min-width: 44px;
+    padding-inline: 10px;
+  }
+  .site-header .av-language-switch span {
+    display: none;
+  }
+  .cosmic-target-caption {
+    padding-top: 12px;
+    font-size: 12px;
+  }
+}
+
+.avastar .theme-control {
+  width: 44px !important;
+}
+.avastar .request-form .av-field[aria-invalid='true'] {
+  border-color: var(--destructive);
+}
+.request-field-error {
+  color: var(--destructive);
+  font-size: var(--type-caption-size);
+}
+/* Copy owns its transition independently from the camera and projected hit areas. */
+.depth-mode .depth-panel {
+  visibility: hidden;
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition: none;
+  will-change: auto;
+}
+.depth-mode .depth-panel[data-depth-stop='0'] {
+  visibility: visible;
+}
+.depth-mode [data-copy-motion] {
+  opacity: var(--copy-opacity, 1) !important;
+  translate: 0 var(--copy-y, 0px);
+  transition: none;
+  will-change: opacity, translate;
+}
+[data-motion='reduced'] .depth-mode [data-copy-motion] {
+  translate: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .depth-mode [data-copy-motion] {
+    translate: none;
+  }
+}
+@media (max-width: 760px) {
+  .depth-mode:not([data-station='0']) .cosmic-target-caption {
+    display: none;
+  }
+}
+.cosmic-planet-target {
+  cursor: grab;
+  user-select: none;
+}
+.cosmic-planet-target[data-dragging='true'] {
+  cursor: grabbing;
+}
+
+/* One centered composition shared with the camera, including on ultrawide screens. */
+.avastar.depth-mode {
+  --cosmic-stage-width: min(100vw, var(--cosmic-stage-max, 1440px));
+  --cosmic-stage-inset: calc(
+    (100vw - var(--cosmic-stage-width)) / 2 + var(--cosmic-stage-width) * 0.06
+  );
+}
+@media (min-width: 761px) {
+  .avastar.depth-mode .depth-panel {
+    padding-inline: var(--cosmic-stage-inset);
+  }
+  .avastar.depth-mode .hero-copy,
+  .avastar.depth-mode .planet-copy {
+    width: calc(var(--cosmic-stage-width) * 0.4);
+    max-width: 576px;
+    flex-shrink: 0;
+  }
+}
+@media (min-width: 1441px) and (min-height: 901px) {
+  .avastar.depth-mode .hero h1 {
+    font-size: 80px;
+  }
+}

@@ -1,0 +1,10 @@
+Avastar planetary surface textures
+
+Source: Solar System Scope by INOVE
+https://www.solarsystemscope.com/textures/
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+https://creativecommons.org/licenses/by/4.0/
+
+Textures: Saturn, Saturn ring, Earth day map, Earth clouds, Neptune, Moon.
+Files are unmodified source textures. Avastar applies animated rotation, lighting,
+cloud compositing, atmospheric shading and artistic scene composition at runtime.

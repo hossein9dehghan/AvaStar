@@ -1,0 +1,8 @@
+{
+  "name": "@avastar/config",
+  "version": "3.0.0",
+  "private": true,
+  "exports": {
+    "./urls": "./urls.ts"
+  }
+}

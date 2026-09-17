@@ -1,0 +1,25 @@
+{
+  "name": "avastar",
+  "version": "3.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "node scripts/prepare-assets.mjs && pnpm --parallel --filter @avastar/web --filter @avastar/design-system dev",
+    "build": "pnpm --filter @avastar/web build && pnpm --filter @avastar/design-system build",
+    "typecheck": "pnpm --filter @avastar/web --filter @avastar/design-system typecheck",
+    "design:check": "node scripts/check-design-tokens.mjs",
+    "design:kit": "node scripts/package-design-kit.mjs",
+    "prepare:assets": "node scripts/prepare-assets.mjs",
+    "format": "prettier --write apps packages scripts docs README.md",
+    "format:check": "prettier --check apps packages scripts docs README.md",
+    "design:tokens": "node scripts/sync-design-tokens.mjs && node scripts/prepare-assets.mjs",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2",
+    "typescript": "5.9.3"
+  }
+}

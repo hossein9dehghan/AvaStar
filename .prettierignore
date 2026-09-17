@@ -1,0 +1,11 @@
+node_modules
+.next
+dist
+packages/ui/src/components
+apps/*/public
+apps/*/vendor
+packages/theme/avastar-tokens.css
+packages/theme/avastar-fonts.css
+pnpm-lock.yaml
+next-env.d.ts
+apps/*/next-env.d.ts
