@@ -6,6 +6,7 @@ import '../fonts.css';
 import '@avastar/theme/avastar-tokens.css';
 import '@avastar/theme/avastar-base.css';
 import '@avastar/theme/avastar-components.css';
+import '@avastar/theme/avastar-materials.css';
 import '../observatory.css';
 export const metadata: Metadata = {
   metadataBase: new URL(siteOrigin),

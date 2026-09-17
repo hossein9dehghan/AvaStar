@@ -38,6 +38,8 @@ function makeStars(count: number) {
 }
 /** One camera and one frame clock own both the planets and their star occlusion. */
 export function CosmicFallback({
+  equipmentTargets,
+  chapterViews,
   targets,
   rotations,
   flight,
@@ -47,6 +49,8 @@ export function CosmicFallback({
   selected,
   hovered,
 }: {
+  equipmentTargets: MutableRefObject<(HTMLButtonElement | null)[]>;
+  chapterViews: Record<PlanetId, number>;
   rotations: MutableRefObject<PlanetRotation[]>;
   targets: MutableRefObject<(HTMLButtonElement | null)[]>;
   flight: MutableRefObject<FlightState>;
@@ -181,6 +185,23 @@ export function CosmicFallback({
             radius,
             Math.round(position) === world.step && alpha > 0.15,
           );
+        if (world.id === 'shop' && !moon) {
+          const radians = (angle * Math.PI) / 180;
+          [
+            [0.836, 0.603],
+            [0.73, 0.73],
+            [0.63, 0.75],
+          ].forEach(([nx, ny], j) => {
+            const target = equipmentTargets.current[j];
+            if (!target) return;
+            target.hidden = w <= 760 || Math.round(position) !== 3 || alpha < 0.4;
+            if (!target.hidden) {
+              const dx = (nx - 0.5) * size,
+                dy = (ny - 0.5) * size;
+              target.style.transform = `translate3d(${x + dx * Math.cos(radians) - dy * Math.sin(radians)}px,${y + dx * Math.sin(radians) + dy * Math.cos(radians)}px,0) translate(-50%,-50%)`;
+            }
+          });
+        }
         node.style.width = `${size.toFixed(2)}px`;
         node.style.transform = `translate3d(${x.toFixed(2)}px,${y.toFixed(2)}px,0) translate(-50%,-50%) rotate(${angle.toFixed(3)}deg)`;
         node.style.opacity = alpha.toFixed(3);
@@ -223,7 +244,7 @@ export function CosmicFallback({
       cancelAnimationFrame(frame);
       window.removeEventListener('resize', onResize);
     };
-  }, [targets, rotations, flight, locale, reduced, paused, selected, hovered]);
+  }, [equipmentTargets, targets, rotations, flight, locale, reduced, paused, selected, hovered]);
   return (
     <>
       <canvas ref={canvas} className="cosmic-stars" aria-hidden="true" />
@@ -245,7 +266,7 @@ export function CosmicFallback({
               decoding="async"
               draggable={false}
             />
-            {!('moon' in world) && <PlanetArtifact id={world.id} />}
+            {!('moon' in world) && <PlanetArtifact id={world.id} view={chapterViews[world.id]} />}
           </div>
         ))}
       </div>

@@ -2329,12 +2329,12 @@ html[lang='en'] .hero-copy h1 {
   }
 }
 
-/* The first scene is an instrument the visitor can manipulate and navigate. */
+/* Optical observatory: physically layered artwork with a separate control plane. */
 .hero-observatory {
   position: absolute;
   top: 48%;
-  left: calc(50% - var(--cosmic-stage-width) * 0.24);
-  width: min(calc(var(--cosmic-stage-width) * 0.55), 96svh);
+  left: calc(50% - var(--cosmic-stage-width) * 0.25);
+  width: min(calc(var(--cosmic-stage-width) * 0.61), 106svh);
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
   direction: ltr;
@@ -2342,16 +2342,62 @@ html[lang='en'] .hero-copy h1 {
   isolation: isolate;
 }
 [lang='en'] .hero-observatory {
-  left: calc(50% + var(--cosmic-stage-width) * 0.24);
+  left: calc(50% + var(--cosmic-stage-width) * 0.25);
 }
-.hero-observatory canvas {
+.aperture-canvas {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
+  opacity: 0;
   pointer-events: none;
+}
+.aperture-canvas[data-ready='true'] {
+  opacity: 1;
+}
+.aperture-fallback {
+  position: absolute;
+  inset: 15%;
+  border-radius: 50%;
+  border: 26px solid #141d26;
+  background: #050b13;
+  box-shadow:
+    inset 0 0 0 2px #a8bdcc44,
+    0 0 0 1px #63778566,
+    0 15px 50px #0009;
+  transform: perspective(1000px) rotateY(calc(-21deg + var(--optic-x, 0) * 8deg))
+    rotateX(calc(12deg + var(--optic-y, 0) * 5deg)) rotate(-12deg);
+  overflow: hidden;
+}
+.aperture-fallback[data-hidden='true'] {
+  visibility: hidden;
+}
+.aperture-fallback-sky {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 28% 35%, #33556b33, transparent 60%),
+    url('/art/planet-map.webp') center/cover;
+  opacity: 0.65;
+}
+.aperture-fallback i {
+  position: absolute;
+  inset: 3%;
+  border: 1px solid #859baa44;
+  border-radius: 50%;
+  box-shadow: inset 0 0 15px #0007;
+}
+.aperture-fallback i:nth-of-type(2) {
+  inset: 6%;
+  border-color: #9f815f66;
+}
+.aperture-fallback i:nth-of-type(3) {
+  inset: 9%;
+  border-color: #7598b644;
 }
 .observatory-grab {
   position: absolute;
-  inset: 9% 3% 14%;
+  inset: 15%;
   z-index: 1;
   border-radius: 50%;
   cursor: grab;
@@ -2361,77 +2407,83 @@ html[lang='en'] .hero-copy h1 {
   cursor: grabbing;
 }
 .observatory-grab:focus-visible {
-  outline: 1px solid #8da9c2;
-  outline-offset: 5px;
+  outline: 1px solid #aec9dd;
+  outline-offset: 8px;
 }
-.observatory-destination {
+.optical-caption {
   position: absolute;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  width: 56px;
-  height: 56px;
-  padding: 0;
-  border: 1px solid transparent;
-  background: transparent;
-  border-radius: 50%;
-  color: #e3e9f0;
-  cursor: pointer;
+  top: 9%;
+  left: 18%;
+  display: grid;
+  gap: 8px;
+  text-align: start;
+  color: #a0b3c4;
+  font-size: 11px;
+  letter-spacing: 0.14em;
 }
-.observatory-destination:focus-visible {
-  outline: 2px solid #99c7e8;
-  outline-offset: 5px;
+.optical-caption span + span {
+  font-size: 13px;
+  letter-spacing: 0;
+  color: #d5dee5;
 }
-.observatory-destination > span {
+.observatory-tools {
   position: absolute;
-  top: 100%;
+  bottom: 15%;
   left: 50%;
   transform: translateX(-50%);
-  white-space: nowrap;
   display: flex;
   align-items: center;
-  gap: 7px;
-  padding: 5px 9px;
-  border-radius: 4px;
-  background: #050a12c9;
-  font-size: 0.8125rem;
+  padding: 3px 8px;
+  border-radius: 12px;
+  gap: 2px;
+  z-index: 3;
 }
-.observatory-destination small {
-  opacity: 0.55;
+.observatory-tools > svg {
+  margin: 0 10px;
+  color: #9aabba;
 }
-.observatory-destination:hover > span,
-.observatory-destination:focus-visible > span {
-  color: #fff;
-  background: #132336;
+.observatory-tools button,
+.chapter-view-controls button {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
 }
-.observatory-help {
+.observatory-tools button:hover,
+.chapter-view-controls button:hover {
+  background: #b3c7db12;
+}
+.observatory-paths {
   position: absolute;
   bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  align-items: center;
-  gap: 9px;
+  gap: 18px;
   width: max-content;
-  max-width: 95%;
-  color: #a3b2c3;
-  font-size: 0.75rem;
+  max-width: 96%;
 }
-[lang='fa'] .observatory-help {
-  direction: rtl;
-}
-.observatory-help button {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  color: inherit;
-  background: transparent;
+.observatory-paths button {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  font-size: 13px;
+  min-height: 44px;
+  color: #c7d2df;
+  background: none;
   border: 0;
-  border-radius: 50%;
+  padding: 0 4px;
 }
-.observatory-help button:hover {
-  color: #fff;
-  background: #ffffff0c;
+.observatory-paths button small {
+  color: #8d9bab;
+  font-size: 10px;
+}
+.observatory-paths button:hover {
+  color: white;
 }
 .planet-artifact {
   position: absolute;
@@ -2441,35 +2493,697 @@ html[lang='en'] .hero-copy h1 {
   overflow: visible;
   pointer-events: none;
 }
+.depth-mode .site-header.av-glass,
+.ds-header.av-glass {
+  border-radius: 0;
+  background: var(--glass-frosted);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: inset 0 1px var(--glass-highlight);
+  backdrop-filter: blur(24px) saturate(125%);
+}
+.flight-control.av-glass {
+  background: var(--glass-frosted);
+  border-color: var(--glass-border);
+  box-shadow:
+    inset 0 1px var(--glass-highlight),
+    var(--glass-shadow);
+}
+.depth-mode .planet-copy h2 {
+  font-size: clamp(34px, 3.8vw, 56px);
+  line-height: 1.4;
+  margin-bottom: 18px;
+}
+.depth-mode .planet-copy > .eyebrow {
+  display: none;
+}
+.depth-mode .planet-copy .section-description {
+  font-size: 1rem;
+  line-height: 1.85;
+  margin-bottom: 0;
+  max-width: 46ch;
+}
+.chapter-experience {
+  margin-block: 22px 16px;
+}
+.chapter-options {
+  display: flex;
+  width: max-content;
+  max-width: 100%;
+  padding: 4px;
+  gap: 4px;
+  border-radius: 12px;
+}
+.chapter-options button {
+  border: 1px solid transparent;
+  min-height: 44px;
+  padding: 5px 15px;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #aebbc9;
+  white-space: nowrap;
+}
+.chapter-options button:hover {
+  color: #f5f7fa;
+  background: #ffffff07;
+}
+.chapter-options button[aria-pressed='true'] {
+  background: #d1e2f112;
+  border-color: #adc3d02b;
+  color: #f5f7fa;
+  box-shadow: inset 0 1px #ffffff0a;
+}
+.chapter-insight {
+  padding-top: 14px;
+  min-height: 87px;
+  max-width: 44ch;
+}
+.chapter-insight strong {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #dae4ed;
+}
+.chapter-insight p {
+  font-size: 0.8125rem;
+  line-height: 1.85;
+  color: #a7b5c4;
+  margin-top: 4px;
+}
+.chapter-view-controls {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  color: #acbdcb;
+  margin-top: 4px;
+  direction: ltr;
+  justify-content: flex-end;
+}
+[lang='en'] .chapter-view-controls {
+  justify-content: flex-start;
+}
+.chapter-view-controls > span {
+  margin-inline-end: 14px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+.depth-mode .planet-copy > .planet-button {
+  margin-top: 0;
+}
+.depth-mode .planet-copy > .text-link {
+  font-size: 0.8125rem;
+  min-height: 44px;
+  margin-top: 4px;
+}
+.depth-mode .planet-kicker {
+  margin-bottom: 17px;
+}
+/* A quiet reading rhythm after the four scene chapters. */
+.depth-mode .journal-grid {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+.depth-mode .journal-card {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.depth-mode .journal-card:hover {
+  transform: none;
+}
+.editorial-art {
+  position: relative;
+  height: clamp(150px, 23svh, 270px);
+  overflow: hidden;
+  border-radius: 14px;
+  background: #080f19;
+  border: 1px solid #a9bfce16;
+  isolation: isolate;
+}
+.editorial-art > img {
+  position: absolute;
+  width: 115%;
+  height: 145%;
+  max-width: none;
+  object-fit: cover;
+  inset: auto -8% -41%;
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.editorial-art-0 {
+  height: clamp(180px, 29svh, 340px);
+}
+.editorial-art-0 > img {
+  width: 135%;
+  height: 165%;
+  inset: 15% -20% auto;
+}
+.editorial-art-2 > img {
+  transform: rotate(-14deg);
+}
+.journal-card:hover .editorial-art > img {
+  transform: scale(1.035);
+}
+.editorial-art > span {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  font:
+    10px/1.5 Arial,
+    sans-serif;
+  letter-spacing: 0.13em;
+  color: #a2b5c6;
+}
+.editorial-grid {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, transparent 49.7%, #bddcf019 50%, transparent 50.3%),
+    linear-gradient(transparent 49.7%, #bddcf019 50%, transparent 50.3%);
+  background-size: 60px 60px;
+  mask-image: linear-gradient(transparent, #0008);
+}
+.editorial-optic {
+  position: absolute;
+  width: 76%;
+  aspect-ratio: 1;
+  left: 18%;
+  top: 23%;
+  border: 22px solid #19242c;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 29% 30%, #82a9b144, #152d3d 37%, #050d17 76%);
+  box-shadow:
+    0 0 0 1px #889dab55,
+    inset 0 0 0 3px #8c765747,
+    0 18px 30px #0008;
+  transform: perspective(600px) rotateY(-28deg) rotateX(14deg);
+}
+.editorial-optic i {
+  position: absolute;
+  inset: 8%;
+  border: 1px solid #aacbd233;
+  border-radius: 50%;
+}
+.editorial-optic i:nth-child(2) {
+  inset: 15%;
+  border-color: #74879444;
+}
+.editorial-optic i:nth-child(3) {
+  inset: 22%;
+  background: linear-gradient(140deg, #618b961c, transparent 50%);
+}
+.editorial-horizon {
+  position: absolute;
+  inset: 70% 0 0;
+  background: #060b12;
+  clip-path: polygon(0 50%, 20% 35%, 37% 61%, 62% 30%, 80% 42%, 100% 10%, 100% 100%, 0 100%);
+}
+.depth-mode .journal-card h3 {
+  font-size: clamp(20px, 1.8vw, 28px);
+  line-height: 1.65;
+  margin-block: 12px;
+}
+.depth-mode .journal-card p {
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+.depth-mode .journal-card .article-link {
+  margin-top: 16px;
+}
+.depth-mode .about-section {
+  gap: clamp(40px, 7vw, 120px);
+}
+.depth-mode .about-symbol {
+  position: relative;
+  padding: 54px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid #8ba2b42e;
+  box-shadow:
+    inset 0 0 0 20px #8aa4b305,
+    0 0 0 20px #8aa4b305;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.about-journey {
+  margin-top: 30px;
+}
+.about-journey > div:first-child {
+  display: flex;
+  gap: 24px;
+  border-bottom: 1px solid var(--hairline);
+}
+.about-journey button {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  min-height: 48px;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  padding: 6px 0;
+  color: #a4b3c2;
+  font-size: 0.875rem;
+}
+.about-journey button[aria-pressed='true'] {
+  color: #f3f6fa;
+  border-bottom-color: #c6d5df;
+}
+.about-journey small {
+  font-size: 10px;
+  color: #8ea1b4;
+}
+.about-journey-copy {
+  padding-top: 16px;
+  min-height: 120px;
+}
+.about-journey-copy strong {
+  font-weight: 500;
+}
+.depth-mode .about-journey-copy p {
+  font-size: 0.875rem !important;
+  line-height: 1.9 !important;
+  margin-top: 6px;
+  max-width: 50ch;
+  color: var(--muted-foreground);
+}
+.depth-mode .partnership {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  max-width: none;
+}
+.depth-mode .partnership > div {
+  max-width: 850px;
+  width: 100%;
+  margin-inline: auto;
+}
+.depth-mode .partnership > .planet-button {
+  align-self: center;
+}
+.depth-mode .partnership h2 {
+  font-size: clamp(36px, 4.5vw, 62px);
+}
+.partner-audience {
+  margin: 30px 0 18px;
+}
+.partner-choice {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-block: 1px solid var(--hairline);
+}
+.partner-choice button {
+  min-height: 94px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: start;
+  border: 0;
+  border-inline-end: 1px solid var(--hairline);
+  background: transparent;
+  padding: 20px;
+  color: #a5b4c4;
+}
+.partner-choice button:last-child {
+  border-inline-end: 0;
+}
+.partner-choice button[aria-pressed='true'] {
+  background: #c8d9e308;
+  color: #f3f6fa;
+}
+.partner-choice button small {
+  font-size: 11px;
+}
+.partner-choice button > span {
+  margin-inline-start: auto;
+}
+.depth-mode .partner-description {
+  font-size: 0.9375rem !important;
+  line-height: 1.9;
+  min-height: 65px;
+  padding-top: 20px;
+  color: #b0becb;
+}
+.request-context {
+  font-size: 0.8125rem;
+  color: var(--muted-foreground);
+  font-weight: 400;
+  line-height: 1.9;
+}
+.depth-mode .faq-section {
+  background: linear-gradient(90deg, #050a10f2, #070e16e8) !important;
+}
+.depth-mode .faq-list {
+  border-top: 1px solid var(--hairline);
+}
+.depth-mode .faq-list [data-slot='accordion-item'] {
+  border-bottom: 1px solid var(--hairline);
+}
+.depth-mode .journey-footer {
+  background: linear-gradient(#060b13dd, #060b13) !important;
+  isolation: isolate;
+}
+.closing-aperture {
+  position: absolute;
+  inset-inline-end: -160px;
+  top: 4%;
+  width: 640px;
+  height: 640px;
+  border: 1px solid #768fa82a;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 20px #91a8b504,
+    0 0 0 45px #8f9ca605,
+    inset 0 0 0 18px #b0c2cf03;
+  transform: rotateY(25deg);
+  z-index: -1;
+  pointer-events: none;
+}
+.depth-mode .footer-surface {
+  background: transparent;
+  box-shadow: none;
+}
+@media (min-width: 761px) {
+  .depth-mode .planet-copy {
+    max-height: calc(100svh - 200px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    padding-inline-end: 12px;
+  }
+  .depth-mode .planet-section {
+    padding-block: 105px 95px;
+  }
+  .depth-mode .hero-copy {
+    position: relative;
+    z-index: 3;
+  }
+}
+@media (max-width: 1000px) and (min-width: 761px) {
+  .chapter-options button {
+    padding-inline: 9px;
+  }
+  .depth-mode .planet-copy h2 {
+    font-size: 34px;
+  }
+  .chapter-insight {
+    min-height: 105px;
+  }
+  .observatory-paths {
+    gap: 9px;
+  }
+  .observatory-paths button {
+    font-size: 11px;
+  }
+}
 @media (max-width: 760px) {
   .hero-observatory,
   [lang='en'] .hero-observatory {
     left: 50%;
-    top: 75%;
-    width: min(99vw, 51svh);
+    top: 74%;
+    width: min(103vw, 53svh);
   }
-  .observatory-destination {
+  .optical-caption {
+    display: none;
+  }
+  .observatory-tools {
+    bottom: 13%;
+    padding: 0 4px;
+  }
+  .observatory-tools > svg {
+    display: none;
+  }
+  .observatory-tools button {
     width: 44px;
     height: 44px;
   }
-  .observatory-destination > span {
-    top: 85%;
-    font-size: 0.69rem;
-    padding: 2px 5px;
-    gap: 3px;
+  .observatory-paths {
+    bottom: 0;
+    gap: 13px;
   }
-  .observatory-help {
-    bottom: -2%;
-    font-size: 0.64rem;
+  .observatory-paths button {
+    font-size: 12px;
     gap: 4px;
   }
-  .observatory-help button {
-    width: 44px;
-    height: 44px;
+  .aperture-fallback {
+    border-width: 15px;
+  }
+  .depth-mode .hero h1 {
+    font-size: clamp(34px, 9vw, 48px);
+    margin-bottom: 12px;
+  }
+  .depth-mode .hero-description {
+    font-size: 0.875rem;
+    line-height: 1.85;
+  }
+  .depth-mode .hero-actions {
+    margin-top: 18px;
+  }
+  .depth-mode .planet-section {
+    padding: 0 6% 112px;
+    align-items: flex-end;
+  }
+  .depth-mode .planet-copy {
+    max-height: calc(100svh - 320px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    padding-inline-end: 4px;
+  }
+  .depth-mode .planet-copy h2 {
+    font-size: 29px;
+    margin-bottom: 10px;
+  }
+  .depth-mode .planet-kicker {
+    font-size: 0.8125rem;
+    margin-bottom: 10px;
+  }
+  .depth-mode .planet-copy .section-description {
+    font-size: 0.875rem;
+    line-height: 1.8;
+  }
+  .chapter-experience {
+    margin-block: 16px 10px;
+  }
+  .chapter-options {
+    width: 100%;
+  }
+  .chapter-options button {
+    flex: 1;
+    padding: 4px 8px;
+    font-size: 0.8125rem;
+  }
+  .chapter-insight {
+    min-height: 88px;
+    padding-top: 12px;
+  }
+  .chapter-view-controls {
+    margin-top: 0;
+  }
+  .depth-mode .journal-section {
+    padding-top: 105px !important;
+    padding-bottom: 115px !important;
+    overflow-y: auto;
+    justify-content: flex-start;
+  }
+  .depth-mode .journal-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .depth-mode .journal-card {
+    display: grid;
+    grid-template-columns: 34% 1fr;
+    gap: 16px;
+  }
+  .depth-mode .journal-card:first-child {
+    display: block;
+  }
+  .editorial-art {
+    height: 150px;
+  }
+  .editorial-art-0 {
+    height: 185px;
+    margin-bottom: 16px;
+  }
+  .depth-mode .journal-card h3 {
+    font-size: 19px;
+  }
+  .depth-mode .journal-card p {
+    font-size: 0.8125rem;
+  }
+  .depth-mode .journal-card .article-link {
+    margin-top: 8px;
+  }
+  .editorial-art > span {
+    font-size: 8px;
+    left: 10px;
+    top: 10px;
+  }
+  .editorial-optic {
+    border-width: 9px;
+    width: 120%;
+    left: 8%;
+    top: 36%;
+  }
+  .depth-mode .about-section {
+    gap: 30px;
+    padding: 112px 7% 120px !important;
+    overflow-y: auto;
+    justify-content: flex-start;
+  }
+  .depth-mode .about-symbol {
+    width: 128px;
+    height: 128px;
+    padding: 24px;
+    margin-inline: auto;
+    flex-shrink: 0;
+  }
+  .depth-mode .about-symbol img {
+    width: 70px;
+  }
+  .depth-mode .about-symbol > span {
+    display: none;
+  }
+  .about-journey {
+    margin-top: 20px;
+  }
+  .about-journey > div:first-child {
+    gap: 20px;
+  }
+  .about-journey-copy {
+    min-height: 130px;
+  }
+  .depth-mode .partnership {
+    padding: 108px 7% 120px !important;
+    overflow-y: auto;
+  }
+  .depth-mode .partnership h2 {
+    font-size: 35px;
+  }
+  .partner-choice button {
+    min-height: 88px;
+    padding: 10px;
+    gap: 7px;
+    font-size: 0.8125rem;
+  }
+  .partner-choice button > span {
+    display: none;
+  }
+  .partner-choice button small {
+    font-size: 9px;
+  }
+  .partner-audience {
+    margin-top: 22px;
+  }
+  .depth-mode .partner-description {
+    min-height: 90px;
+    font-size: 0.875rem !important;
+  }
+}
+@media (max-height: 650px) {
+  .depth-mode .hero {
+    padding-top: 95px;
+    padding-bottom: 105px;
+  }
+  .depth-mode .planet-copy {
+    max-height: calc(100svh - 205px);
+  }
+  .depth-mode .planet-section {
+    padding-top: 95px;
+    align-items: flex-start;
+  }
+  .hero-observatory {
+    opacity: 0.8;
+  }
+  .depth-mode .hero-copy {
+    max-height: calc(100svh - 185px);
+    overflow: auto;
+  }
+  .depth-mode .about-section,
+  .depth-mode .partnership,
+  .depth-mode .journal-section {
+    overflow-y: auto;
+    justify-content: flex-start;
+    padding-top: 100px !important;
+    padding-bottom: 110px !important;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-observatory {
-    will-change: auto;
+  .editorial-art > img {
+    transition: none;
+  }
+  .journal-card:hover .editorial-art > img {
+    transform: none;
+  }
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .depth-mode .site-header.av-glass,
+  .flight-control.av-glass {
+    background: var(--card);
+    backdrop-filter: none;
+  }
+}
+.equipment-point {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+  min-width: 44px;
+  height: 44px;
+  border: 0;
+  background: transparent;
+  color: #e6edf2;
+}
+.equipment-point[hidden] {
+  display: none;
+}
+.equipment-point > span {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  border: 1px solid #c6dce466;
+  border-radius: 50%;
+  background: #0b1526dc;
+  font: 10px/1 monospace;
+  box-shadow: 0 0 0 5px #d0e4ed0a;
+}
+.equipment-point[aria-pressed='true'] > span {
+  background: #d5e3eb;
+  color: #101c29;
+  border-color: #d5e3eb;
+}
+.equipment-point small {
+  font-size: 11px;
+  background: #07101ddc;
+  padding: 3px 7px;
+  border-radius: 4px;
+}
+@media (max-width: 760px) and (max-height: 650px) {
+  .depth-mode .planet-section {
+    padding-top: 220px;
+    align-items: flex-start;
+  }
+  .depth-mode .planet-copy {
+    max-height: calc(100svh - 325px);
+  }
+  .depth-mode .hero-copy {
+    max-height: calc(52svh - 90px);
+  }
+  .hero-observatory,
+  [lang='en'] .hero-observatory {
+    top: 73%;
+    width: min(88vw, 50svh);
+  }
+  .observatory-paths {
+    bottom: -4%;
+    gap: 7px;
+  }
+  .observatory-paths button {
+    font-size: 10px;
   }
 }

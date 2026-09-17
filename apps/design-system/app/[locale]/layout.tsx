@@ -7,6 +7,7 @@ import '../fonts.css';
 import '@avastar/theme/avastar-tokens.css';
 import '@avastar/theme/avastar-base.css';
 import '@avastar/theme/avastar-components.css';
+import '@avastar/theme/avastar-materials.css';
 import '@avastar/theme/avastar-panels.css';
 import '../design-system.css';
 export const metadata: Metadata = {

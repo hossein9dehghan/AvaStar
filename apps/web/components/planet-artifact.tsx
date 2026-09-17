@@ -2,7 +2,7 @@ import { useId } from 'react';
 import type { PlanetId } from '@/lib/avastar';
 
 /** Illustrated fallback uses the same planet layer, never a separate floating card. */
-export function PlanetArtifact({ id }: { id: PlanetId }) {
+export function PlanetArtifact({ id, view = 0 }: { id: PlanetId; view?: number }) {
   const uid = useId().replaceAll(':', '');
   return (
     <svg
@@ -79,113 +79,67 @@ export function PlanetArtifact({ id }: { id: PlanetId }) {
         </g>
       )}
       {id === 'learn' && (
-        <>
-          <path
-            d="M147 466C70 237 467 113 768 329"
-            stroke="#b1cadd"
-            strokeWidth="1.8"
-            strokeDasharray="4 9"
-            opacity=".75"
-          />
-          {[
-            [147, 466],
-            [236, 252],
-            [498, 211],
-            [768, 329],
-          ].map(([x, y], i) => (
-            <g key={i}>
-              <circle cx={x} cy={y} r="13" stroke="#aabfd1" />
-              <circle cx={x} cy={y} r="4" fill="#f0c98e" />
-            </g>
-          ))}
-          <g transform="translate(96 615) rotate(-13 200 120)">
-            <path
-              d="M27 57L168 21L221 48L356 34L367 218L228 241L173 225L39 255Z"
-              fill="#142d46"
-              stroke="#648daa"
-              strokeWidth="2"
-            />
-            <path
-              d="M34 46L170 13L222 45L350 24L357 211L224 233L175 216L42 243Z"
-              fill={`url(#${uid}-paper)`}
-            />
-            <path d="M170 13L175 216L224 233L222 45Z" fill="#9ca598" />
-            <path
-              d="M48 230L175 203L224 222L348 202M49 235L174 209L225 227L351 207"
-              stroke="#606f74"
-              opacity=".6"
-            />
-            <g stroke="#5a7484" strokeWidth="2" opacity=".72">
-              <path d="M67 78L143 61M69 96L145 79M71 114L147 97M75 174L152 157M77 192L154 175" />
-              <path d="M249 74L324 62M249 90L324 78M250 175L326 163M251 192L327 180" />
-            </g>
-            <path d="M265 130L284 109L309 141L327 106" stroke="#5c7a87" strokeWidth="1.5" />
-            {[
-              [265, 130],
-              [284, 109],
-              [309, 141],
-              [327, 106],
-            ].map(([x, y], i) => (
-              <circle key={i} cx={x} cy={y} r="4" fill="#688294" />
-            ))}
-            <path d="M219 48L221 233" stroke="#39546b" strokeWidth="3" />
-            <path d="M179 214L173 264L187 253L199 261L197 223" fill="#c69561" />
-          </g>
-        </>
+        <g stroke="#c5d9e6" strokeWidth="1" opacity=".48" transform="rotate(-18 500 500)">
+          {view === 0 && (
+            <>
+              <ellipse cx="500" cy="500" rx="205" ry="418" />
+              <ellipse cx="500" cy="500" rx="80" ry="418" />
+              <ellipse cx="500" cy="500" rx="418" ry="135" />
+              <ellipse cx="500" cy="500" rx="362" ry="75" transform="translate(0 -200)" />
+            </>
+          )}
+          {view === 1 && (
+            <>
+              <ellipse
+                cx="500"
+                cy="500"
+                rx="435"
+                ry="190"
+                transform="rotate(-28 500 500)"
+                stroke="#dbc7a7"
+                strokeWidth="2"
+              />
+              <path d="M90 500H910" />
+            </>
+          )}
+          {view === 2 && (
+            <>
+              <path d="M235 420L370 285L510 415L700 355L785 490" />
+              {[
+                [235, 420],
+                [370, 285],
+                [510, 415],
+                [700, 355],
+                [785, 490],
+              ].map(([x, y]) => (
+                <circle key={x} cx={x} cy={y} r="4" fill="#e2edf4" />
+              ))}
+            </>
+          )}
+        </g>
       )}
       {id === 'explore' && (
-        <>
-          <path
-            d="M146 677C68 338 581 46 921 330"
-            stroke="#b7c9d6"
-            opacity=".4"
-            strokeWidth="1.5"
-            strokeDasharray="3 10"
-          />
-          <g transform="translate(725 145) rotate(-16 110 100)">
-            <path d="M19 102L208 89" stroke="#cbb084" strokeWidth="5" />
-            <path
-              d="M0 56L67 49L71 133L4 142Z M155 39L222 32L226 116L159 125Z"
-              fill="#21455f"
-              stroke="#7697ab"
-              strokeWidth="2"
-            />
-            <g stroke="#658293" opacity=".7">
-              <path d="M22 54L26 140M46 51L50 136M178 36L182 122M201 35L205 119M2 85L69 76M2 115L70 104M157 68L223 58M158 96L225 87" />
-            </g>
-            <path d="M80 64L127 58L140 75L143 125L93 133L80 117Z" fill={`url(#${uid}-gold)`} />
-            <path d="M80 64L94 81L140 75M94 81L93 133" stroke="#edcea3" opacity=".5" />
-            <path d="M110 65L113 27" stroke="#d4dbe0" strokeWidth="4" />
-            <ellipse cx="111" cy="35" rx="27" ry="13" fill={`url(#${uid}-metal)`} />
-            <path d="M91 31L112 8L130 29" stroke="#bdcbd2" />
-            <circle cx="112" cy="8" r="3" fill="#dabb8d" />
-          </g>
-        </>
+        <g>
+          <path d="M0 785Q120 745 240 770T490 760T720 790T1000 745V1000H0Z" fill="#18252e" />
+          <path d="M0 840Q190 805 410 840T770 825T1000 850V1000H0Z" fill="#09121b" />
+          <path d="M0 903Q190 856 430 890T1000 882V1000H0Z" fill="#040a12" />
+          <circle cx={260 + view * 240} cy="803" r="3" fill="#d6b992" />
+        </g>
       )}
       {id === 'club' && (
-        <g>
-          <path
-            d="M151 402L315 198L583 173L824 340L750 663L490 760L151 402 M315 198L750 663M151 402L824 340"
-            stroke="#c8c3e3"
-            strokeWidth="1.6"
-            opacity=".65"
-          />
-          {[
-            [151, 402],
-            [315, 198],
-            [583, 173],
-            [824, 340],
-            [750, 663],
-            [490, 760],
-          ].map(([x, y], i) => (
-            <g key={i}>
-              <circle cx={x} cy={y} r={i % 2 ? 14 : 23} stroke="#9bb7d4" strokeWidth="1.4" />
-              <circle cx={x} cy={y} r={i % 2 ? 4 : 7} fill={i % 2 ? '#e5ecf5' : '#e5bf88'} />
-              {!(i % 2) && (
-                <circle cx={x} cy={y} r="32" stroke="#9bb7d4" strokeWidth=".7" opacity=".45" />
-              )}
-            </g>
+        <g stroke="#bfd2e0" fill="none">
+          {[0, 1, 2].map((i) => (
+            <ellipse
+              key={i}
+              cx="500"
+              cy="500"
+              rx={438 + i * 18}
+              ry={178 + i * 15}
+              transform={`rotate(${-27 + i * 15} 500 500)`}
+              opacity={i === view ? 0.55 : 0.14}
+            />
           ))}
+          <circle cx="170" cy={360 + view * 60} r="4" fill="#cddce5" />
         </g>
       )}
     </svg>

@@ -940,3 +940,16 @@
   font-size: var(--type-title-size);
   margin-bottom: var(--space-6);
 }
+
+.panel-header.av-glass {
+  border-radius: 0;
+  background: var(--glass-frosted);
+  border-color: var(--glass-border);
+  box-shadow: inset 0 1px var(--glass-highlight);
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .panel-header.av-glass {
+    background: var(--card);
+    backdrop-filter: none;
+  }
+}

@@ -1,10 +1,9 @@
 'use client';
-import { useEffect, useRef, type PointerEvent } from 'react';
-import { Move, RotateCcw } from 'lucide-react';
-import { paintObservatory, paintPlanetDisc } from '@/lib/observatory-art';
+import { useEffect, useRef, useState, type PointerEvent } from 'react';
+import { ArrowLeft, ArrowRight, RotateCcw, Move } from 'lucide-react';
 import { planetIds, planets, type Locale } from '@/lib/avastar';
 import type { FlightState } from './use-depth-journey';
-
+import type { createApertureScene } from '@/lib/aperture-scene';
 export function InteractiveObservatory({
   locale,
   flight,
@@ -18,259 +17,192 @@ export function InteractiveObservatory({
   paused: boolean;
   onExplore: (step: number) => void;
 }) {
-  const root = useRef<HTMLDivElement>(null);
-  const canvas = useRef<HTMLCanvasElement>(null),
-    buttons = useRef<(HTMLButtonElement | null)[]>([]);
-  const bodies = useRef<(HTMLCanvasElement | undefined)[]>([]);
-  const motion = useRef({
-    yaw: -0.12,
-    pitch: 0.75,
-    vx: 0,
-    vy: 0,
-    hover: -1,
-    dragging: false,
-    x: 0,
-    y: 0,
-    last: 0,
-    revision: 0,
-  });
-  const gesture = useRef<null | { id: number; x: number; y: number; type: string; moved: boolean }>(
-    null,
-  );
+  const root = useRef<HTMLDivElement>(null),
+    canvas = useRef<HTMLCanvasElement>(null),
+    scene = useRef<ReturnType<typeof createApertureScene> | null>(null);
+  const [ready, setReady] = useState(false);
+  const state = useRef({ x: 0, y: 0, tx: 0, ty: 0, revision: 0 });
+  const gesture = useRef<null | { id: number; x: number; y: number; tx: number; ty: number }>(null);
   useEffect(() => {
     let cancelled = false;
-    const images = ['earth.jpg', 'saturn.jpg', 'moon.jpg', 'neptune.jpg'].map((name, i) => {
-      const image = new Image();
-      image.onload = () => {
-        if (cancelled) return;
-        const map = document.createElement('canvas');
-        map.width = 1024;
-        map.height = 512;
-        const context = map.getContext('2d');
-        if (!context) return;
-        context.drawImage(image, 0, 0, 1024, 512);
-        const disc = document.createElement('canvas');
-        disc.width = disc.height = 192;
-        const surface = disc.getContext('2d');
-        if (!surface) return;
-        paintPlanetDisc(surface, context.getImageData(0, 0, 1024, 512), 192, 0.58 + i * 0.13);
-        bodies.current[i] = disc;
-        motion.current.revision++;
-      };
-      image.src = `/art/textures/${name}`;
-      return image;
-    });
-    return () => {
-      cancelled = true;
-      images.forEach((image) => {
-        image.onload = null;
+    const node = canvas.current;
+    const unavailable = (event: Event) => {
+      event.preventDefault();
+      scene.current?.dispose();
+      scene.current = null;
+      setReady(false);
+    };
+    node?.addEventListener('webglcontextlost', unavailable);
+    void import('@/lib/aperture-scene')
+      .then(({ createApertureScene }) => {
+        if (cancelled || !canvas.current) return;
+        try {
+          const s = createApertureScene(canvas.current);
+          scene.current = s;
+          s.render({ x: 0, y: 0, travel: 0, time: 0 });
+          setReady(true);
+        } catch {
+          scene.current?.dispose();
+          scene.current = null;
+        }
+      })
+      .catch(() => {
+        /* Keep the optical fallback when the graphics chunk cannot load. */
       });
+    return () => {
+      node?.removeEventListener('webglcontextlost', unavailable);
+      cancelled = true;
+      scene.current?.dispose();
+      scene.current = null;
     };
   }, []);
   useEffect(() => {
-    const node = canvas.current,
-      ctx = node?.getContext('2d');
-    if (!node || !ctx) return;
     let frame = 0,
       previous = 0,
-      time = 0,
-      px = 0,
-      py = 0,
-      lastRevision = -1;
+      last = -1;
     const render = (now: number) => {
-      const dt = previous ? Math.min((now - previous) / 1000, 0.04) : 1 / 60;
+      const dt = previous ? Math.min((now - previous) / 1000, 0.04) : 0.016;
       previous = now;
-      const s = motion.current,
-        visible = flight.current.position < 1;
-      const p = Math.max(0, Math.min(1, flight.current.position));
+      const s = state.current,
+        p = Math.max(0, Math.min(1, flight.current.position));
       if (root.current) {
         root.current.style.opacity = String(1 - p * p * (3 - 2 * p));
-        root.current.style.scale = String(reduced ? 1 : 1 + p * 0.12);
+        root.current.style.setProperty('--optic-x', String(s.x));
+        root.current.style.setProperty('--optic-y', String(s.y));
       }
-      if (visible && (!reduced || s.revision !== lastRevision)) {
-        if (!paused && !reduced) {
-          time += dt;
-          if (!s.dragging) {
-            s.yaw += s.vx * dt;
-            s.pitch = Math.max(-0.55, Math.min(1.3, s.pitch + s.vy * dt));
-            s.vx *= Math.exp(-5 * dt);
-            s.vy *= Math.exp(-5 * dt);
-          }
+      if (p < 1 && (!reduced || last !== s.revision)) {
+        const rate = reduced || gesture.current ? 1 : 1 - Math.exp(-8 * dt);
+        s.x += (s.tx + (reduced ? 0 : flight.current.pointerX * 0.55) - s.x) * rate;
+        s.y += (s.ty + (reduced ? 0 : flight.current.pointerY * 0.4) - s.y) * rate;
+        try {
+          scene.current?.render({ x: s.x, y: s.y, travel: reduced ? 0 : p, time: now / 1000 });
+        } catch {
+          scene.current?.dispose();
+          scene.current = null;
+          setReady(false);
         }
-        px += ((reduced ? 0 : flight.current.pointerX) - px) * (1 - Math.exp(-8 * dt));
-        py += ((reduced ? 0 : flight.current.pointerY) - py) * (1 - Math.exp(-8 * dt));
-        const points = paintObservatory(
-          ctx,
-          1200,
-          {
-            yaw: s.yaw + px * 0.24,
-            pitch: s.pitch + py * 0.16,
-            hover: s.hover,
-            time,
-          },
-          bodies.current,
-        );
-        points.forEach((p, i) => {
-          const b = buttons.current[i];
-          if (b) {
-            b.style.left = `${p.x / 8}%`;
-            b.style.top = `${p.y / 8}%`;
-          }
-        });
-        lastRevision = s.revision;
+        last = s.revision;
       }
       if (!paused) frame = requestAnimationFrame(render);
     };
     render(performance.now());
     return () => cancelAnimationFrame(frame);
-  }, [flight, reduced, paused]);
-  const end = (event: PointerEvent<HTMLDivElement>) => {
-    const g = gesture.current;
-    if (!g || event.pointerId !== g.id) return;
-    const s = motion.current;
-    s.dragging = false;
-    if (reduced || performance.now() - s.last > 100) s.vx = s.vy = 0;
-    gesture.current = null;
-    delete event.currentTarget.dataset.dragging;
-    if (event.currentTarget.hasPointerCapture(event.pointerId))
-      event.currentTarget.releasePointerCapture(event.pointerId);
+  }, [flight, paused, reduced, ready]);
+  const turn = (n: number) => {
+    state.current.tx = Math.max(-2, Math.min(2, state.current.tx + n));
+    state.current.revision++;
   };
-  const help =
-    locale === 'fa'
-      ? 'با درگ بچرخانید؛ یک مسیر را انتخاب کنید.'
-      : 'Drag to rotate. Choose an orbit.';
+  const end = (e: PointerEvent<HTMLDivElement>) => {
+    if (gesture.current?.id !== e.pointerId) return;
+    gesture.current = null;
+    delete e.currentTarget.dataset.dragging;
+    if (e.currentTarget.hasPointerCapture(e.pointerId))
+      e.currentTarget.releasePointerCapture(e.pointerId);
+  };
+  const fa = locale === 'fa';
   return (
     <div
-      ref={root}
       className="hero-observatory"
+      ref={root}
       role="group"
-      aria-label={locale === 'fa' ? 'منظومهٔ تعاملی آوا استار' : 'Interactive Avastar observatory'}
+      aria-label={fa ? 'دریچهٔ رصد آوا استار' : 'The Avastar observatory'}
     >
+      <div className="aperture-fallback" aria-hidden="true" data-hidden={ready}>
+        <div className="aperture-fallback-sky" />
+        <i />
+        <i />
+        <i />
+      </div>
+      <canvas ref={canvas} className="aperture-canvas" data-ready={ready} aria-hidden="true" />
       <div
         className="observatory-grab"
-        tabIndex={0}
         role="group"
+        tabIndex={0}
         aria-label={
-          locale === 'fa'
-            ? 'چرخش منظومه؛ از کلیدهای جهت استفاده کنید'
-            : 'Rotate the observatory with arrow keys'
+          fa
+            ? 'تغییر زاویهٔ رصد؛ با درگ یا کلیدهای جهت'
+            : 'Change viewing angle by dragging or using arrow keys'
         }
         onKeyDown={(e) => {
-          if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) return;
-          e.preventDefault();
-          const s = motion.current;
-          s.vx = s.vy = 0;
-          s.yaw += e.key === 'ArrowRight' ? 0.15 : e.key === 'ArrowLeft' ? -0.15 : 0;
-          s.pitch = Math.max(
-            -0.55,
-            Math.min(1.3, s.pitch + (e.key === 'ArrowDown' ? 0.1 : e.key === 'ArrowUp' ? -0.1 : 0)),
-          );
-          s.revision++;
+          if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+            e.preventDefault();
+            turn(e.key === 'ArrowLeft' ? -0.3 : 0.3);
+          }
+          if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+            e.preventDefault();
+            state.current.ty = Math.max(
+              -1,
+              Math.min(1, state.current.ty + (e.key === 'ArrowUp' ? -0.25 : 0.25)),
+            );
+            state.current.revision++;
+          }
         }}
         onPointerDown={(e) => {
           if (e.button !== 0) return;
-          const s = motion.current;
           gesture.current = {
             id: e.pointerId,
             x: e.clientX,
             y: e.clientY,
-            type: e.pointerType,
-            moved: false,
+            tx: state.current.tx,
+            ty: state.current.ty,
           };
-          s.x = e.clientX;
-          s.y = e.clientY;
-          s.last = performance.now();
-          s.vx = s.vy = 0;
           e.currentTarget.setPointerCapture(e.pointerId);
         }}
         onPointerMove={(e) => {
           const g = gesture.current;
-          if (!g || e.pointerId !== g.id) return;
+          if (!g || g.id !== e.pointerId) return;
           const dx = e.clientX - g.x,
             dy = e.clientY - g.y;
-          if (!g.moved) {
-            if (Math.hypot(dx, dy) < 6) return;
-            if (g.type === 'touch' && Math.abs(dy) > Math.abs(dx)) return;
-            g.moved = true;
-          }
-          e.preventDefault();
-          const s = motion.current,
-            now = performance.now(),
-            dt = Math.max(0.01, (now - s.last) / 1000),
-            mx = (e.clientX - s.x) * 0.007,
-            my = (e.clientY - s.y) * 0.005;
-          s.dragging = true;
+          if (e.pointerType === 'touch' && Math.abs(dy) > Math.abs(dx)) return;
           e.currentTarget.dataset.dragging = 'true';
-          s.yaw += mx;
-          s.pitch = Math.max(-0.55, Math.min(1.3, s.pitch + my));
-          s.vx = Math.max(-2, Math.min(2, mx / dt));
-          s.vy = Math.max(-1, Math.min(1, my / dt));
-          s.x = e.clientX;
-          s.y = e.clientY;
-          s.last = now;
-          s.revision++;
+          state.current.tx = Math.max(-2, Math.min(2, g.tx + dx * 0.008));
+          state.current.ty = Math.max(-1, Math.min(1, g.ty + dy * 0.005));
+          state.current.revision++;
         }}
         onPointerUp={end}
-        onPointerCancel={(e) => {
-          motion.current.vx = motion.current.vy = 0;
-          end(e);
-        }}
+        onPointerCancel={end}
         onLostPointerCapture={() => {
           gesture.current = null;
-          motion.current.dragging = false;
         }}
         onBlur={() => {
-          motion.current.vx = motion.current.vy = 0;
-          motion.current.dragging = false;
           gesture.current = null;
         }}
       />
-      <canvas ref={canvas} width={1200} height={1200} aria-hidden="true" />
-      {planetIds.map((id, i) => (
-        <button
-          key={id}
-          className="observatory-destination"
-          ref={(node) => {
-            buttons.current[i] = node;
-          }}
-          aria-label={`${locale === 'fa' ? 'رفتن به' : 'Go to'} ${planets[id][locale].name}`}
-          onPointerEnter={() => {
-            motion.current.hover = i;
-            motion.current.revision++;
-          }}
-          onPointerLeave={() => {
-            motion.current.hover = -1;
-            motion.current.revision++;
-          }}
-          onFocus={() => {
-            motion.current.hover = i;
-            motion.current.revision++;
-          }}
-          onBlur={() => {
-            motion.current.hover = -1;
-            motion.current.revision++;
-          }}
-          onClick={() => onExplore(i + 1)}
-        >
-          <span>
-            {planets[id][locale].name}
-            <small aria-hidden="true">↗</small>
-          </span>
+      <div className="optical-caption">
+        <span>AVASTAR OBSERVATORY</span>
+        <span>{fa ? 'دریچه‌ای به بی‌نهایت' : 'A window into infinity'}</span>
+      </div>
+      <div
+        className="observatory-tools av-glass"
+        data-material="light"
+        role="group"
+        aria-label={fa ? 'کنترل زاویه' : 'View controls'}
+      >
+        <Move size={15} aria-hidden="true" />
+        <button onClick={() => turn(-0.3)} aria-label={fa ? 'چرخش به چپ' : 'Rotate left'}>
+          <ArrowLeft size={16} />
         </button>
-      ))}
-      <div className="observatory-help">
-        <Move size={14} aria-hidden="true" />
-        <span>{help}</span>
         <button
-          aria-label={locale === 'fa' ? 'بازنشانی زاویهٔ منظومه' : 'Reset the observatory view'}
           onClick={() => {
-            Object.assign(motion.current, { yaw: -0.12, pitch: 0.75, vx: 0, vy: 0 });
-            motion.current.revision++;
+            state.current.tx = state.current.ty = 0;
+            state.current.revision++;
           }}
+          aria-label={fa ? 'زاویهٔ اولیه' : 'Reset view'}
         >
           <RotateCcw size={15} />
         </button>
+        <button onClick={() => turn(0.3)} aria-label={fa ? 'چرخش به راست' : 'Rotate right'}>
+          <ArrowRight size={16} />
+        </button>
       </div>
+      <nav className="observatory-paths" aria-label={fa ? 'مسیرهای آوا استار' : 'Avastar paths'}>
+        {planetIds.map((id, i) => (
+          <button key={id} onClick={() => onExplore(i + 1)}>
+            <small>0{i + 1}</small>
+            {planets[id][locale].name}
+          </button>
+        ))}
+      </nav>
     </div>
   );
 }

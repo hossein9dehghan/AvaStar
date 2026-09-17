@@ -105,5 +105,15 @@ export function usePlanetDrag() {
     suppressed.current = null;
     return dragged;
   };
-  return { rotations, bind, consumeClick };
+  const rotate = (step: number, delta: number) => {
+    const r = rotations.current[step];
+    r.yaw += delta;
+    r.yawSpeed = r.pitchSpeed = 0;
+    r.revision++;
+  };
+  const reset = (step: number) => {
+    const r = rotations.current[step];
+    Object.assign(r, createPlanetRotation(), { revision: r.revision + 1 });
+  };
+  return { rotations, bind, consumeClick, rotate, reset };
 }

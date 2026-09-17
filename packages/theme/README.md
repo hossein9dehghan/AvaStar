@@ -152,7 +152,7 @@ References: https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html an
 - تغییر فیلتر جدول، query/sort را حفظ می‌کند. selectionResetKey فقط انتخاب ردیف را پاک می‌کند؛ remount جدول فقط برای بازنشانی صریح دمو است.
 - ViewStatePanel برای CTA زمینه‌مند، title/description/actionLabel می‌گیرد. بازگشت از حالت خالی نباید پیشرفت یا ویرایش را پاک کند.
 - NumberField و ErrorSummary قابل استفادهٔ مستقل‌اند. OTP فارسی/عربی در نمونه به رقم استاندارد نرمال می‌شود.
-- تقویم میلادی در فارسی محلی شده است؛ تقویم شمسی، سرویس آپلود یا احراز هویت واقعی به این دمو اضافه نشده‌اند.
+- تقویم دو حالت شمسی و میلادی دارد؛ سرویس آپلود و احراز هویت واقعی به این دمو اضافه نشده‌اند.
 - کنترل پیش‌فرض: ۴۸، کوچک: ۴۴ و بزرگ: ۵۶ پیکسل. خانه‌های تقویم در عرض کم به شبکهٔ هفت‌ستونه پاسخ می‌دهند و حداقل ارتفاع ۴۴ دارند؛ OTP یک ورودی واحد با شش خانهٔ بصری است.
 - سورس کامل نمونه‌ها در source/ و کیت موجود است. قطعه‌کدهای کوتاهِ صفحه، فایل کامل مستقل نیستند.
 - قرارداد ۴۷ جزء/الگو، نام فارسی، کاربرد، API و رفتار کیبورد را کنار نمونه‌ها ارائه می‌کند.
@@ -164,3 +164,8 @@ References: https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html an
 `TabsList variant="default"` is a segmented control for compact view choices. Use `variant="line"` for peer sections of a page. Tab targets are at least 44px; long groups scroll inside their own list without widening the page. Arrow keys follow `dir`, Home/End skip disabled tabs, and both variants expose the selected state independently of color. Import `avastar-components.css` for the shared geometry and states.
 
 `LanguageSwitch` accepts `locale` and the complete destination `href`. Pass the active section and component fragment to preserve the reading location. It displays the destination language in its native script, uses a translation icon, and has a localized accessible name.
+
+
+### Optical materials
+
+Import `avastar-materials.css` after `avastar-components.css`. `MaterialSurface` from `@avastar/ui/material-surface` supports `material="light" | "frosted" | "solid"` and `reducedTransparency`. Use light glass for small scene controls, frosted glass for floating navigation, and dense surfaces for forms and tables. Never nest transparent surfaces. Both themes define fill, edge, highlight, shadow and readable secondary text; tests composite text against black and white backdrops. Reduced transparency, increased contrast, forced colors and missing backdrop-filter support have opaque alternatives. The interactive Materials section demonstrates backgrounds, selection, disabled controls and keyboard focus.

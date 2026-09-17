@@ -44,6 +44,13 @@ import { PathGuide } from './path-guide';
 import { ErrorSummary, type FieldError } from '@avastar/ui/error-summary';
 import { LanguageSwitch } from '@avastar/ui/language-switch';
 import { CosmicBackdrop } from './cosmic-backdrop';
+import {
+  AboutJourney,
+  PartnerAudience,
+  JournalArtwork,
+  partnerOptions,
+} from './editorial-sections';
+import { ChapterExperience } from './chapter-experience';
 import { InteractiveObservatory } from './interactive-observatory';
 import { usePlanetDrag } from './use-planet-drag';
 import { OrbitCursor } from './orbit-cursor';
@@ -106,6 +113,14 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
   const [validationAttempt, setValidationAttempt] = useState(0);
   const [interest, setInterest] = useState<PlanetId | null>(null);
   const planetDrag = usePlanetDrag();
+  const [partnerAudience, setPartnerAudience] = useState<string>('school');
+  const [chapterViews, setChapterViews] = useState<Record<PlanetId, number>>({
+    learn: 0,
+    explore: 0,
+    shop: 0,
+    club: 0,
+  });
+  const equipmentTargets = useRef<(HTMLButtonElement | null)[]>([]);
   const planetTargets = useRef<(HTMLButtonElement | null)[]>([]);
   const lastFocus = useRef<HTMLElement | null>(null);
   const requestId = useRef<string>('');
@@ -221,7 +236,10 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
         body: JSON.stringify({
           name: form.get('name'),
           contact: form.get('contact'),
-          message: form.get('message'),
+          message:
+            request === 'partners'
+              ? `${fa ? 'نوع مجموعه' : 'Organization type'}: ${partnerOptions[locale].find((x) => x[0] === partnerAudience)?.[1]}\n${form.get('message')}`
+              : form.get('message'),
           website: form.get('website'),
           kind: request,
           locale,
@@ -308,7 +326,7 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
       <a className="skip-link" href="#main">
         {fa ? 'رفتن به محتوا' : 'Skip to content'}
       </a>
-      <header className="site-header">
+      <header className="site-header av-glass">
         <a href={homeUrl} className="brand" aria-label={fa ? 'خانه آوا استار' : 'Avastar home'}>
           <img
             className="brand-dark"
@@ -380,6 +398,8 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
           />
           <div className="cosmos" aria-hidden="true">
             <CosmicBackdrop
+              equipmentTargets={equipmentTargets}
+              chapterViews={chapterViews}
               locale={locale}
               targets={planetTargets}
               rotations={planetDrag.rotations}
@@ -432,6 +452,22 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
                 </button>
               );
             })}
+            {(fa ? ['اپتیک', 'مقر', 'چشمی'] : ['Optics', 'Mount', 'Eyepiece']).map((label, i) => (
+              <button
+                hidden
+                key={label}
+                className="equipment-point"
+                ref={(node) => {
+                  equipmentTargets.current[i] = node;
+                }}
+                aria-label={`${fa ? 'شناخت' : 'Explore'} ${label}`}
+                aria-pressed={chapterViews.shop === i}
+                onClick={() => setChapterViews((v) => ({ ...v, shop: i }))}
+              >
+                <span>{String(i + 1).padStart(2, '0')}</span>
+                <small>{label}</small>
+              </button>
+            ))}
           </div>
           <div className="atmosphere" aria-hidden="true" />
           <aside
@@ -555,11 +591,14 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
                     <p className="eyebrow">{t.eyebrow}</p>
                     <h2>{t.title}</h2>
                     <p className="section-description">{t.description}</p>
-                    <div className="feature-chips">
-                      {t.features.map((f) => (
-                        <span key={f}>{f}</span>
-                      ))}
-                    </div>
+                    <ChapterExperience
+                      id={id}
+                      locale={locale}
+                      value={chapterViews[id]}
+                      onChange={(value) => setChapterViews((v) => ({ ...v, [id]: value }))}
+                      onRotate={(delta) => planetDrag.rotate(i + 1, delta)}
+                      onReset={() => planetDrag.reset(i + 1)}
+                    />
                     <Button
                       className="av-button av-button--secondary planet-button"
                       variant="outline"
@@ -593,18 +632,7 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
               <div className="journal-grid">
                 {Object.entries(guides).map(([key, g], i) => (
                   <a className="journal-card" href={`/${locale}/${key}`} key={key}>
-                    <div className={`journal-art journal-art-${i}`}>
-                      <img
-                        src={planetArt[g.planet]}
-                        alt=""
-                        width="1254"
-                        height="1254"
-                        loading="lazy"
-                      />
-                      <span className="article-number" dir="ltr">
-                        FIELD NOTES / 0{i + 1}
-                      </span>
-                    </div>
+                    <JournalArtwork index={i} />
                     <div className="journal-card-body">
                       <span className="overline">{g.category[locale]}</span>
                       <h3>{g.title[locale]}</h3>
@@ -635,11 +663,7 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
                 <p className="eyebrow">{fa ? 'درباره آوا استار' : 'ABOUT AVASTAR'}</p>
                 <h2>{c.aboutTitle}</h2>
                 <p>{c.aboutText}</p>
-                <div className="values">
-                  <span>{fa ? 'یادگیری ساده' : 'Accessible learning'}</span>
-                  <span>{fa ? 'انتخاب آگاهانه' : 'Informed choices'}</span>
-                  <span>{fa ? 'همراهی ماندگار' : 'Lasting connection'}</span>
-                </div>
+                <AboutJourney locale={locale} />
               </div>
             </section>
             <section
@@ -651,6 +675,11 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
                 <p className="eyebrow">{fa ? 'افق‌های مشترک' : 'SHARED HORIZONS'}</p>
                 <h2>{c.partners}</h2>
                 <p>{c.partnersText}</p>
+                <PartnerAudience
+                  locale={locale}
+                  value={partnerAudience}
+                  onChange={setPartnerAudience}
+                />
               </div>
               <Button
                 variant="outline"
@@ -771,7 +800,7 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
       </main>
       <SiteFooter locale={locale} home={home} openGuide={openGuide} openRequest={openRequest} />
       {home && (
-        <div className="flight-control">
+        <div className="flight-control av-glass">
           <div className="flight-readout">
             <span className="flight-index" dir="ltr">
               {String(station + 1).padStart(2, '0')}
@@ -941,6 +970,26 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
                 focusKey={validationAttempt}
                 title={fa ? 'لطفاً این موارد را اصلاح کنید' : 'Please check these fields'}
               />
+              {request === 'partners' && (
+                <label>
+                  {fa ? 'نوع مجموعه' : 'Organization type'}
+                  <select
+                    name="audience"
+                    className="av-field"
+                    value={partnerAudience}
+                    onChange={(e) => setPartnerAudience(e.target.value)}
+                  >
+                    {partnerOptions[locale].map(([id, label]) => (
+                      <option key={id} value={id}>
+                        {label}
+                      </option>
+                    ))}
+                  </select>
+                  <p className="request-context">
+                    {partnerOptions[locale].find((x) => x[0] === partnerAudience)?.[2]}
+                  </p>
+                </label>
+              )}
               <label>
                 {c.name}
                 <input
@@ -1006,7 +1055,7 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
                   name="message"
                   required
                   minLength={10}
-                  maxLength={2000}
+                  maxLength={request === 'partners' ? 1800 : 2000}
                   rows={3}
                 />
                 {fieldErrors

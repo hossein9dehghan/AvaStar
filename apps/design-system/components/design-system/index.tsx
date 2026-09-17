@@ -106,7 +106,7 @@ export function DesignSystem({ locale }: { locale: Locale }) {
           >
             {t('رفتن به محتوای دیزاین سیستم', 'Skip to design system content')}
           </a>
-          <header className="ds-header">
+          <header className="ds-header av-glass">
             <div className="ds-header-brand">
               <Button
                 className="av-button av-button--ghost av-button--icon ds-menu-toggle"

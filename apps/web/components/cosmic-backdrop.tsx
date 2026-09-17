@@ -7,6 +7,8 @@ import type { CosmicScene } from './cosmic-scene';
 import { CosmicFallback } from './cosmic-fallback';
 
 export type CosmicBackdropProps = {
+  equipmentTargets: MutableRefObject<(HTMLButtonElement | null)[]>;
+  chapterViews: Record<PlanetId, number>;
   rotations: MutableRefObject<PlanetRotation[]>;
   targets: MutableRefObject<(HTMLButtonElement | null)[]>;
   flight: MutableRefObject<FlightState>;

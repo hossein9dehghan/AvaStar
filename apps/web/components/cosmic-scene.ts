@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { createOpticalEnvironment } from '@/lib/optical-environment';
 import { createPlanetArtifact } from '@/lib/planet-artifacts';
 import { starAppearance } from '@/lib/star-appearance';
 import { advancePlanetRotation } from '@/lib/planet-rotation';
@@ -118,6 +119,9 @@ export async function createCosmicScene(
   );
   const ringGeometry = new THREE.RingGeometry(1.28, 2.18, 160);
   const resources: { dispose: () => void }[] = [geometry, ringGeometry, ...textures];
+  const environment = createOpticalEnvironment(renderer);
+  scene.environment = environment.texture;
+  resources.push(environment);
   let width = innerWidth,
     height = innerHeight,
     frame = 0,
@@ -317,6 +321,7 @@ export async function createCosmicScene(
       starsMaterial.uniforms.uCamera.value.set(camera.position.x, camera.position.y);
       starsMaterial.uniforms.uPointer.value.set(pointerX, -pointerY);
       starsMaterial.uniforms.uActive.value = pointerActive;
+      camera.updateMatrixWorld();
       for (const planet of planets) {
         const def = planet.definition;
         const rotation = state.rotations.current[def.step];
@@ -338,6 +343,20 @@ export async function createCosmicScene(
         planet.body.rotation.y = def.step * 1.6 + elapsed * def.spin + rotation.yaw;
         planet.uniforms.uOpacity.value = opacity;
         planet.artifact?.fade(opacity);
+        planet.artifact?.setView(state.chapterViews[def.id]);
+        if (def.id === 'shop') {
+          planet.group.updateMatrixWorld(true);
+          planet.artifact?.anchors.forEach((anchor, i) => {
+            const node = state.equipmentTargets.current[i];
+            if (!node) return;
+            node.hidden = width <= 760 || Math.round(position) !== 3 || opacity < 0.4;
+            if (!node.hidden) {
+              anchor.getWorldPosition(projected);
+              projected.project(camera);
+              node.style.transform = `translate3d(${((projected.x + 1) * width) / 2}px,${((1 - projected.y) * height) / 2}px,0) translate(-50%,-50%)`;
+            }
+          });
+        }
         planet.uniforms.uCloudShift.value = elapsed * 0.001;
         // Use the actual camera projection, including pointer parallax, for DOM hit areas.
         camera.updateMatrixWorld();

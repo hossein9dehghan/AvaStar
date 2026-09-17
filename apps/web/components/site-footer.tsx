@@ -23,6 +23,7 @@ export function SiteFooter({
       data-depth-stop={home ? 9 : undefined}
       aria-label={fa ? 'پایان سفر و ارتباط با آوا استار' : 'Avastar information and contact'}
     >
+      <div className="closing-aperture" aria-hidden="true" />
       <div className="footer-surface">
         <div className="footer-invitation">
           <div>

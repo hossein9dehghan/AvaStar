@@ -12,13 +12,9 @@ import {
   SelectItem,
 } from '@avastar/ui/components/select';
 import { DataTable, type Column } from '@avastar/ui/data-table';
-import {
-  ViewStatePanel,
-  viewStates,
-  stateLabel,
-  type ViewState,
-} from '@avastar/ui/view-state';
+import { ViewStatePanel, viewStates, stateLabel, type ViewState } from '@avastar/ui/view-state';
 import { useSpringValue } from '@avastar/ui/use-spring';
+import { MaterialLab } from './material-lab';
 import { Section, Specimen } from './primitives';
 import { translate, type Locale } from '@/lib/site';
 export function StateControl({
@@ -348,19 +344,7 @@ export function MaterialPatterns({ locale }: { locale: Locale }) {
         'Content surfaces stay opaque. Translucency gives floating navigation a clear hierarchy.',
       )}
     >
-      <div className="ds-material-grid">
-        {[
-          ['base', t('زمینه', 'Canvas')],
-          ['raised', t('محتوا', 'Content')],
-          ['floating', t('لایه شناور', 'Floating layer')],
-        ].map(([kind, label]) => (
-          <div key={kind} className={`ds-material ds-material--${kind}`}>
-            <Layers size={26} />
-            <h2>{label}</h2>
-            <code>{kind === 'base' ? 'background' : kind === 'raised' ? 'card' : 'material'}</code>
-          </div>
-        ))}
-      </div>
+      <MaterialLab locale={locale} />
       <div className="ds-notes">
         <p>
           <strong>{t('کاهش شفافیت', 'Reduced transparency')}</strong>

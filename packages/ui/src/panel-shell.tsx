@@ -154,7 +154,7 @@ function PanelLayout({
         </SidebarFooter>
       </Sidebar>
       <div className="panel-workspace">
-        <header className="panel-header">
+        <header className="panel-header av-glass">
           <div>
             <Button
               variant="ghost"
