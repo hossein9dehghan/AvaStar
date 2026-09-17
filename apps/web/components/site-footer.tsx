@@ -1,6 +1,5 @@
 'use client';
 import { copy, guides, planetIds, planets, type Locale } from '@/lib/avastar';
-import { designSystemOrigin } from '@/lib/design-system';
 import { ArrowUp, ArrowUpLeft, ArrowUpRight, Compass, MessageCircle } from 'lucide-react';
 export function SiteFooter({
   locale,
@@ -119,7 +118,6 @@ export function SiteFooter({
             {fa ? 'اعتبار تصاویر' : 'Image credits'}
           </a>
           <span dir="ltr">© {new Date().getFullYear()} AVASTAR</span>
-          <a href={`${designSystemOrigin}/${locale}`}>{fa ? 'دیزاین سیستم' : 'Design system'}</a>
           <a href={link('main')}>
             {fa ? 'بازگشت به آغاز سفر' : 'Back to the beginning'}
             <ArrowUp size={16} />

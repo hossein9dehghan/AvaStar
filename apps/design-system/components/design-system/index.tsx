@@ -52,7 +52,7 @@ import {
   useActiveComponent,
   normalizeSearch,
 } from './documentation';
-import { translate, landingOrigin, type Locale } from '@/lib/site';
+import { translate, type Locale } from '@/lib/site';
 export function DesignSystem({ locale }: { locale: Locale }) {
   const t = translate(locale),
     fa = locale === 'fa',
@@ -166,10 +166,6 @@ export function DesignSystem({ locale }: { locale: Locale }) {
               {navigation}
               <div className="ds-sidebar-bottom">
                 <span>AVASTAR UI / 3.1</span>
-                <a href={`${landingOrigin}/${locale}`}>
-                  {t('مشاهده لندینگ', 'View landing')}
-                  <ArrowUpRight size={15} />
-                </a>
               </div>
             </aside>
             <main id="ds-main" className="ds-main" ref={main} tabIndex={-1}>

@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import '../vendor/shadcn-tailwind-4.13.0.css';
+/* Shared workspace components live outside this app's automatic source scan. */
+@source '../../../packages/ui/src';
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
