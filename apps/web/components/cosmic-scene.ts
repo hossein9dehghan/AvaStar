@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { createPlanetArtifact } from '@/lib/planet-artifacts';
 import { starAppearance } from '@/lib/star-appearance';
 import { advancePlanetRotation } from '@/lib/planet-rotation';
 import { placePlanetTarget } from '@/lib/cosmic-hit-target';
@@ -104,6 +105,10 @@ export async function createCosmicScene(
     shaderFailed = true;
   };
   const scene = new THREE.Scene();
+  scene.add(new THREE.HemisphereLight('#cfdef4', '#111724', 1.4));
+  const keyLight = new THREE.DirectionalLight('#fff0d5', 3.2);
+  keyLight.position.set(-5, 7, 9);
+  scene.add(keyLight);
   const camera = new THREE.PerspectiveCamera(CAMERA_FOV, 1, 0.1, 240);
   const light = new THREE.Vector3(-0.8, 0.45, 0.85).normalize();
   const geometry = new THREE.SphereGeometry(
@@ -202,8 +207,13 @@ export async function createCosmicScene(
       group.add(ring);
       resources.push(material);
     }
+    const artifact = moon ? null : createPlanetArtifact(definition.id);
+    if (artifact) {
+      group.add(artifact.group);
+      resources.push(artifact);
+    }
     scene.add(group);
-    return { definition, group, body, uniforms, radius: 1, focus: 1 };
+    return { definition, group, body, uniforms, artifact, radius: 1, focus: 1 };
   }
   const planets = worlds.map((world) => makeWorld(world));
   const moon = makeWorld(worlds[3], true);
@@ -327,6 +337,7 @@ export async function createCosmicScene(
         );
         planet.body.rotation.y = def.step * 1.6 + elapsed * def.spin + rotation.yaw;
         planet.uniforms.uOpacity.value = opacity;
+        planet.artifact?.fade(opacity);
         planet.uniforms.uCloudShift.value = elapsed * 0.001;
         // Use the actual camera projection, including pointer parallax, for DOM hit areas.
         camera.updateMatrixWorld();

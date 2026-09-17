@@ -2329,15 +2329,147 @@ html[lang='en'] .hero-copy h1 {
   }
 }
 
-/* The opening galaxy sits behind the journey's planetary layers. */
-.cosmos .hero-galaxy {
+/* The first scene is an instrument the visitor can manipulate and navigate. */
+.hero-observatory {
   position: absolute;
-  inset: auto;
-  left: 0;
-  top: 0;
-  z-index: 1;
-  max-width: none;
-  opacity: 0;
+  top: 48%;
+  left: calc(50% - var(--cosmic-stage-width) * 0.24);
+  width: min(calc(var(--cosmic-stage-width) * 0.55), 96svh);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  direction: ltr;
+  z-index: 2;
+  isolation: isolate;
+}
+[lang='en'] .hero-observatory {
+  left: calc(50% + var(--cosmic-stage-width) * 0.24);
+}
+.hero-observatory canvas {
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  will-change: transform, opacity;
+}
+.observatory-grab {
+  position: absolute;
+  inset: 9% 3% 14%;
+  z-index: 1;
+  border-radius: 50%;
+  cursor: grab;
+  touch-action: pan-y;
+}
+.observatory-grab[data-dragging='true'] {
+  cursor: grabbing;
+}
+.observatory-grab:focus-visible {
+  outline: 1px solid #8da9c2;
+  outline-offset: 5px;
+}
+.observatory-destination {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: 50%;
+  color: #e3e9f0;
+  cursor: pointer;
+}
+.observatory-destination:focus-visible {
+  outline: 2px solid #99c7e8;
+  outline-offset: 5px;
+}
+.observatory-destination > span {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 9px;
+  border-radius: 4px;
+  background: #050a12c9;
+  font-size: 0.8125rem;
+}
+.observatory-destination small {
+  opacity: 0.55;
+}
+.observatory-destination:hover > span,
+.observatory-destination:focus-visible > span {
+  color: #fff;
+  background: #132336;
+}
+.observatory-help {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: max-content;
+  max-width: 95%;
+  color: #a3b2c3;
+  font-size: 0.75rem;
+}
+[lang='fa'] .observatory-help {
+  direction: rtl;
+}
+.observatory-help button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+}
+.observatory-help button:hover {
+  color: #fff;
+  background: #ffffff0c;
+}
+.planet-artifact {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+@media (max-width: 760px) {
+  .hero-observatory,
+  [lang='en'] .hero-observatory {
+    left: 50%;
+    top: 75%;
+    width: min(99vw, 51svh);
+  }
+  .observatory-destination {
+    width: 44px;
+    height: 44px;
+  }
+  .observatory-destination > span {
+    top: 85%;
+    font-size: 0.69rem;
+    padding: 2px 5px;
+    gap: 3px;
+  }
+  .observatory-help {
+    bottom: -2%;
+    font-size: 0.64rem;
+    gap: 4px;
+  }
+  .observatory-help button {
+    width: 44px;
+    height: 44px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-observatory {
+    will-change: auto;
+  }
 }

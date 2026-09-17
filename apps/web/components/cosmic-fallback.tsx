@@ -7,6 +7,7 @@ import { cosmicStageWidth } from '@/lib/cosmic-layout';
 import { starAppearance } from '@/lib/star-appearance';
 import { placePlanetTarget } from '@/lib/cosmic-hit-target';
 import type { FlightState } from './use-depth-journey';
+import { PlanetArtifact } from './planet-artifact';
 
 const worlds = [
   { step: 1, id: 'learn', src: planetArt.learn, side: -1, spin: 0.38 },
@@ -244,6 +245,7 @@ export function CosmicFallback({
               decoding="async"
               draggable={false}
             />
+            {!('moon' in world) && <PlanetArtifact id={world.id} />}
           </div>
         ))}
       </div>

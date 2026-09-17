@@ -44,6 +44,7 @@ import { PathGuide } from './path-guide';
 import { ErrorSummary, type FieldError } from '@avastar/ui/error-summary';
 import { LanguageSwitch } from '@avastar/ui/language-switch';
 import { CosmicBackdrop } from './cosmic-backdrop';
+import { InteractiveObservatory } from './interactive-observatory';
 import { usePlanetDrag } from './use-planet-drag';
 import { OrbitCursor } from './orbit-cursor';
 import { SiteFooter } from './site-footer';
@@ -463,6 +464,13 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
         {home ? (
           <>
             <section className="hero depth-panel" data-depth-stop="0">
+              <InteractiveObservatory
+                locale={locale}
+                flight={flight}
+                reduced={reduced}
+                paused={hidden || !!planet || guide || !!request || menu}
+                onExplore={jump}
+              />
               <div className="hero-copy">
                 <p className="eyebrow">
                   <span className="tiny-orbit" />

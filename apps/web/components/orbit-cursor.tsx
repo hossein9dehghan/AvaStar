@@ -82,7 +82,7 @@ export function OrbitCursor({ enabled, reduced }: { enabled: boolean; reduced: b
         return;
       }
       const action = target.closest('a,button,[role="button"],summary');
-      const planet = !!target.closest('.cosmic-planet-target');
+      const planet = !!target.closest('.cosmic-planet-target,.observatory-grab');
       size = planet ? 50 : action ? 38 : 28;
       const kind = planet ? 'planet' : action ? 'action' : 'default';
       core.dataset.kind = ring.dataset.kind = kind;
