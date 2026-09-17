@@ -394,38 +394,43 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
             inert={!!planet || guide || !!request || menu}
             aria-label={fa ? 'سیاره‌های قابل کاوش' : 'Explore the planets'}
           >
-            {(['learn', ...planetIds] as PlanetId[]).map((id, step) => (
-              <button
-                key={step}
-                type="button"
-                hidden
-                className="cosmic-planet-target"
-                ref={(node) => {
-                  planetTargets.current[step] = node;
-                }}
-                {...planetDrag.bind(step)}
-                title={
-                  fa
-                    ? 'برای چرخش درگ کنید؛ برای جزئیات کلیک کنید'
-                    : 'Drag to rotate; click for details'
-                }
-                onPointerEnter={() => setHoveredPlanet(id)}
-                onPointerLeave={() => setHoveredPlanet(null)}
-                onFocus={() => setHoveredPlanet(id)}
-                onBlur={() => setHoveredPlanet(null)}
-                onClick={(event) => {
-                  if (!planetDrag.consumeClick(step, event.detail)) showPlanet(id);
-                }}
-                aria-label={
-                  fa ? `کشف سیاره ${planets[id].fa.name}` : `Open the ${planets[id].en.name} planet`
-                }
-              >
-                <span className="cosmic-target-caption">
-                  {fa ? 'کاوش این سیاره' : 'Explore this planet'}{' '}
-                  <ArrowUpRight size={16} aria-hidden="true" />
-                </span>
-              </button>
-            ))}
+            {planetIds.map((id, index) => {
+              const step = index + 1;
+              return (
+                <button
+                  key={step}
+                  type="button"
+                  hidden
+                  className="cosmic-planet-target"
+                  ref={(node) => {
+                    planetTargets.current[step] = node;
+                  }}
+                  {...planetDrag.bind(step)}
+                  title={
+                    fa
+                      ? 'برای چرخش درگ کنید؛ برای جزئیات کلیک کنید'
+                      : 'Drag to rotate; click for details'
+                  }
+                  onPointerEnter={() => setHoveredPlanet(id)}
+                  onPointerLeave={() => setHoveredPlanet(null)}
+                  onFocus={() => setHoveredPlanet(id)}
+                  onBlur={() => setHoveredPlanet(null)}
+                  onClick={(event) => {
+                    if (!planetDrag.consumeClick(step, event.detail)) showPlanet(id);
+                  }}
+                  aria-label={
+                    fa
+                      ? `کشف سیاره ${planets[id].fa.name}`
+                      : `Open the ${planets[id].en.name} planet`
+                  }
+                >
+                  <span className="cosmic-target-caption">
+                    {fa ? 'کاوش این سیاره' : 'Explore this planet'}{' '}
+                    <ArrowUpRight size={16} aria-hidden="true" />
+                  </span>
+                </button>
+              );
+            })}
           </div>
           <div className="atmosphere" aria-hidden="true" />
           <aside

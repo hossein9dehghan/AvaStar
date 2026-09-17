@@ -15,16 +15,6 @@ import type { CosmicBackdropProps } from './cosmic-backdrop';
 
 const worlds = [
   {
-    step: 0,
-    id: 'learn',
-    side: -1,
-    style: 1,
-    ring: true,
-    colors: ['#344660', '#8498b5', '#b8d0e5'],
-    tilt: -0.4,
-    spin: 0.027,
-  },
-  {
     step: 1,
     id: 'learn',
     side: -1,
@@ -142,9 +132,7 @@ export async function createCosmicScene(
     const ringNormal = new THREE.Vector3(0, 1, 0);
     const uniforms = {
       uMap: {
-        value: moon
-          ? moonMap
-          : [saturnMap, earthMap, saturnMap, moonMap, neptuneMap][definition.step],
+        value: moon ? moonMap : [earthMap, saturnMap, moonMap, neptuneMap][definition.step - 1],
       },
       uCloudMap: { value: cloudMap },
       uCloud: { value: !moon && definition.step === 1 ? 1 : 0 },
@@ -218,7 +206,7 @@ export async function createCosmicScene(
     return { definition, group, body, uniforms, radius: 1, focus: 1 };
   }
   const planets = worlds.map((world) => makeWorld(world));
-  const moon = makeWorld(worlds[4], true);
+  const moon = makeWorld(worlds[3], true);
   const moonOffset = new THREE.Vector3();
   const projected = new THREE.Vector3();
 
@@ -357,7 +345,7 @@ export async function createCosmicScene(
         planet.uniforms.uRadius.value = planet.radius * planet.focus;
         planet.uniforms.uRingNormal.value.set(0, 1, 0).applyQuaternion(planet.group.quaternion);
       }
-      const parent = planets[4];
+      const parent = planets[3];
       const orbit = 2.7 + elapsed * 0.035;
       const direction = state.locale === 'fa' ? 1 : -1;
       moon.group.visible = parent.group.visible;

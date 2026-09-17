@@ -5,4 +5,3 @@ export const planetArt: Record<PlanetId, string> = {
   shop: '/art/glacial.webp',
   club: '/art/nocturne.webp',
 };
-export const heroArt = '/art/annulus.webp';

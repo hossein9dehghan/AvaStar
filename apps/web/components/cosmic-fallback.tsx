@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, type MutableRefObject } from 'react';
 import type { Locale, PlanetId } from '@/lib/avastar';
-import { heroArt, planetArt } from '@/lib/planet-art';
+import { planetArt } from '@/lib/planet-art';
 import { advancePlanetRotation, type PlanetRotation } from '@/lib/planet-rotation';
 import { cosmicStageWidth } from '@/lib/cosmic-layout';
 import { starAppearance } from '@/lib/star-appearance';
@@ -9,7 +9,6 @@ import { placePlanetTarget } from '@/lib/cosmic-hit-target';
 import type { FlightState } from './use-depth-journey';
 
 const worlds = [
-  { step: 0, id: 'learn', src: heroArt, side: -1, spin: 0.22 },
   { step: 1, id: 'learn', src: planetArt.learn, side: -1, spin: 0.38 },
   { step: 2, id: 'explore', src: planetArt.explore, side: 1, spin: -0.18 },
   { step: 3, id: 'shop', src: planetArt.shop, side: -1, spin: 0.3 },
@@ -141,7 +140,7 @@ export function CosmicFallback({
         const node = layers.current[i];
         if (!node) return;
         const moon = 'moon' in world,
-          ringed = world.src === heroArt;
+          ringed = world.id === 'explore';
         const distance = 10 + (world.step - position) * 18;
         const ratio = 10 / Math.max(1, distance);
         const near = clamp((distance - 1) / 3);
@@ -151,11 +150,9 @@ export function CosmicFallback({
         const baseX = mobile
           ? w * 0.5
           : w / 2 + stageWidth * world.side * (locale === 'fa' ? 1 : -1) * 0.24;
-        const baseY = mobile ? (world.step === 0 ? h * 0.73 : Math.min(h * 0.2, 150)) : h * 0.48;
+        const baseY = mobile ? Math.min(h * 0.2, 150) : h * 0.48;
         const width = mobile
-          ? world.step === 0
-            ? w * (h < 740 ? 0.98 : 1.17)
-            : Math.min(w * 0.2, h * 0.075) / (ringed ? 0.245 : 0.435)
+          ? Math.min(w * 0.2, h * 0.075) / (ringed ? 0.245 : 0.435)
           : Math.min(stageWidth * (ringed ? 0.5 : 0.45), h * 1.04);
         const size =
           width * (moon ? 0.39 : 1) * ratio * (world.id === (selected || hovered) ? focus : 1);
@@ -171,13 +168,13 @@ export function CosmicFallback({
         }
         if (distance > 1 && distance < 18 && alpha > 0.35) foreground.push({ x, y, r: radius });
         // Keep the photographic fallback still until the user directly rotates it.
-        const rotation = rotations.current[Math.min(i, 4)];
+        const rotation = rotations.current[Math.floor(world.step)];
         if (!moon) advancePlanetRotation(rotation, paused ? 0 : dt, reduced);
         // The no-WebGL artwork supports a restrained roll while the 3D scene rotates its surface.
         const angle = ((rotation.yaw * 180) / Math.PI) * 0.25 + rotation.pitch * 12;
         if (!moon)
           placePlanetTarget(
-            targets.current[i],
+            targets.current[world.step],
             x + (ringed ? size * 0.029 * Math.sin((angle * Math.PI) / 180) : 0),
             y - (ringed ? size * 0.029 * Math.cos((angle * Math.PI) / 180) : 0),
             radius,
