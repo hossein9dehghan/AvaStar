@@ -610,3 +610,189 @@ export const contractDetails: Record<
   },
 };
 export const componentSlug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+/**
+ * Physical contracts are intentionally separate from the prose above: these values are the
+ * implementation constraints used by the shared theme, not approximate visual guidance.
+ */
+export type ComponentMetrics = {
+  height: string;
+  radius: string;
+  inset: string;
+  target: string;
+  gap?: string;
+};
+
+const standardControl: ComponentMetrics = {
+  height: '48px (compact: 44px; prominent: 56px)',
+  radius: '12px',
+  inset: '10px 16px',
+  target: '44 × 44px minimum',
+  gap: '8px',
+};
+
+export const componentMetrics: Record<string, ComponentMetrics> = {
+  Button: { ...standardControl },
+  'Icon button': {
+    height: '44px square',
+    radius: '12px',
+    inset: '0',
+    target: '44 × 44px',
+    gap: '—',
+  },
+  Input: { ...standardControl, inset: '10px 14px', gap: 'label: 8px; help/error: 6px' },
+  Textarea: {
+    height: '96px minimum',
+    radius: '12px',
+    inset: '12px 14px',
+    target: '44px line target',
+    gap: 'label: 8px; help/error: 6px',
+  },
+  'Number input': { ...standardControl, inset: '0 4px 0 14px', gap: 'stepper: 4px' },
+  Checkbox: {
+    height: '20px visual',
+    radius: '6px',
+    inset: '0',
+    target: '44 × 44px label target',
+    gap: '8px label gap',
+  },
+  Switch: {
+    height: '28px visual',
+    radius: '999px',
+    inset: '3px',
+    target: '44 × 44px label target',
+    gap: '8px label gap',
+  },
+  'Radio group': {
+    height: '20px visual',
+    radius: '999px',
+    inset: '0',
+    target: '44px row minimum',
+    gap: '8px label gap; 12px between rows',
+  },
+  Slider: {
+    height: '44px target; 4px track',
+    radius: '999px',
+    inset: '0',
+    target: '44 × 44px thumb target',
+    gap: '12px label/value gap',
+  },
+  'Toggle group': {
+    height: '44px',
+    radius: '12px group / 8px item',
+    inset: '4px group; 12px item',
+    target: '44px per item',
+    gap: '4px',
+  },
+  Select: { ...standardControl, inset: '10px 14px', gap: '8px icon gap' },
+  Combobox: { ...standardControl, inset: '10px 14px', gap: '8px icon gap; 4px list item gap' },
+  Calendar: {
+    height: '40px day target',
+    radius: '10px day / 16px surface',
+    inset: '16px surface; 8px day',
+    target: '40 × 40px day; 44px toolbar',
+    gap: '4px day grid',
+  },
+  Tabs: {
+    height: '44px trigger',
+    radius: '12px list / 8px trigger',
+    inset: '4px list; 12px trigger',
+    target: '44px per trigger',
+    gap: '4px',
+  },
+  Accordion: {
+    height: '52px trigger minimum',
+    radius: '12px item',
+    inset: '14px 16px trigger',
+    target: '44px minimum',
+    gap: '12px between items',
+  },
+  Tooltip: {
+    height: 'auto',
+    radius: '10px',
+    inset: '8px 10px',
+    target: 'trigger remains 44px minimum',
+    gap: '6px from trigger',
+  },
+  Dialog: {
+    height: 'auto; max 80vh',
+    radius: '28px',
+    inset: '24px desktop; 20px mobile',
+    target: '44px close/action targets',
+    gap: '16px sections',
+  },
+  Sheet: {
+    height: 'auto; max 92vh',
+    radius: '28px top corners',
+    inset: '24px desktop; 20px mobile',
+    target: '44px close/action targets',
+    gap: '16px sections',
+  },
+  Card: {
+    height: 'content-driven',
+    radius: '20px',
+    inset: '24px desktop; 20px compact',
+    target: '44px internal action targets',
+    gap: '12px content rhythm',
+  },
+  Avatar: {
+    height: '24 / 32 / 40 / 48px',
+    radius: '999px',
+    inset: '0',
+    target: '44px when interactive',
+    gap: '8px with label',
+  },
+  Badge: {
+    height: '28px minimum',
+    radius: '999px',
+    inset: '5px 11px',
+    target: 'not interactive by default',
+    gap: '6px',
+  },
+  'Data table': {
+    height: '48px header; 56px row minimum',
+    radius: '16px wrapper',
+    inset: '12px 16px cell',
+    target: '44px row actions',
+    gap: '1px separators',
+  },
+  Progress: {
+    height: '8px track',
+    radius: '999px',
+    inset: '0',
+    target: 'not interactive',
+    gap: '8px label/value gap',
+  },
+  Alert: {
+    height: 'content-driven',
+    radius: '16px',
+    inset: '16px',
+    target: '44px action target',
+    gap: '10px icon/content',
+  },
+  Toast: {
+    height: '48px minimum',
+    radius: '16px',
+    inset: '12px 14px',
+    target: '44px dismiss/action target',
+    gap: '10px',
+  },
+  'Tree navigation': {
+    height: '44px item',
+    radius: '10px',
+    inset: '10px 12px',
+    target: '44px per item',
+    gap: '4px branches',
+  },
+  'Landing action': {
+    height: '44 / 48 / 56px',
+    radius: '12px',
+    inset: '10px 16px / 12px 20px prominent',
+    target: '44 × 44px minimum',
+    gap: '10px icon/text',
+  },
+};
+
+export function metricsFor(name: string): ComponentMetrics {
+  return componentMetrics[name] || standardControl;
+}

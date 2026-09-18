@@ -1,6 +1,7 @@
 'use client';
 import { copy, guides, planetIds, planets, type Locale } from '@/lib/avastar';
 import { ArrowUp, ArrowUpLeft, ArrowUpRight, Compass, MessageCircle } from 'lucide-react';
+import { Button } from '@avastar/ui/components/button';
 export function SiteFooter({
   locale,
   home,
@@ -35,14 +36,14 @@ export function SiteFooter({
             </p>
             <h2>{fa ? 'آسمان منتظر کنجکاوی شماست.' : 'The sky is waiting for your curiosity.'}</h2>
           </div>
-          <button
-            className="av-button av-button--primary primary-button inline-button"
+          <Button
+            className="av-button av-button--primary av-button--landing primary-button inline-button"
             onClick={openGuide}
           >
             <Compass size={19} />
             {c.start}
             {arrow}
-          </button>
+          </Button>
         </div>
         <div className="footer-grid">
           <div className="footer-identity">
@@ -94,19 +95,31 @@ export function SiteFooter({
           </nav>
           <div className="footer-contact">
             <h3>{fa ? 'در ارتباط باشیم' : 'Let’s connect'}</h3>
-            <button onClick={() => openRequest('general')}>
+            <Button
+              variant="ghost"
+              className="av-button av-button--ghost"
+              onClick={() => openRequest('general')}
+            >
               <MessageCircle size={17} />
               {fa ? 'راهنمایی و ارتباط با ما' : 'Guidance and contact'}
               {arrow}
-            </button>
-            <button onClick={() => openRequest('partners')}>
+            </Button>
+            <Button
+              variant="ghost"
+              className="av-button av-button--ghost"
+              onClick={() => openRequest('partners')}
+            >
               {fa ? 'مدارس و سازمان‌ها' : 'Schools and organizations'}
               {arrow}
-            </button>
-            <button onClick={() => openRequest('partners')}>
+            </Button>
+            <Button
+              variant="ghost"
+              className="av-button av-button--ghost"
+              onClick={() => openRequest('partners')}
+            >
               {fa ? 'همکاری فروش و معرفی' : 'Retail and referral partners'}
               {arrow}
-            </button>
+            </Button>
             <p>
               {fa
                 ? 'در فرم ارتباط، راه تماس و موضوع درخواستتان را بنویسید.'

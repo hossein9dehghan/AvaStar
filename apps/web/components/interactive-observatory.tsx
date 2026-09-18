@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, type PointerEvent } from 'react';
 import { ArrowLeft, ArrowRight, RotateCcw, Move } from 'lucide-react';
 import { planetIds, planets, type Locale } from '@/lib/avastar';
+import { Button } from '@avastar/ui/components/button';
 import type { FlightState } from './use-depth-journey';
 import type { createApertureScene } from '@/lib/aperture-scene';
 export function InteractiveObservatory({
@@ -185,10 +186,17 @@ export function InteractiveObservatory({
         aria-label={fa ? 'کنترل زاویه' : 'View controls'}
       >
         <Move size={15} aria-hidden="true" />
-        <button onClick={() => turn(-0.3)} aria-label={fa ? 'چرخش به چپ' : 'Rotate left'}>
+        <Button
+          variant="ghost"
+          className="av-button av-button--ghost av-button--icon"
+          onClick={() => turn(-0.3)}
+          aria-label={fa ? 'چرخش به چپ' : 'Rotate left'}
+        >
           <ArrowLeft size={16} />
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="ghost"
+          className="av-button av-button--ghost av-button--icon"
           onClick={() => {
             state.current.tx = state.current.ty = 0;
             state.current.revision++;
@@ -196,17 +204,27 @@ export function InteractiveObservatory({
           aria-label={fa ? 'زاویهٔ اولیه' : 'Reset view'}
         >
           <RotateCcw size={15} />
-        </button>
-        <button onClick={() => turn(0.3)} aria-label={fa ? 'چرخش به راست' : 'Rotate right'}>
+        </Button>
+        <Button
+          variant="ghost"
+          className="av-button av-button--ghost av-button--icon"
+          onClick={() => turn(0.3)}
+          aria-label={fa ? 'چرخش به راست' : 'Rotate right'}
+        >
           <ArrowRight size={16} />
-        </button>
+        </Button>
       </div>
       <nav className="observatory-paths" aria-label={fa ? 'مسیرهای آوا استار' : 'Avastar paths'}>
         {planetIds.map((id, i) => (
-          <button key={id} onClick={() => onExplore(i + 1)}>
+          <Button
+            variant="ghost"
+            className="av-button av-button--ghost av-button--landing"
+            key={id}
+            onClick={() => onExplore(i + 1)}
+          >
             <small>0{i + 1}</small>
             {planets[id][locale].name}
-          </button>
+          </Button>
         ))}
       </nav>
     </div>

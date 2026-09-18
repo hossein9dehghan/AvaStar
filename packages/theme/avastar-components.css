@@ -35,6 +35,54 @@
   border-color: var(--primary);
   color: var(--primary-foreground);
 }
+.av-button--landing {
+  min-height: var(--control-md);
+  border-radius: var(--radius-input);
+  letter-spacing: -0.01em;
+}
+.av-button--primary.av-button--landing {
+  min-height: var(--control-lg);
+  padding-inline: var(--space-6);
+}
+.av-button--landing:active {
+  transform: scale(0.97);
+  transition-duration: 80ms;
+}
+.av-choice-group {
+  display: flex;
+  width: max-content;
+  max-width: 100%;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-input);
+  background: var(--glass-light);
+  backdrop-filter: blur(16px) saturate(120%);
+}
+.av-choice-button {
+  min-height: var(--control-sm);
+  padding: 5px 15px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted-foreground);
+  font: 500 0.875rem/1.4 var(--av-font);
+  cursor: pointer;
+}
+.av-choice-button:hover {
+  color: var(--foreground);
+  background: var(--control-hover);
+}
+.av-choice-button[aria-pressed='true'] {
+  color: var(--foreground);
+  border-color: var(--glass-border);
+  background: var(--glass-frosted);
+  box-shadow: inset 0 1px var(--glass-highlight);
+}
+.av-choice-button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
 .av-button--primary:hover {
   background: var(--primary-hover);
   border-color: var(--primary-hover);

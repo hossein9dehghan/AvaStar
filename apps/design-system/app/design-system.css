@@ -1978,6 +1978,55 @@
   overflow-wrap: anywhere;
   text-align: left;
 }
+.ds-metrics {
+  margin-block: var(--space-3) var(--space-6);
+  padding: var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--card) 74%, transparent);
+}
+.ds-metrics h3 {
+  margin: 0 0 var(--space-4);
+  font-size: 0.9375rem;
+}
+.ds-metrics dl {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+}
+.ds-metrics dl > div {
+  min-width: 0;
+  padding: var(--space-3);
+  border-radius: var(--radius-input);
+  background: var(--muted);
+}
+.ds-metrics dt {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+.ds-metrics dd {
+  margin: 6px 0 0;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  overflow-wrap: anywhere;
+}
+.ds-metrics p {
+  margin: var(--space-4) 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.8;
+}
+@media (max-width: 900px) {
+  .ds-metrics dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .ds-metrics dl {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
 .ds-catalog-en {
   display: block;
   color: var(--muted-foreground);

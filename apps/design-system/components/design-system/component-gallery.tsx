@@ -139,6 +139,40 @@ export function ComponentGallery({ locale }: { locale: Locale }) {
             </Button>
           </div>
         </Specimen>
+        <Specimen
+          locale={locale}
+          title={t('کنترل‌های لندینگ', 'Landing controls')}
+          description={t(
+            'همین دکمه‌ها در هیرو، فصل‌ها، پنجرهٔ مسیر و فوتر لندینگ استفاده می‌شوند؛ شکل و رفتار آن‌ها از این قرارداد مشترک می‌آید.',
+            'These are the exact actions used by the landing hero, chapters, path dialog and footer. Their shape and behavior come from this shared contract.',
+          )}
+          source={
+            '<Button className="av-button av-button--primary av-button--landing">…</Button>\n<Button className="av-button av-button--secondary av-button--landing">…</Button>\n<Button className="av-button av-button--ghost av-button--icon">…</Button>'
+          }
+        >
+          <div className="ds-button-row">
+            <Button
+              className="av-button av-button--primary av-button--landing"
+              onClick={() => toast.success(t('شروع مسیر نمونه', 'Sample path started'))}
+            >
+              {t('شروع مسیر', 'Start your path')}{' '}
+              {locale === 'fa' ? <ArrowLeft size={17} /> : <ArrowRight size={17} />}
+            </Button>
+            <Button
+              className="av-button av-button--secondary av-button--landing"
+              onClick={() => toast.info(t('جزئیات مسیر', 'Path details'))}
+            >
+              {t('دیدن جزئیات', 'View details')}
+            </Button>
+            <Button
+              className="av-button av-button--ghost av-button--icon"
+              aria-label={t('کنترل نما', 'View control')}
+              onClick={() => toast.info(t('کنترل نمای نمونه', 'Sample view control'))}
+            >
+              <Compass size={18} />
+            </Button>
+          </div>
+        </Specimen>
         <h2 className="ds-subheading">{t('مقایسه همه حالت‌ها', 'All interaction states')}</h2>
         <ButtonStates locale={locale} />
         <div className="ds-control-states">

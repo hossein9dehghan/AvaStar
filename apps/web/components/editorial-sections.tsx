@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { Button } from '@avastar/ui/components/button';
 import type { Locale } from '@/lib/avastar';
 export const partnerOptions = {
   fa: [
@@ -44,11 +45,17 @@ export function PartnerAudience({
         aria-label={locale === 'fa' ? 'نوع مجموعه' : 'Organization type'}
       >
         {items.map(([id, label], i) => (
-          <button key={id} aria-pressed={id === value} onClick={() => onChange(id)}>
+          <Button
+            variant="ghost"
+            className="av-choice-button"
+            key={id}
+            aria-pressed={id === value}
+            onClick={() => onChange(id)}
+          >
             <small>0{i + 1}</small>
             {label}
             <span aria-hidden="true">↗</span>
-          </button>
+          </Button>
         ))}
       </div>
       <p className="partner-description" aria-live="polite">
@@ -99,10 +106,16 @@ export function AboutJourney({ locale }: { locale: Locale }) {
     <div className="about-journey">
       <div role="group" aria-label={fa ? 'مسیر آوا استار' : 'The Avastar journey'}>
         {items.map(([label], i) => (
-          <button key={label} onClick={() => setActive(i)} aria-pressed={active === i}>
+          <Button
+            variant="ghost"
+            className="av-choice-button"
+            key={label}
+            onClick={() => setActive(i)}
+            aria-pressed={active === i}
+          >
             <small>0{i + 1}</small>
             {label}
-          </button>
+          </Button>
         ))}
       </div>
       <div className="about-journey-copy" aria-live="polite">

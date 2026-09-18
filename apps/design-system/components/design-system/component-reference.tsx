@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@avastar/ui/components/accordion';
-import { inventory, contractDetails, componentSlug } from './component-contracts';
+import { inventory, contractDetails, componentSlug, metricsFor } from './component-contracts';
 import { useActiveComponent } from './documentation';
 import { translate, type Locale } from '@/lib/site';
 export function ComponentReference({ section, locale }: { section: string; locale: Locale }) {
@@ -40,7 +40,8 @@ export function ComponentReference({ section, locale }: { section: string; local
       >
         {rows.map(([name, , states]) => {
           const detail = contractDetails[name],
-            slug = componentSlug(name);
+            slug = componentSlug(name),
+            metrics = metricsFor(name);
           return (
             <AccordionItem value={slug} key={name} id={`${section}--${slug}`}>
               <AccordionTrigger>
@@ -63,6 +64,42 @@ export function ComponentReference({ section, locale }: { section: string; local
                     <h3>{t('API اصلی', 'Core API')}</h3>
                     <code dir="ltr">{detail.api}</code>
                   </div>
+                </div>
+                <div
+                  className="ds-metrics"
+                  aria-label={t('اندازه‌های اجرایی', 'Implementation measurements')}
+                >
+                  <h3>{t('اندازه‌های اجرایی', 'Implementation measurements')}</h3>
+                  <dl>
+                    <div>
+                      <dt>{t('ارتفاع', 'Height')}</dt>
+                      <dd dir="ltr">{metrics.height}</dd>
+                    </div>
+                    <div>
+                      <dt>{t('گردی گوشه', 'Corner radius')}</dt>
+                      <dd dir="ltr">{metrics.radius}</dd>
+                    </div>
+                    <div>
+                      <dt>{t('فاصلهٔ داخلی', 'Internal inset')}</dt>
+                      <dd dir="ltr">{metrics.inset}</dd>
+                    </div>
+                    <div>
+                      <dt>{t('ناحیهٔ لمس', 'Touch target')}</dt>
+                      <dd dir="ltr">{metrics.target}</dd>
+                    </div>
+                    {metrics.gap && (
+                      <div>
+                        <dt>{t('فاصلهٔ اجزا', 'Element gap')}</dt>
+                        <dd dir="ltr">{metrics.gap}</dd>
+                      </div>
+                    )}
+                  </dl>
+                  <p>
+                    {t(
+                      'این اعداد قرارداد پیاده‌سازی هستند؛ تغییرشان باید هم‌زمان در توکن‌ها، نمونه‌ها و لندینگ اعمال شود.',
+                      'These values are implementation contracts. Any change must update tokens, specimens and the landing together.',
+                    )}
+                  </p>
                 </div>
                 <a
                   className="ds-text-link"

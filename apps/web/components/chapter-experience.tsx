@@ -1,6 +1,7 @@
 'use client';
 import { ArrowLeft, ArrowRight, RotateCcw } from 'lucide-react';
 import { MaterialSurface } from '@avastar/ui/material-surface';
+import { Button } from '@avastar/ui/components/button';
 import { chapterContent } from '@/lib/chapter-content';
 import type { Locale, PlanetId } from '@/lib/avastar';
 export function ChapterExperience({
@@ -23,20 +24,22 @@ export function ChapterExperience({
   return (
     <div className="chapter-experience">
       <MaterialSurface
-        className="chapter-options"
+        className="chapter-options av-choice-group"
         material="light"
         role="group"
         aria-label={fa ? 'انتخاب موضوع' : 'Choose a topic'}
       >
         {items.map(([label], i) => (
-          <button
+          <Button
             key={label}
+            variant="ghost"
+            className="av-choice-button"
             aria-pressed={i === value}
             aria-controls={`${id}-insight`}
             onClick={() => onChange(i)}
           >
             {label}
-          </button>
+          </Button>
         ))}
       </MaterialSurface>
       <div id={`${id}-insight`} className="chapter-insight" aria-live="polite" aria-atomic="true">
@@ -49,15 +52,30 @@ export function ChapterExperience({
         aria-label={fa ? 'چرخش صحنه' : 'Scene rotation'}
       >
         <span>{fa ? 'زاویهٔ دید' : 'VIEWPOINT'}</span>
-        <button aria-label={fa ? 'چرخش به چپ' : 'Rotate left'} onClick={() => onRotate(-0.22)}>
+        <Button
+          variant="ghost"
+          className="av-button av-button--ghost av-button--icon"
+          aria-label={fa ? 'چرخش به چپ' : 'Rotate left'}
+          onClick={() => onRotate(-0.22)}
+        >
           <ArrowLeft size={15} />
-        </button>
-        <button aria-label={fa ? 'بازنشانی زاویه' : 'Reset angle'} onClick={onReset}>
+        </Button>
+        <Button
+          variant="ghost"
+          className="av-button av-button--ghost av-button--icon"
+          aria-label={fa ? 'بازنشانی زاویه' : 'Reset angle'}
+          onClick={onReset}
+        >
           <RotateCcw size={14} />
-        </button>
-        <button aria-label={fa ? 'چرخش به راست' : 'Rotate right'} onClick={() => onRotate(0.22)}>
+        </Button>
+        <Button
+          variant="ghost"
+          className="av-button av-button--ghost av-button--icon"
+          aria-label={fa ? 'چرخش به راست' : 'Rotate right'}
+          onClick={() => onRotate(0.22)}
+        >
           <ArrowRight size={15} />
-        </button>
+        </Button>
       </div>
     </div>
   );
