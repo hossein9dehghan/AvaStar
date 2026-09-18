@@ -104,13 +104,14 @@ export function CosmicFallback({
       lastRotationRevision = rotationRevision;
       if (!paused && !reduced) clock.current += dt;
       const easing = 1 - Math.exp(-3 * dt);
-      pointer.current.x += ((reduced ? 0 : f.pointerX) - pointer.current.x) * easing;
-      pointer.current.y += ((reduced ? 0 : f.pointerY) - pointer.current.y) * easing;
-      const px = reduced ? 0 : pointer.current.x,
-        py = reduced ? 0 : pointer.current.y;
+      const position = reduced ? Math.round(f.position) : f.position;
+      const heroPointer = !reduced && position <= 0.35;
+      pointer.current.x += ((heroPointer ? f.pointerX : 0) - pointer.current.x) * easing;
+      pointer.current.y += ((heroPointer ? f.pointerY : 0) - pointer.current.y) * easing;
+      const px = heroPointer ? pointer.current.x : 0,
+        py = heroPointer ? pointer.current.y : 0;
       const goal = selected ? 1.015 : hovered ? 1.008 : 1;
       focus = reduced ? 1 : focus + (goal - focus) * (1 - Math.exp(-6 * dt));
-      const position = reduced ? Math.round(f.position) : f.position;
       ctx.clearRect(0, 0, w, h);
       ctx.globalCompositeOperation = 'source-over';
       const count = w < 760 ? 2600 : 4800;

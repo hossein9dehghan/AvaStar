@@ -233,7 +233,9 @@ export function useDepthJourney(enabled: boolean, reduced: boolean) {
       navigate(location.hash || '#main');
     };
     const pointer = (event: PointerEvent) => {
-      if (event.pointerType === 'touch' || reducedRef.current) {
+      // The observatory at the start may follow the cursor. Once the journey reaches
+      // a chapter, only a direct drag on a planet may change its orientation.
+      if (event.pointerType === 'touch' || reducedRef.current || flight.current.position > 0.35) {
         resetPointer();
         return;
       }

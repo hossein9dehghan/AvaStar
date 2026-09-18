@@ -308,11 +308,12 @@ export async function createCosmicScene(
       rotationRevision !== lastRotationRevision
     ) {
       lastRotationRevision = rotationRevision;
-      pointerX = state.reduced ? 0 : THREE.MathUtils.damp(pointerX, f.pointerX, 8, dt);
-      pointerY = state.reduced ? 0 : THREE.MathUtils.damp(pointerY, f.pointerY, 8, dt);
+      const heroPointer = !state.reduced && position <= 0.35;
+      pointerX = THREE.MathUtils.damp(pointerX, heroPointer ? f.pointerX : 0, 8, dt);
+      pointerY = THREE.MathUtils.damp(pointerY, heroPointer ? f.pointerY : 0, 8, dt);
       pointerActive = THREE.MathUtils.damp(
         pointerActive,
-        !state.reduced && f.pointerActive ? 1 : 0,
+        heroPointer && f.pointerActive ? 1 : 0,
         9,
         dt,
       );

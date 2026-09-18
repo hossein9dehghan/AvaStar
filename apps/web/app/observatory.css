@@ -3123,6 +3123,258 @@ html[lang='en'] .hero-copy h1 {
     backdrop-filter: none;
   }
 }
+
+/* Journey tabs: compact, aligned, and keyboard-equivalent in both directions. */
+.depth-mode .about-journey {
+  width: min(100%, 720px);
+  margin-top: 32px;
+}
+.depth-mode .about-journey-tabs,
+.depth-mode .about-journey > .about-journey-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: 100%;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  background: transparent;
+}
+.depth-mode .about-journey-tab,
+.depth-mode .about-journey button.about-journey-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 48px;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--muted-foreground);
+  font: 500 0.875rem/1.4 var(--av-font);
+  white-space: nowrap;
+  transition:
+    color 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease,
+    transform 100ms ease-out;
+}
+.depth-mode .about-journey-tab small {
+  color: inherit;
+  font:
+    500 0.6875rem/1 ui-monospace,
+    monospace;
+  opacity: 0.7;
+}
+.depth-mode .about-journey-tab:hover {
+  background: color-mix(in srgb, var(--control-hover) 64%, transparent);
+  color: var(--foreground);
+}
+.depth-mode .about-journey-tab[aria-selected='true'] {
+  border-color: var(--hairline);
+  background: color-mix(in srgb, var(--foreground) 8%, transparent);
+  color: var(--foreground);
+}
+.depth-mode .about-journey-tab:active {
+  transform: scale(0.98);
+}
+.depth-mode .about-journey-tab:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+.depth-mode .about-journey-copy {
+  min-height: 126px;
+  margin-top: 14px;
+  padding: 6px 2px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  animation: journey-copy-in 220ms var(--observatory-ease) both;
+}
+.depth-mode .about-journey-copy strong {
+  display: block;
+  color: var(--foreground);
+  font-weight: 500;
+}
+.depth-mode .about-journey-copy p {
+  margin: 7px 0 0;
+}
+@keyframes journey-copy-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* The footer keeps its editorial rhythm; it is not a floating glass card. */
+.depth-mode .footer-surface.av-glass {
+  padding: clamp(25px, 4vw, 52px);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+@media (max-width: 620px) {
+  .depth-mode .about-journey-tabs {
+    gap: 3px;
+    padding: 3px;
+  }
+  .depth-mode .about-journey-tab,
+  .depth-mode .about-journey button.about-journey-tab {
+    min-height: 44px;
+    gap: 5px;
+    padding: 8px 6px;
+    font-size: 0.75rem;
+  }
+  .depth-mode .about-journey-copy {
+    min-height: 118px;
+  }
+  .depth-mode .footer-surface.av-glass {
+    padding: 24px 19px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .depth-mode .about-journey-tab,
+  .depth-mode .about-journey-copy {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* Journey controls are a floating material, never a page-wide divider. */
+.vertical-line,
+.section-rail,
+.scene-rail {
+  display: none !important;
+}
+.dock-progress {
+  display: none;
+}
+.depth-mode .flight-control,
+.depth-mode .flight-control.av-glass {
+  position: fixed;
+  z-index: var(--layer-navigation);
+  left: 50%;
+  bottom: 24px;
+  width: min(calc(100% - 48px), 1240px);
+  max-width: none;
+  min-height: 76px;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: minmax(12rem, 1fr) auto minmax(12rem, 1fr);
+  align-items: center;
+  gap: clamp(14px, 2vw, 28px);
+  padding: 12px 16px;
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  background: linear-gradient(
+    125deg,
+    color-mix(in srgb, var(--glass-light) 78%, transparent),
+    var(--glass-frosted)
+  );
+  box-shadow:
+    inset 0 1px var(--glass-highlight),
+    0 18px 52px color-mix(in srgb, #000 45%, transparent);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  backdrop-filter: blur(24px) saturate(140%);
+}
+.depth-mode .flight-readout {
+  min-width: 0;
+  gap: 12px;
+  padding-inline: 8px;
+}
+.depth-mode .flight-readout strong {
+  color: var(--foreground);
+}
+.depth-mode .flight-actions {
+  justify-self: end;
+  gap: 8px;
+}
+.depth-mode .flight-control .motion-toggle,
+.depth-mode .flight-control .next-station {
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--control-background) 58%, transparent);
+}
+.depth-mode .flight-control .next-station {
+  padding-inline: 12px;
+  color: var(--foreground);
+}
+.depth-mode .flight-control .next-station svg {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border: 0;
+}
+.depth-mode .flight-stops {
+  padding: 4px 8px;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--control-background) 52%, transparent);
+}
+.depth-mode .flight-stops button {
+  width: 28px;
+}
+.depth-mode .flight-stops button > span {
+  width: 5px;
+  height: 5px;
+}
+.depth-mode .partner-choice {
+  gap: 12px;
+  border: 0;
+}
+.depth-mode .partner-choice button,
+.depth-mode .partner-choice button:last-child {
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-card);
+  background: var(--glass-light);
+  box-shadow: inset 0 1px var(--glass-highlight);
+}
+.depth-mode .partner-choice button[aria-pressed='true'] {
+  background: var(--glass-frosted);
+  border-color: var(--ring);
+}
+.editorial-grid {
+  background: none;
+}
+@media (max-width: 760px) {
+  .depth-mode .flight-control,
+  .depth-mode .flight-control.av-glass {
+    bottom: max(12px, env(safe-area-inset-bottom));
+    width: calc(100% - 24px);
+    min-height: 64px;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 16px;
+  }
+  .depth-mode .flight-stops {
+    display: none;
+  }
+  .depth-mode .flight-readout strong {
+    font-size: 0.8125rem;
+  }
+  .depth-mode .flight-index {
+    font-size: 1.125rem;
+  }
+  .depth-mode .flight-control .next-station {
+    width: 44px;
+    min-width: 44px;
+    padding: 0;
+  }
+  .depth-mode .partner-choice {
+    grid-template-columns: 1fr;
+  }
+}
 .equipment-point {
   position: absolute;
   top: 0;

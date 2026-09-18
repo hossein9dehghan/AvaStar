@@ -104,21 +104,51 @@ export function AboutJourney({ locale }: { locale: Locale }) {
       ];
   return (
     <div className="about-journey">
-      <div role="group" aria-label={fa ? 'مسیر آوا استار' : 'The Avastar journey'}>
+      <div
+        className="about-journey-tabs"
+        role="tablist"
+        aria-label={fa ? 'مسیر آوا استار' : 'The Avastar journey'}
+      >
         {items.map(([label], i) => (
           <Button
             variant="ghost"
-            className="av-choice-button"
+            className="about-journey-tab"
             key={label}
+            role="tab"
+            id={`journey-tab-${i}`}
+            aria-selected={active === i}
+            aria-controls="journey-panel"
+            tabIndex={active === i ? 0 : -1}
             onClick={() => setActive(i)}
-            aria-pressed={active === i}
+            onKeyDown={(event) => {
+              if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                event.preventDefault();
+                const direction = event.key === 'ArrowLeft' ? (fa ? 1 : -1) : fa ? -1 : 1;
+                setActive((current) => (current + direction + items.length) % items.length);
+              }
+              if (event.key === 'Home') {
+                event.preventDefault();
+                setActive(0);
+              }
+              if (event.key === 'End') {
+                event.preventDefault();
+                setActive(items.length - 1);
+              }
+            }}
           >
             <small>0{i + 1}</small>
             {label}
           </Button>
         ))}
       </div>
-      <div className="about-journey-copy" aria-live="polite">
+      <div
+        className="about-journey-copy"
+        id="journey-panel"
+        key={active}
+        role="tabpanel"
+        aria-labelledby={`journey-tab-${active}`}
+        tabIndex={0}
+      >
         <strong>{items[active][1]}</strong>
         <p>{items[active][2]}</p>
       </div>
