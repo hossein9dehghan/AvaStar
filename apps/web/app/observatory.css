@@ -132,6 +132,18 @@ html {
   user-select: none;
   pointer-events: none;
 }
+.section-visual {
+  width: 100%;
+  height: 100%;
+}
+.section-visual--instrument {
+  filter: drop-shadow(0 26px 28px #000a);
+}
+.section-visual--instrument .planet-artifact {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
 .planet-plane.plane-0 {
   width: 65vw;
   transform: translate3d(26vw, 48vh, 0) translate(-50%, -50%);

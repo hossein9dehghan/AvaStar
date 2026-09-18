@@ -10,11 +10,10 @@ import type { FlightState } from './use-depth-journey';
 import { PlanetArtifact } from './planet-artifact';
 
 const worlds = [
-  { step: 1, id: 'learn', src: planetArt.learn, side: -1, spin: 0.38 },
-  { step: 2, id: 'explore', src: planetArt.explore, side: 1, spin: -0.18 },
-  { step: 3, id: 'shop', src: planetArt.shop, side: -1, spin: 0.3 },
-  { step: 4, id: 'club', src: planetArt.club, side: 1, spin: -0.32 },
-  { step: 4.28, id: 'club', src: planetArt.shop, side: 1, spin: 0.4, moon: true },
+  { step: 1, id: 'learn', src: '/art/blue-world.webp', side: -1, spin: 0.38 },
+  { step: 2, id: 'explore', src: '/art/annulus.webp', side: 1, spin: -0.18 },
+  { step: 3, id: 'shop', side: -1, spin: 0.3, visual: 'instrument' },
+  { step: 4, id: 'club', src: '/art/nocturne.webp', side: 1, spin: -0.32 },
 ] as const;
 const clamp = (x: number) => Math.max(0, Math.min(1, x));
 // A fixed seed prevents the sky from jumping on hover, resize or modal changes.
@@ -161,7 +160,10 @@ export function CosmicFallback({
           ? Math.min(w * 0.2, h * 0.075) / (ringed ? 0.245 : 0.435)
           : Math.min(stageWidth * (ringed ? 0.5 : 0.45), h * 1.04);
         const size =
-          width * (moon ? 0.39 : 1) * ratio * (world.id === (selected || hovered) ? focus : 1);
+          width *
+          (world.id === 'shop' ? 1.22 : 1) *
+          ratio *
+          (world.id === (selected || hovered) ? focus : 1);
         const x =
           w / 2 +
           (baseX - w / 2 + (moon ? -stageWidth * 0.31 * (locale === 'fa' ? 1 : -1) : 0)) * ratio -
@@ -258,16 +260,24 @@ export function CosmicFallback({
               layers.current[i] = node;
             }}
           >
-            <img
-              src={world.src}
-              alt=""
-              width="1254"
-              height="1254"
-              fetchPriority={i === 0 ? 'high' : 'low'}
-              decoding="async"
-              draggable={false}
-            />
-            {!('moon' in world) && <PlanetArtifact id={world.id} view={chapterViews[world.id]} />}
+            {'visual' in world ? (
+              <div className={`section-visual section-visual--${world.visual}`}>
+                <PlanetArtifact id={world.id} view={chapterViews[world.id]} />
+              </div>
+            ) : (
+              <>
+                <img
+                  src={world.src}
+                  alt=""
+                  width="1254"
+                  height="1254"
+                  fetchPriority={i === 0 ? 'high' : 'low'}
+                  decoding="async"
+                  draggable={false}
+                />
+                <PlanetArtifact id={world.id} view={chapterViews[world.id]} />
+              </>
+            )}
           </div>
         ))}
       </div>

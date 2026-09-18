@@ -42,7 +42,7 @@ export function PlanetArtifact({ id, view = 0 }: { id: PlanetId; view?: number }
         </linearGradient>
       </defs>
       {id === 'shop' && (
-        <g transform="translate(540 535) scale(1.15)">
+        <g transform="translate(350 238) scale(1.46)">
           <ellipse cx="170" cy="343" rx="123" ry="17" fill="#030710" opacity=".4" />
           <g stroke={`url(#${uid}-metal)`} strokeWidth="8" strokeLinecap="round">
             <path d="M166 203L68 336M166 203L267 327M166 203L182 352" />
