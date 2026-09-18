@@ -172,6 +172,12 @@ export function InteractiveObservatory({
         <span>AVASTAR OBSERVATORY</span>
         <span>{fa ? 'دریچه‌ای به بی‌نهایت' : 'A window into infinity'}</span>
       </div>
+      <div className="aperture-readout av-glass" data-material="light" aria-hidden="true">
+        <span>{fa ? 'میدان دید' : 'FIELD OF VIEW'}</span>
+        <strong dir="ltr">08° 24′</strong>
+        <i />
+        <small>{fa ? 'نور، عمق، جهت' : 'LIGHT · DEPTH · DIRECTION'}</small>
+      </div>
       <div
         className="observatory-tools av-glass"
         data-material="light"

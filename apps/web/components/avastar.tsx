@@ -492,7 +492,6 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
                 <span />
               </a>
             ))}
-            <span className="vertical-line" />
           </aside>
         </>
       )}
@@ -631,7 +630,7 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
               </div>
               <div className="journal-grid">
                 {Object.entries(guides).map(([key, g], i) => (
-                  <a className="journal-card" href={`/${locale}/${key}`} key={key}>
+                  <a className="journal-card av-glass" href={`/${locale}/${key}`} key={key}>
                     <JournalArtwork index={i} />
                     <div className="journal-card-body">
                       <span className="overline">{g.category[locale]}</span>

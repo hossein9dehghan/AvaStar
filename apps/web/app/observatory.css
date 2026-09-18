@@ -3187,3 +3187,215 @@ html[lang='en'] .hero-copy h1 {
     font-size: 10px;
   }
 }
+
+/* Final material pass: glass remains a navigation and card layer, with readable content. */
+.depth-mode .journey-side {
+  top: auto;
+  bottom: 28px;
+  inset-inline-end: max(24px, calc((100vw - var(--cosmic-stage-width)) / 2 + 24px));
+  flex-direction: row;
+  gap: 5px;
+  padding: 6px;
+  opacity: 1;
+  border: 1px solid #c7d8e22e;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #d7e9f012, #06111eb5);
+  box-shadow:
+    inset 0 1px #f5fbff1f,
+    0 12px 32px #00000038;
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+}
+.depth-mode .journey-side .side-caption,
+.depth-mode .journey-side .vertical-line {
+  display: none;
+}
+.depth-mode .journey-side a {
+  width: 30px;
+  height: 30px;
+  border: 1px solid transparent;
+}
+.depth-mode .journey-side a span {
+  width: 5px;
+  height: 5px;
+  background: #9eafbd;
+  box-shadow: 0 0 0 4px transparent;
+}
+.depth-mode .journey-side a.current {
+  border-color: #dae9f082;
+  background: #e3f1f01a;
+}
+.depth-mode .journey-side a.current span {
+  background: #f3d0a2;
+  box-shadow: 0 0 0 4px #f3d0a21a;
+}
+.depth-mode .site-header.av-glass,
+.depth-mode .site-header.av-glass:hover {
+  background: linear-gradient(112deg, #07111fc4, #1322339c 50%, #09121db3);
+  border-bottom-color: #d4e4ed27;
+  box-shadow:
+    inset 0 1px #f0fbff2c,
+    0 8px 30px #0000001e;
+  -webkit-backdrop-filter: blur(28px) saturate(155%);
+  backdrop-filter: blur(28px) saturate(155%);
+}
+.depth-mode .site-header.av-glass::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 22px;
+  pointer-events: none;
+  background: linear-gradient(#0b15201c, transparent);
+  translate: 0 100%;
+}
+.depth-mode .hero-copy {
+  padding: 20px 0;
+}
+.depth-mode .hero-copy::before {
+  content: '';
+  position: absolute;
+  inset: -40px -58px;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 35% 42%, #08121bdb 0%, #08121b96 38%, transparent 73%);
+  filter: blur(7px);
+}
+.aperture-readout {
+  position: absolute;
+  top: 20%;
+  inset-inline-end: 6%;
+  display: grid;
+  gap: 5px;
+  min-width: 146px;
+  padding: 13px 15px 12px;
+  border-radius: 13px;
+  color: #dce7ed;
+  font:
+    10px/1.45 Arial,
+    sans-serif;
+  letter-spacing: 0.12em;
+  pointer-events: none;
+}
+.aperture-readout > strong {
+  color: #f7e3c8;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+.aperture-readout i {
+  height: 1px;
+  background: linear-gradient(90deg, #ecd2aa, transparent);
+}
+.aperture-readout small {
+  color: #aebfcb;
+  font-size: 8px;
+}
+.depth-mode .journal-card.av-glass {
+  min-height: 100%;
+  padding: 12px;
+  border: 1px solid #c2d7e026;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #dceaf60d, #0a1421c4 65%);
+  box-shadow:
+    inset 0 1px #f1f8ff1c,
+    0 14px 38px #00000020;
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  backdrop-filter: blur(18px) saturate(130%);
+  transition:
+    transform 0.35s var(--observatory-ease),
+    border-color 0.35s,
+    background 0.35s,
+    box-shadow 0.35s;
+}
+.depth-mode .journal-card.av-glass:hover,
+.depth-mode .journal-card.av-glass:focus-visible {
+  transform: translateY(-5px);
+  border-color: #d4e6ec66;
+  background: linear-gradient(145deg, #e4f1fa17, #102238ce 65%);
+  box-shadow:
+    inset 0 1px #ffffff2e,
+    0 21px 48px #0000003e;
+}
+.depth-mode .journal-card.av-glass .editorial-art {
+  border-color: #cfe0e426;
+  border-radius: 11px;
+}
+.depth-mode .journal-card.av-glass .journal-card-body {
+  padding: 18px 7px 8px;
+}
+.depth-mode .journey-footer {
+  padding-inline: max(6%, calc((100vw - var(--cosmic-stage-width)) / 2 + 6%)) !important;
+}
+.depth-mode .footer-surface.av-glass {
+  max-width: 1320px;
+  padding: clamp(25px, 4vw, 52px);
+  border-color: #d2e4ed2d;
+  border-radius: 28px;
+  background: linear-gradient(140deg, #d7eaf113, #08131fc7 45%, #0d1a29c7);
+  box-shadow:
+    inset 0 1px #f4fbff2c,
+    0 24px 72px #00000042;
+  -webkit-backdrop-filter: blur(28px) saturate(145%);
+  backdrop-filter: blur(28px) saturate(145%);
+}
+.depth-mode .footer-invitation {
+  border-bottom-color: #d4e4ed25;
+}
+.depth-mode .footer-grid {
+  gap: clamp(24px, 3vw, 52px);
+}
+.depth-mode .footer-grid nav a,
+.depth-mode .footer-contact button {
+  border-radius: 8px;
+  padding-inline: 8px;
+}
+.depth-mode .footer-grid nav a:hover,
+.depth-mode .footer-contact button:hover {
+  background: #e5f2f109;
+}
+.depth-mode .footer-base {
+  border-top-color: #d4e4ed25;
+}
+@media (max-width: 760px) {
+  .depth-mode .journey-side {
+    display: none;
+  }
+  .depth-mode .site-header.av-glass,
+  .depth-mode .site-header.av-glass:hover {
+    background: #091421d9;
+  }
+  .aperture-readout {
+    top: 16%;
+    inset-inline-end: 9%;
+    min-width: 117px;
+    padding: 9px 10px;
+  }
+  .aperture-readout > strong {
+    font-size: 15px;
+  }
+  .depth-mode .hero-copy::before {
+    inset: -24px -22px;
+  }
+  .depth-mode .journal-card.av-glass {
+    padding: 8px;
+    border-radius: 14px;
+  }
+  .depth-mode .journey-footer {
+    padding-inline: 5% !important;
+  }
+  .depth-mode .footer-surface.av-glass {
+    padding: 24px 19px;
+    border-radius: 20px;
+  }
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  .depth-mode .site-header.av-glass,
+  .depth-mode .site-header.av-glass:hover,
+  .depth-mode .footer-surface.av-glass,
+  .depth-mode .journal-card.av-glass,
+  .depth-mode .journey-side {
+    background: var(--card);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}

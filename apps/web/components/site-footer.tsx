@@ -24,7 +24,7 @@ export function SiteFooter({
       aria-label={fa ? 'پایان سفر و ارتباط با آوا استار' : 'Avastar information and contact'}
     >
       <div className="closing-aperture" aria-hidden="true" />
-      <div className="footer-surface">
+      <div className="footer-surface av-glass" data-material="frosted">
         <div className="footer-invitation">
           <div>
             <p className="eyebrow">
