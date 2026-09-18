@@ -159,17 +159,14 @@ export function CosmicFallback({
         const width = mobile
           ? Math.min(w * 0.2, h * 0.075) / (ringed ? 0.245 : 0.435)
           : Math.min(stageWidth * (ringed ? 0.5 : 0.45), h * 1.04);
-        const size =
-          width *
-          (world.id === 'shop' ? 1.22 : 1) *
-          ratio *
-          (world.id === (selected || hovered) ? focus : 1);
+        const size = width * (world.id === 'shop' ? 1.22 : 1) * ratio;
+        const bodyFocus = world.id === (selected || hovered) && world.id !== 'shop' ? focus : 1;
         const x =
           w / 2 +
           (baseX - w / 2 + (moon ? -stageWidth * 0.31 * (locale === 'fa' ? 1 : -1) : 0)) * ratio -
           px * 2 * ratio;
         const y = h / 2 + (baseY - h / 2 + (moon ? -h * 0.38 : 0)) * ratio + py * 1.5 * ratio;
-        const radius = size * (ringed ? 0.245 : 0.435);
+        const radius = size * (ringed ? 0.245 : 0.435) * bodyFocus;
         for (const body of foreground) {
           const t = clamp((Math.hypot(x - body.x, y - body.y) / (radius + body.r) - 0.66) / 0.48);
           alpha *= t * t * (3 - 2 * t);
@@ -189,11 +186,10 @@ export function CosmicFallback({
             Math.round(position) === world.step && alpha > 0.15,
           );
         if (world.id === 'shop' && !moon) {
-          const radians = (angle * Math.PI) / 180;
           [
-            [0.836, 0.603],
-            [0.73, 0.73],
-            [0.63, 0.75],
+            [0.72, 0.38],
+            [0.41, 0.55],
+            [0.32, 0.43],
           ].forEach(([nx, ny], j) => {
             const target = equipmentTargets.current[j];
             if (!target) return;
@@ -201,12 +197,14 @@ export function CosmicFallback({
             if (!target.hidden) {
               const dx = (nx - 0.5) * size,
                 dy = (ny - 0.5) * size;
-              target.style.transform = `translate3d(${x + dx * Math.cos(radians) - dy * Math.sin(radians)}px,${y + dx * Math.sin(radians) + dy * Math.cos(radians)}px,0) translate(-50%,-50%)`;
+              target.style.transform = `translate3d(${x + dx}px,${y + dy}px,0) translate(-50%,-50%)`;
             }
           });
         }
         node.style.width = `${size.toFixed(2)}px`;
-        node.style.transform = `translate3d(${x.toFixed(2)}px,${y.toFixed(2)}px,0) translate(-50%,-50%) rotate(${angle.toFixed(3)}deg)`;
+        node.style.transform = `translate3d(${x.toFixed(2)}px,${y.toFixed(2)}px,0) translate(-50%,-50%)`;
+        node.style.setProperty('--planet-roll', `${angle.toFixed(3)}deg`);
+        node.style.setProperty('--planet-focus', bodyFocus.toFixed(4));
         node.style.opacity = alpha.toFixed(3);
         node.style.visibility = alpha > 0.008 ? 'visible' : 'hidden';
         node.style.filter = `blur(${reduced ? 0 : Math.min(7, Math.max(0, distance - 16) * 0.35)}px)`;
@@ -214,23 +212,25 @@ export function CosmicFallback({
         if (alpha <= 0.008) return;
         // Physically erase stars behind the image silhouette, including the unlit hemisphere.
         // Coordinates match the artwork and share the exact same transform as the image.
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.rotate((angle * Math.PI) / 180);
-        ctx.scale(size, size);
-        ctx.fillStyle = `rgba(0,0,0,${clamp(alpha * 4)})`;
-        ctx.beginPath();
-        ctx.arc(0, ringed ? -0.029 : 0, ringed ? 0.248 : 0.435, 0, Math.PI * 2);
-        ctx.fill();
-        if (ringed) {
-          ctx.translate(0, -0.03);
-          ctx.rotate((-27 * Math.PI) / 180);
+        if (world.id !== 'shop') {
+          ctx.save();
+          ctx.translate(x, y);
+          ctx.rotate((angle * Math.PI) / 180);
+          ctx.scale(size, size);
+          ctx.fillStyle = `rgba(0,0,0,${clamp(alpha * 4)})`;
           ctx.beginPath();
-          ctx.ellipse(0, 0, 0.493, 0.118, 0, 0, Math.PI * 2);
-          ctx.ellipse(0, 0, 0.357, 0.062, 0, 0, Math.PI * 2, true);
-          ctx.fill('evenodd');
+          ctx.arc(0, ringed ? -0.029 : 0, ringed ? 0.248 : 0.435, 0, Math.PI * 2);
+          ctx.fill();
+          if (ringed) {
+            ctx.translate(0, -0.03);
+            ctx.rotate((-27 * Math.PI) / 180);
+            ctx.beginPath();
+            ctx.ellipse(0, 0, 0.493, 0.118, 0, 0, Math.PI * 2);
+            ctx.ellipse(0, 0, 0.357, 0.062, 0, 0, Math.PI * 2, true);
+            ctx.fill('evenodd');
+          }
+          ctx.restore();
         }
-        ctx.restore();
       });
       ctx.globalCompositeOperation = 'source-over';
       if (!paused) frame = requestAnimationFrame(render);
@@ -260,12 +260,8 @@ export function CosmicFallback({
               layers.current[i] = node;
             }}
           >
-            {'visual' in world ? (
-              <div className={`section-visual section-visual--${world.visual}`}>
-                <PlanetArtifact id={world.id} view={chapterViews[world.id]} />
-              </div>
-            ) : (
-              <>
+            <div className="planet-body-layer">
+              {'src' in world ? (
                 <img
                   src={world.src}
                   alt=""
@@ -275,9 +271,13 @@ export function CosmicFallback({
                   decoding="async"
                   draggable={false}
                 />
-                <PlanetArtifact id={world.id} view={chapterViews[world.id]} />
-              </>
-            )}
+              ) : null}
+            </div>
+            <div
+              className={`section-visual section-visual--${'visual' in world ? world.visual : world.id}`}
+            >
+              <PlanetArtifact id={world.id} view={chapterViews[world.id]} />
+            </div>
           </div>
         ))}
       </div>

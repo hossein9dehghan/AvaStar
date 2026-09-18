@@ -422,27 +422,36 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
                   key={step}
                   type="button"
                   hidden
-                  className="cosmic-planet-target"
+                  className={`cosmic-planet-target ${id === 'shop' ? 'cosmic-instrument-target' : ''}`}
                   ref={(node) => {
                     planetTargets.current[step] = node;
                   }}
-                  {...planetDrag.bind(step)}
+                  {...(id === 'shop' ? {} : planetDrag.bind(step))}
                   title={
-                    fa
-                      ? 'برای چرخش درگ کنید؛ برای جزئیات کلیک کنید'
-                      : 'Drag to rotate; click for details'
+                    id === 'shop'
+                      ? fa
+                        ? 'برای دیدن جزئیات تجهیزات کلیک کنید'
+                        : 'Click to explore the equipment'
+                      : fa
+                        ? 'برای چرخش درگ کنید؛ برای جزئیات کلیک کنید'
+                        : 'Drag to rotate; click for details'
                   }
                   onPointerEnter={() => setHoveredPlanet(id)}
                   onPointerLeave={() => setHoveredPlanet(null)}
                   onFocus={() => setHoveredPlanet(id)}
                   onBlur={() => setHoveredPlanet(null)}
                   onClick={(event) => {
-                    if (!planetDrag.consumeClick(step, event.detail)) showPlanet(id);
+                    if (id === 'shop' || !planetDrag.consumeClick(step, event.detail))
+                      showPlanet(id);
                   }}
                   aria-label={
-                    fa
-                      ? `کشف سیاره ${planets[id].fa.name}`
-                      : `Open the ${planets[id].en.name} planet`
+                    id === 'shop'
+                      ? fa
+                        ? 'مشاهدهٔ جزئیات تجهیزات رصدی'
+                        : 'Open observing equipment details'
+                      : fa
+                        ? `کشف سیاره ${planets[id].fa.name}`
+                        : `Open the ${planets[id].en.name} planet`
                   }
                 >
                   <span className="cosmic-target-caption">
@@ -470,29 +479,6 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
             ))}
           </div>
           <div className="atmosphere" aria-hidden="true" />
-          <aside
-            className="journey-side"
-            aria-label={fa ? 'موقعیت در منظومه' : 'Your position in the universe'}
-          >
-            <span className="side-caption">{fa ? 'منظومه آوا استار' : 'AVASTAR UNIVERSE'}</span>
-            <a
-              href="#main"
-              className={station === 0 ? 'current' : ''}
-              aria-label={fa ? 'آغاز سفر' : 'Start'}
-            >
-              <span />
-            </a>
-            {planetIds.map((id, i) => (
-              <a
-                key={id}
-                href={`#${id}`}
-                className={active === i ? 'current' : ''}
-                aria-label={planets[id][locale].name}
-              >
-                <span />
-              </a>
-            ))}
-          </aside>
         </>
       )}
       <main id="main" className={home ? 'depth-main' : undefined}>
@@ -594,6 +580,7 @@ export default function Avastar({ locale, slug }: { locale: Locale; slug?: strin
                       id={id}
                       locale={locale}
                       value={chapterViews[id]}
+                      rotatable={id !== 'shop'}
                       onChange={(value) => setChapterViews((v) => ({ ...v, [id]: value }))}
                       onRotate={(delta) => planetDrag.rotate(i + 1, delta)}
                       onReset={() => planetDrag.reset(i + 1)}

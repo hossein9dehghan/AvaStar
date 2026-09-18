@@ -137,6 +137,8 @@ export async function createCosmicScene(
 
   function makeWorld(definition: (typeof worlds)[number], moon = false) {
     const group = new THREE.Group();
+    const visualRoot = new THREE.Group();
+    const instrument = !moon && definition.id === 'shop';
     const center = new THREE.Vector3();
     const ringNormal = new THREE.Vector3(0, 1, 0);
     const uniforms = {
@@ -168,6 +170,7 @@ export async function createCosmicScene(
       depthWrite: true,
     });
     const body = new THREE.Mesh(geometry, surface);
+    body.visible = !instrument;
     group.add(body);
     const atmosphere = new THREE.ShaderMaterial({
       vertexShader: surfaceVertex,
@@ -213,11 +216,12 @@ export async function createCosmicScene(
     }
     const artifact = moon ? null : createPlanetArtifact(definition.id);
     if (artifact) {
-      group.add(artifact.group);
+      visualRoot.add(artifact.group);
+      scene.add(visualRoot);
       resources.push(artifact);
     }
     scene.add(group);
-    return { definition, group, body, uniforms, artifact, radius: 1, focus: 1 };
+    return { definition, group, visualRoot, body, uniforms, artifact, radius: 1, focus: 1 };
   }
   const planets = worlds.map((world) => makeWorld(world));
   const moon = makeWorld(worlds[3], true);
@@ -282,6 +286,7 @@ export async function createCosmicScene(
       const def = planet.definition;
       const layout = worldLayout(def.step, def.side, def.ring, width, height, read().locale);
       planet.group.position.set(layout.x, layout.y, layout.z);
+      planet.visualRoot.position.set(layout.x, layout.y, layout.z + 0.04);
       planet.radius = layout.radius;
     }
     dirty = true;
@@ -336,17 +341,21 @@ export async function createCosmicScene(
         planet.focus = THREE.MathUtils.damp(planet.focus, target, 10, dt);
         planet.group.visible = opacity > 0.008;
         planet.group.scale.setScalar(planet.radius * planet.focus);
-        planet.group.rotation.set(
-          0.38 + pointerY * 0.045 + rotation.pitch,
-          rotation.yaw * 0.18,
-          def.tilt - pointerX * 0.025,
+        planet.visualRoot.visible = opacity > 0.008;
+        planet.visualRoot.scale.setScalar(planet.radius);
+        planet.visualRoot.rotation.set(0.38, 0, def.tilt);
+        // The composition stays spatially stable; only the planet surface responds to drag.
+        planet.group.rotation.set(0.38, 0, def.tilt);
+        planet.body.rotation.set(
+          rotation.pitch,
+          def.step * 1.6 + elapsed * def.spin + rotation.yaw,
+          0,
         );
-        planet.body.rotation.y = def.step * 1.6 + elapsed * def.spin + rotation.yaw;
         planet.uniforms.uOpacity.value = opacity;
         planet.artifact?.fade(opacity);
         planet.artifact?.setView(state.chapterViews[def.id]);
         if (def.id === 'shop') {
-          planet.group.updateMatrixWorld(true);
+          planet.visualRoot.updateMatrixWorld(true);
           planet.artifact?.anchors.forEach((anchor, i) => {
             const node = state.equipmentTargets.current[i];
             if (!node) return;

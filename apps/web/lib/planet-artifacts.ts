@@ -7,6 +7,7 @@ export function createPlanetArtifact(id: PlanetId) {
     geometries: THREE.BufferGeometry[] = [],
     materials: THREE.Material[] = [];
   const choices: THREE.Group[] = [];
+  const anchors: THREE.Object3D[] = [];
   const material = (color: string, roughness = 0.4, metalness = 0.65) => {
     const m = new THREE.MeshStandardMaterial({ color, roughness, metalness, transparent: true });
     materials.push(m);
@@ -113,9 +114,9 @@ export function createPlanetArtifact(id: PlanetId) {
   } else if (id === 'shop') {
     const scope = new THREE.Group();
     group.add(scope);
-    scope.position.set(0.34, -0.52, 1.33);
-    scope.scale.setScalar(1.05);
-    scope.rotation.set(0.12, -0.37, -0.08);
+    scope.position.set(0, -0.08, 0.24);
+    scope.scale.setScalar(0.76);
+    scope.rotation.set(0.06, -0.24, 0.1);
     // Tripod with telescoping legs, spreader, dovetail and equatorial head.
     for (const a of [0, (Math.PI * 2) / 3, (Math.PI * 4) / 3]) {
       const foot = new THREE.Vector3(Math.cos(a) * 0.57, -1.08, Math.sin(a) * 0.57),
@@ -188,6 +189,17 @@ export function createPlanetArtifact(id: PlanetId) {
     rod(new THREE.Vector3(0.26, 0.03, 0), new THREE.Vector3(0.26, 0.43, 0), 0.032, carbon, tube);
     for (const y of [0.1, 0.31])
       rod(new THREE.Vector3(0.18, y, 0), new THREE.Vector3(0.26, y, 0), 0.012, ivory, tube);
+    // Independent label anchors prevent mesh offsets from stacking all callouts together.
+    for (const position of [
+      new THREE.Vector3(0.55, 0.7, 0.08),
+      new THREE.Vector3(-0.32, 0.02, 0.12),
+      new THREE.Vector3(-0.57, 0.45, 0.08),
+    ]) {
+      const anchor = new THREE.Object3D();
+      anchor.position.copy(position);
+      scope.add(anchor);
+      anchors.push(anchor);
+    }
   } else if (id === 'explore') {
     // Foreground terrain is a visual transition into an observing night, not a spacecraft.
     for (let layer = 0; layer < 3; layer++) {
@@ -262,7 +274,7 @@ export function createPlanetArtifact(id: PlanetId) {
   };
   return {
     group,
-    anchors: id === 'shop' ? choices.map((c) => c.children[0]) : [],
+    anchors,
     fade(value: number) {
       opacity = value;
       update();

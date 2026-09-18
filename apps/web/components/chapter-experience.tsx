@@ -8,6 +8,7 @@ export function ChapterExperience({
   id,
   locale,
   value,
+  rotatable = true,
   onChange,
   onRotate,
   onReset,
@@ -15,6 +16,7 @@ export function ChapterExperience({
   id: PlanetId;
   locale: Locale;
   value: number;
+  rotatable?: boolean;
   onChange: (value: number) => void;
   onRotate: (delta: number) => void;
   onReset: () => void;
@@ -46,37 +48,39 @@ export function ChapterExperience({
         <strong>{items[value][1]}</strong>
         <p>{items[value][2]}</p>
       </div>
-      <div
-        className="chapter-view-controls"
-        role="group"
-        aria-label={fa ? 'چرخش صحنه' : 'Scene rotation'}
-      >
-        <span>{fa ? 'زاویهٔ دید' : 'VIEWPOINT'}</span>
-        <Button
-          variant="ghost"
-          className="av-button av-button--ghost av-button--icon"
-          aria-label={fa ? 'چرخش به چپ' : 'Rotate left'}
-          onClick={() => onRotate(-0.22)}
+      {rotatable ? (
+        <div
+          className="chapter-view-controls"
+          role="group"
+          aria-label={fa ? 'چرخش سیاره' : 'Planet rotation'}
         >
-          <ArrowLeft size={15} />
-        </Button>
-        <Button
-          variant="ghost"
-          className="av-button av-button--ghost av-button--icon"
-          aria-label={fa ? 'بازنشانی زاویه' : 'Reset angle'}
-          onClick={onReset}
-        >
-          <RotateCcw size={14} />
-        </Button>
-        <Button
-          variant="ghost"
-          className="av-button av-button--ghost av-button--icon"
-          aria-label={fa ? 'چرخش به راست' : 'Rotate right'}
-          onClick={() => onRotate(0.22)}
-        >
-          <ArrowRight size={15} />
-        </Button>
-      </div>
+          <span>{fa ? 'زاویهٔ دید' : 'VIEWPOINT'}</span>
+          <Button
+            variant="ghost"
+            className="av-button av-button--ghost av-button--icon"
+            aria-label={fa ? 'چرخش به چپ' : 'Rotate left'}
+            onClick={() => onRotate(-0.22)}
+          >
+            <ArrowLeft size={15} />
+          </Button>
+          <Button
+            variant="ghost"
+            className="av-button av-button--ghost av-button--icon"
+            aria-label={fa ? 'بازنشانی زاویه' : 'Reset angle'}
+            onClick={onReset}
+          >
+            <RotateCcw size={14} />
+          </Button>
+          <Button
+            variant="ghost"
+            className="av-button av-button--ghost av-button--icon"
+            aria-label={fa ? 'چرخش به راست' : 'Rotate right'}
+            onClick={() => onRotate(0.22)}
+          >
+            <ArrowRight size={15} />
+          </Button>
+        </div>
+      ) : null}
     </div>
   );
 }
